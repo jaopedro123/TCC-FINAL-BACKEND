@@ -1,0 +1,10 @@
+package com.MotherBoard.Admin.usuario;
+
+public class UserNotFoundException extends Exception {
+
+	public UserNotFoundException(String message) {
+		super(message);
+		
+	}
+	
+}
