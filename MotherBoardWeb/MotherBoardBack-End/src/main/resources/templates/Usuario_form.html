@@ -79,7 +79,10 @@
     <h2 style="text-align: center;">
 		[[${tituloDaPag}]]
 	</h2>
-    <form th:action="@{/usuarios/salvar}" method="post" th:object="${usuario}" onsubmit="return validateForm(this);">
+	
+    <form th:action="@{/usuarios/salvar}" method="post" enctype="multipart/form-data" th:object="${usuario}" onsubmit="return validateForm(this);">
+		
+		
 		
 		<input type="hidden" th:field="*{id}" id="id"/>
 		
@@ -126,8 +129,15 @@
         </div> 
 
         <div class="mb-3">
-            <label for="foto" class="form-label">Envie uma foto</label>
-            <input class="form-control" type="file" id="foto" name="foto">
+            <label for="foto" class="form-label">Envie uma foto </label>
+            
+            <input type="hidden" th:field="*{fotos}"/>
+            <img id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
+
+            
+             </br>
+            <input class="form-control" type="file" name="imagem" id="foto" >
+            
         </div>
         
         <br>
@@ -161,8 +171,33 @@
         $("#buttonCancel").on("click", function() {
             window.location = "[[@{/Usuarios}]]";
         });
+        
+        $("#foto").change(function() {
+			
+			foto = this.files[0].size;
+			
+			// 1 MB = 1048576
+			if (foto > 1048576) {
+				this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
+				this.reportvalidity();
+			} 
+			else {
+			this.setCustomValidity("");
+			showImageThumbnail(this);
+			}
+		});
+        
     });
 
+		function showImageThumbnail(fileInput) {
+			var file = fileInput.files[0];
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$("#thumbnail").attr("src", e.target.result);
+			};
+			reader.readAsDataURL(file);
+		}
+	
     function validateForm(form) {
         var checks = [checkEmailUnico(form), checkCpfUnico(form)];
 

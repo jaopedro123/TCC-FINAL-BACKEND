@@ -33,7 +33,7 @@ public class UsuarioServico {
         return (List<Role>) roleRepo.findAll();
     }
 
-    public void salva(Usuario usuario) {
+    public Usuario salva(Usuario usuario) {
         boolean isUpdatingUser = (usuario.getId() != null);
 
         if (isUpdatingUser) {
@@ -48,7 +48,7 @@ public class UsuarioServico {
             encodePassword(usuario);
         }
 
-        usuarioRepo.save(usuario);
+       return usuarioRepo.save(usuario);
     }
 
     private void encodePassword(Usuario usuario) {

@@ -101,21 +101,27 @@
                         <th scope="col">CPF</th>
                         <th scope="col">Roles</th>
                         <th scope="col">Permitido</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
                   <tr th:each="Usuario : ${listUsuarios}">
                       <td>[[${Usuario.id}]]</td>
-                      <td><i class="bi bi-file-person" style="font-size: 2rem;"></i></td>
+                      	<td>
+    						<img th:if="${Usuario.fotos == null}" th:src="@{/imagens/imagem-default.png}" style="width: 150px; height: 150px;"/>
+    						<img th:if="${Usuario.fotos != null}" id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${Usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
+						</td>
+
                       <td>[[${Usuario.nomeCompleto}]]</td>
                       <td>[[${Usuario.email}]]</td>
                       <td>[[${Usuario.cpf}]]</td>
                       <td>[[${Usuario.roles}]]</td>
-                      
-                      <td>
+                   <td>
                           <a th:if="${Usuario.permitido == true}" th:href="@{'/usuarios/' + ${Usuario.id} + '/permitido/false'}">
                               <i class="bi bi-power" title="Desabilitar Funcionario" style="color: green; font-size: 24px;"></i>
                           </a>
+                        
                           <a th:if="${Usuario.permitido == false}" th:href="@{'/usuarios/' + ${Usuario.id} + '/permitido/true'}">
                               <i class="bi bi-power" title="Habilitar Funcionario" style="color: rgb(255, 128, 128); font-size: 24px;"></i>
                           </a>
@@ -127,12 +133,14 @@
                               <i class="bi bi-pen" title="Editar esse usuario" style="color: rgb(0, 128, 64); font-size: 24px;"></i>
                           </a> 
                           
-                          &nbsp;  &nbsp;
+                       </td>
+                       
+                       <td>
 
                           <a class="delete-link" th:href="@{'/usuarios/deletar/' + ${Usuario.id}}" th:userId="${Usuario.id}">
     <i class="bi bi-trash" title="Deletar esse usuario" style="color: rgb(255, 128, 128); font-size: 24px;"></i>
 </a>
-                      </td>
+                       </td>
                   </tr>
                 </tbody>
             </table>

@@ -1,16 +1,21 @@
 package com.MotherBoard.Admin.usuario;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.RedirectAttributesMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.entidade.comum.Role;
 import com.MotherBoard.entidade.comum.Usuario;
 
@@ -44,14 +49,30 @@ public class UsuarioControlador {
 	}
 	
 	@PostMapping("/usuarios/salvar")
-	public String salvaUsuario(Usuario usuario, RedirectAttributes redirectAttributes) {
-	    if (usuario.getId() != null) {
-	        redirectAttributes.addFlashAttribute("message", "Os dados do funcionario foram atualizados com sucesso!");
+	public String salvaUsuario(Usuario usuario, RedirectAttributes redirectAttributes, @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
+	    
+	    if (!multipartFile.isEmpty()) {
+	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+	        usuario.setFotos(fileName); 
+	        Usuario saveUsuario = service.salva(usuario); 
+	        
+	        String uploadDir = "fotos-usuario/" + saveUsuario.getId();
+	        
+	        FileUploadUtil.cleanDir(uploadDir);
+	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	    } 
 	    else {
-	        redirectAttributes.addFlashAttribute("message", "O Funcionario foi cadastrado com sucesso!");
+	    	if (usuario.getFotos().isEmpty()) usuario.setFotos(null);
+	        service.salva(usuario);
 	    }
-	    service.salva(usuario);
+	    
+	    if (usuario.getId() != null) {
+	        redirectAttributes.addFlashAttribute("message", "Os dados do funcionário foram atualizados com sucesso!");
+	    } 
+	    else {
+	        redirectAttributes.addFlashAttribute("message", "O funcionário foi cadastrado com sucesso!");
+	    }
+	    
 	    return "redirect:/Usuarios";
 	}
 
