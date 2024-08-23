@@ -1,6 +1,8 @@
 package com.MotherBoard.Admin.usuario;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,10 +100,18 @@ public class UsuarioControlador {
 	public String deleteUser(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
 	    try {
 	        service.delete(id);
-	        redirectAttributes.addFlashAttribute("message", "O Funcionario com ID: " + id + " Foi deletado com sucesso");   
-	    }
+
+	        String userPhotosDir = "fotos-usuario/" + id;
+	        FileUploadUtil.cleanDir(userPhotosDir); 
+	        Files.delete(Paths.get(userPhotosDir));
+
+	        redirectAttributes.addFlashAttribute("message", "O Funcionario com ID: " + id + " Foi deletado com sucesso");
+	    } 
 	    catch (UserNotFoundException ex) {
 	        redirectAttributes.addFlashAttribute("message", ex.getMessage());
+	    } 
+	    catch (IOException ex) {
+	        redirectAttributes.addFlashAttribute("message", "Erro ao deletar pasta de imagens do funcionario com ID: " + id);
 	    }
 	    return "redirect:/Usuarios";
 	}
