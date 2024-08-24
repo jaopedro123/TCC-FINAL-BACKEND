@@ -9,8 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,14 +31,15 @@ public class Categoria {
 	
 	private boolean habilitado;
 	
-	@OneToOne
-	@JoinColumn(name = "parent_id")
-	private Categoria parent;
+	@ManyToOne
+	@JoinColumn(name = "pai_id", unique = false)
+	private Categoria pai;
 	
-	@OneToMany(mappedBy = "parent")
-	private Set<Categoria> children = new HashSet<>();
-
+	@OneToMany(mappedBy = "pai")
+	private Set<Categoria> filho = new HashSet<>();
 	
+	public Categoria() {
+	}
 	
 	public Categoria(Integer id) {
 		this.id = id;
@@ -50,9 +51,9 @@ public class Categoria {
 		this.imagem = "default.png";
 	}
 	
-	public Categoria(String nome, Categoria parent) {
+	public Categoria(String nome, Categoria pai) {
 		this(nome);
-		this.parent = parent;
+		this.pai = pai;
 	}
 
 	public Integer getId() {
@@ -95,20 +96,20 @@ public class Categoria {
 		this.habilitado = habilitado;
 	}
 
-	public Categoria getParent() {
-		return parent;
+	public Categoria getPai() {
+		return pai;
 	}
 
-	public void setParent(Categoria parent) {
-		this.parent = parent;
+	public void setParent(Categoria pai) {
+		this.pai = pai;
 	}
 
-	public Set<Categoria> getChildren() {
-		return children;
+	public Set<Categoria> getFilho() {
+		return filho;
 	}
 
-	public void setChildren(Set<Categoria> children) {
-		this.children = children;
+	public void setFilho(Set<Categoria> filho) {
+		this.filho = filho;
 	}
 	
 	
