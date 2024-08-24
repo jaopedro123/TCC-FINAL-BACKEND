@@ -2,12 +2,20 @@ package com.MotherBoard.Admin.categoria;
 
 import java.util.List;
 
+import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.MotherBoard.entidade.comum.Categoria;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @Controller
 public class CategoriaControlador {
@@ -21,4 +29,29 @@ public class CategoriaControlador {
 		
 		return "Categoria";
 	}
+
+	@GetMapping("/categorias/new")
+	public String novaCategoria(Model model) {
+		List<Categoria>  listarCategorias = service.listarCategoriasForm();
+
+		model.addAttribute("categoria", new Categoria());
+		model.addAttribute("listarCategorias", listarCategorias);
+		model.addAttribute("tituloDaPag", "Criar nova Categoria");
+
+		return "Categoria_form";
+	}
+
+	@PostMapping("/categorias/salvar")
+	public String salvarCategoria(Categoria categoria,
+		@RequestParam("arquivoImagem") MultipartFile multipartFile) {
+			String arquivoNome = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+			categoria.setImagem(arquivoNome);
+
+			Categoria salvarCategoria = service.save(categoria);
+			String enviarDir = "../categoria-imagens" + salvarCategoria.getId();
+			FileUploadUtil.saveFile(enviarDir, arquivoNome, multipartFile);
+
+		return "redirect:/categorias";
+	}
+	
 }
