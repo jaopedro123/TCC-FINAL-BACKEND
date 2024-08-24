@@ -79,7 +79,7 @@
     <h2 style="text-align: center;">
 		[[${tituloDaPag}]]
 	</h2>
-    <form th:action="@{/categorias/new}" method="post" th:object="${categoria}">
+    <form th:action="@{/categorias/salvar}" method="post" th:object="${categoria}">
 		
 		<input type="hidden" th:field="*{id}" id="id"/>
 		
@@ -110,10 +110,18 @@
             </div>
         </div> 
 
-        <div class="mb-3">
-            <label for="foto" class="form-label">Envie uma Imagem</label>
-            <input class="form-control" type="file" id="foto" name="foto">
-        </div>
+		<div class="mb-3">
+			
+            <label for="foto" class="form-label">Envie uma foto </label>
+            
+            <input type="hidden" th:field="*{imagem}"/>
+<!--            <img id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.photosImagePath}}" style="width: 150px; height: 150px;" />-->
+
+            
+             </br>
+            <input class="form-control" type="file" name="imagem" id="foto" >
+		            
+		 </div>
         
         <br><br>
 
