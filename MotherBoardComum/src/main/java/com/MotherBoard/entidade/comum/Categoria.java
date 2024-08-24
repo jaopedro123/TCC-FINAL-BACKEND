@@ -12,6 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "categorias")
@@ -48,7 +49,6 @@ public class Categoria {
 	public Categoria(String nome) {
 		this.nome = nome;
 		this.alias = nome;
-		this.imagem = "default.png";
 	}
 	
 	public Categoria(String nome, Categoria pai) {
@@ -110,6 +110,13 @@ public class Categoria {
 
 	public void setFilho(Set<Categoria> filho) {
 		this.filho = filho;
+	}
+	
+	@Transient
+	public String getImagemPath() {
+	    if (id == null || imagem == null) return "/imagens/image-light.png";
+	    
+	    return "/categoria-imagens/" + this.id + "/" + this.imagem;
 	}
 	
 	
