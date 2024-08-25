@@ -40,7 +40,9 @@ public class CategoriaRepositoryTests {
 		Categoria placaDeVideo = new Categoria("Placa de Vídeo", pai);
 		Categoria armazenamento = new Categoria("Armazenamento", pai);
 		
-		repo.saveAll(List.of(processador, memoriaRam, armazenamento));
+//		, memoriaRam, placaDeVideo, armazenamento
+		
+		repo.saveAll(List.of(processador));
 	}
 	
 	@Test
@@ -67,13 +69,13 @@ public class CategoriaRepositoryTests {
 	}
 	
 	@Test
-	public void testeMostrarCategoriaId() {
+	public void testeMostrarCategoriaID() {
 		Iterable<Categoria> listarCategorias = repo.findAll();
 		listarCategorias.forEach(categorias -> System.out.println(categorias.getId() + " idFilho: " + categorias.getFilho()));
 	}
 	
 	@Test 
-	public void testeMostrarSubCategoriaId() {
+	public void testeMostrarSubCategoriaID() {
 		Iterable<Categoria> categorias = repo.findAll();
 		
 		for(Categoria categoria : categorias) {

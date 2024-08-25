@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-/* import jakarta.persistence.Transient; */
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "categorias")
@@ -44,6 +44,22 @@ public class Categoria {
 	
 	public Categoria(Integer id) {
 		this.id = id;
+	}
+
+	public static Categoria copiarIdENome(Categoria categoria) {
+		Categoria copiarCategoria = new Categoria();
+		copiarCategoria.setId(categoria.getId());
+		copiarCategoria.setNome(categoria.getNome());
+
+		return copiarCategoria;
+	}
+
+	public static Categoria copiarIdENome(Integer id, String nome) {
+		Categoria copiarCategoria = new Categoria();
+		copiarCategoria.setId(id);
+		copiarCategoria.setNome(nome);
+
+		return copiarCategoria;
 	}
 
 	public Categoria(String nome) {
@@ -113,12 +129,12 @@ public class Categoria {
 		this.filho = filho;
 	}
 	
-/* 	@Transient
+	@Transient
 	public String getImagemPath() {
 	    if (id == null ||imagem == null) return "/imagens/image-light.png";
 	    
 	    return "/categoria-imagens/" + this.id + "/" + this.imagem;
-	} */
+	}
 	
 	
 }

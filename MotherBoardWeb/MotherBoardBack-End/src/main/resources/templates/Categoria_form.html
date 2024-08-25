@@ -80,7 +80,7 @@
 		[[${tituloDaPag}]]
 	</h2>
     <!-- enctype="multipart/form-data" -->
-    <form th:action="@{/categorias/salvar}" method="post"  th:object="${categoria}">
+    <form th:action="@{/categorias/salvar}" enctype="multipart/form-data" method="post"  th:object="${categoria}">
 		
 		<input type="hidden" th:field="*{id}" id="id"/>
 		
@@ -98,7 +98,7 @@
                 <option value="0">Sem pai :(</option>
                 
                 <th:block th:each="categoria : ${listarCategorias}">
-                    <option th:value="${categoria.id}">[[${categoria.nome}]]</option>
+                    <option th:value="${categoria.id}">ID: [[${categoria.id}]], NOME: [[${categoria.nome}]]</option>
                 </th:block>
             
             </select>
@@ -119,7 +119,7 @@
 <!--			<img id="thumbnail" alt="asdf" th:src="@{${categoria.getImagemPath}}" style="width: 210px; height: 140px;" />-->
 <!--		</div>-->
 		
-<!-- 		<div class="mb-3">
+		<div class="mb-3">
             <label for="imagem" class="form-label">Envie uma foto </label>
             
             <input type="hidden" th:field="*{imagem}"/>
@@ -128,7 +128,7 @@
             
                 </br>
             <input class="form-control" type="file" name="imagem" id="foto" > 
-        </div> -->
+        </div>
 
         <br><br>
 
