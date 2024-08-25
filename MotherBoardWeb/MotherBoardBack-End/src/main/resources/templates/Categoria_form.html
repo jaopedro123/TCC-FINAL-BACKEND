@@ -79,7 +79,8 @@
     <h2 style="text-align: center;">
 		[[${tituloDaPag}]]
 	</h2>
-    <form th:action="@{/categorias/salvar}" method="post" enctype="multipart/form-data" th:object="${categoria}">
+    <!-- enctype="multipart/form-data" -->
+    <form th:action="@{/categorias/salvar}" method="post"  th:object="${categoria}">
 		
 		<input type="hidden" th:field="*{id}" id="id"/>
 		
@@ -109,20 +110,26 @@
                 <input type="checkbox" th:field="*{habilitado}" class="form-check-input">
             </div>
         </div> 
-
-<!--		<div class="mb-3">-->
-			
-<!--            <label for="foto" class="form-label">Envie uma foto </label>-->
-            
-<!--            <input type="hidden" th:field="*{imagem}"/>-->
-<!--            <img id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.getImagemPath}}" style="width: 150px; height: 150px;" />-->
-
-            
-<!--             </br>-->
-<!--            <input class="form-control" type="file" name="imagem" id="foto" >-->
-		            
-<!--		 </div>-->
         
+<!--		<div>-->
+<!--			<label>Image:</label>-->
+<!--			<input type="hidden" th:field="*{imagem}">-->
+<!--			<input type="file" id="imagem" name="imagem" accept="image/png, image/jpeg">-->
+
+<!--			<img id="thumbnail" alt="asdf" th:src="@{${categoria.getImagemPath}}" style="width: 210px; height: 140px;" />-->
+<!--		</div>-->
+		
+<!-- 		<div class="mb-3">
+            <label for="imagem" class="form-label">Envie uma foto </label>
+            
+            <input type="hidden" th:field="*{imagem}"/>
+            <img id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.getImagemPath}}" style="width: 150px; height: 150px;" />
+
+            
+                </br>
+            <input class="form-control" type="file" name="imagem" id="foto" > 
+        </div> -->
+
         <br><br>
 
         <div>
@@ -138,7 +145,32 @@
         $("#buttonCancel").on("click", function() {
             window.location = "[[@{/categorias}]]";
         });
+        
+        $("#foto").change(function() {
+			
+			foto = this.files[0].size;
+			
+			// 1 MB = 1048576
+			if (foto > 1048576) {
+				this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
+				this.reportvalidity();
+			} 
+			else {
+			this.setCustomValidity("");
+			showImageThumbnail(this);
+			}
+		});
+        
     });
+
+    function showImageThumbnail(fileInput) {
+        var file = fileInput.files[0];
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $("#thumbnail").attr("src", e.target.result);
+        };
+        reader.readAsDataURL(file);
+    }
 </script>
 			
 <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4"  data-bs-theme="dark">
@@ -226,7 +258,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="assets/scripts/Atendimento.js">
 </script>
 </body>
 </html>

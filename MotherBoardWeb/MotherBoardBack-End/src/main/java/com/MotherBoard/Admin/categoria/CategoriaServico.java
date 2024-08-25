@@ -26,6 +26,8 @@ public class CategoriaServico {
 		List<Categoria> listarTodasCategorias = new ArrayList<>();
 		Iterable<Categoria> categoriasNoBD = repo.findAll();
 
+		categoriasNoBD.forEach(categorias -> System.out.println(categorias.getId()));
+
 		for(Categoria categoria : categoriasNoBD) {
 			if(categoria.getPai() == null) {
 				listarTodasCategorias.add(new Categoria(categoria.getNome()));

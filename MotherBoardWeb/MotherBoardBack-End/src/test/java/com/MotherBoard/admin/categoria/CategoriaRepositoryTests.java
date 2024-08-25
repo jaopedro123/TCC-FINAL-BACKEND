@@ -14,6 +14,7 @@ import org.springframework.test.annotation.Rollback;
 
 import com.MotherBoard.Admin.categoria.CategoriaRepository;
 import com.MotherBoard.entidade.comum.Categoria;
+import com.MotherBoard.entidade.comum.Usuario;
 
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -25,7 +26,7 @@ public class CategoriaRepositoryTests {
 	
 	@Test
 	public void testeCreateRootCategoria() {
-		Categoria categoria = new Categoria("Hardware");
+		Categoria categoria = new Categoria("Computadores");
 		Categoria salvaCategoria = repo.save(categoria);
 		
 		assertThat(salvaCategoria.getId()).isGreaterThan(0);
@@ -39,7 +40,7 @@ public class CategoriaRepositoryTests {
 		Categoria placaDeVideo = new Categoria("Placa de Vídeo", pai);
 		Categoria armazenamento = new Categoria("Armazenamento", pai);
 		
-		repo.saveAll(List.of(processador, memoriaRam, placaDeVideo, armazenamento));
+		repo.saveAll(List.of(processador, memoriaRam, armazenamento));
 	}
 	
 	@Test
@@ -64,6 +65,26 @@ public class CategoriaRepositoryTests {
 		
 		assertThat(filho.size()).isGreaterThan(0);
 	}
+	
+	@Test
+	public void testeMostrarCategoriaId() {
+		Iterable<Categoria> listarCategorias = repo.findAll();
+		listarCategorias.forEach(categorias -> System.out.println(categorias.getId() + " idFilho: " + categorias.getFilho()));
+	}
+	
+	@Test 
+	public void testeMostrarSubCategoriaId() {
+		Iterable<Categoria> categorias = repo.findAll();
+		
+		for(Categoria categoria : categorias) {
+				
+			Set<Categoria> filho = categoria.getFilho();
+			
+			for(Categoria subCategoria : filho) {
+				System.out.println("--"+subCategoria.getId());
+			}
+		}
+	}	
 	
 	@Test
 	public void testeMostrarTodasCategoria() {

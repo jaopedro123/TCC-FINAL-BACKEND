@@ -74,7 +74,7 @@
     </nav>
 </header>
         
-<main>
+<main class="container">
 
     <div class="ms-5 mt-5">
         <a th:href="@{/categorias/new}">Nova Categoria</a>
@@ -89,24 +89,18 @@
                 <th scope="col">Nome da Categoria</th>
                 <th scope="col">Alias</th>
                 <th scope="col">Ativa</th>
+				<th scope="col">Editar</th>
+				<th scope="col">Excluir</th>
             </tr>
         </thead>
         <tbody>
           <tr th:each="Categoria : ${listarCategorias}">
             <td>[[${Categoria.id}]]</td>
-<!--			<td>-->
-<!--				<img th:if="${Categoria.imagem == null}" th:src="@{/imagens/image-light.png}" style="width: 150px; height: 150px;"/>-->
-<!--				<img th:if="${Categoria.imagem!= null}" id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.getImagemPath}}" style="width: 150px; height: 150px;" />-->
-<!--			</td>-->
 			<td>
-                <img th:if="${Categoria.imagem != null}" th:src="@{${categoria.getImagemPath}}">
-            </td>
-			<td>
-                <img th:src="@{/imagens/image-light.png}">
-            </td>
+				<img th:src="@{${Categoria.imagem}}" style="width: 150px;">
+			</td>
             <td>[[${Categoria.nome}]]</td>
             <td>[[${Categoria.alias}]]</td>
-            <td>[[${Categoria.habilitado}]]</td>
             <td>
                 <a >
                     <i class="bi bi-power" title="Desativar Categoria" style="color: green; font-size: 24px;"></i>
@@ -119,11 +113,12 @@
                 <a >
                     <i class="bi bi-pen" title="Editar essa Categoria" style="color: rgb(0, 128, 64); font-size: 24px;"></i>
                 </a> 
-                &nbsp;  &nbsp;
-                <a class="delete-link">
+            </td>
+			<td>		
+				<a class="delete-link">
                     <i class="bi bi-trash" title="Deletar essa Categoria" style="color: rgb(255, 128, 128); font-size: 24px;"></i>
                 </a>
-            </td>
+			</td>
           </tr>
         </tbody>
     </table>

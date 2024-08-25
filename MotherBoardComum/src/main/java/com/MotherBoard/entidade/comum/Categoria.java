@@ -12,7 +12,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
+/* import jakarta.persistence.Transient; */
 
 @Entity
 @Table(name = "categorias")
@@ -27,7 +27,7 @@ public class Categoria {
 	@Column(length = 64, nullable = false, unique = true)
 	private String alias;
 	
-	@Column(length = 128, nullable = false)
+	@Column(length = 128)
 	private String imagem;
 	
 	private boolean habilitado;
@@ -49,7 +49,7 @@ public class Categoria {
 	public Categoria(String nome) {
 		this.nome = nome;
 		this.alias = nome;
-		this.imagem = "/imagens/image-light.png";
+		//this.imagem = "/imagens/image-light.png";
 	}
 	
 	public Categoria(String nome, Categoria pai) {
@@ -113,12 +113,12 @@ public class Categoria {
 		this.filho = filho;
 	}
 	
-	@Transient
+/* 	@Transient
 	public String getImagemPath() {
-	    if (id == null || imagem == null) return "/imagens/image-light.png";
+	    if (id == null ||imagem == null) return "/imagens/image-light.png";
 	    
 	    return "/categoria-imagens/" + this.id + "/" + this.imagem;
-	}
+	} */
 	
 	
 }

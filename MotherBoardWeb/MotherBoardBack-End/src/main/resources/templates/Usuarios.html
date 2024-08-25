@@ -74,19 +74,18 @@
             </nav>
         </header>
    
-        	<body class="bg-dark text-light">
-				</br/>
-     	 <div class="container mt-5">
-            <a th:href="@{/Usuarios/new}"> Novo Funcionario </a>
+		</br/>
+     	<div class="container mt-5">
+        	<a th:href="@{/Usuarios/new}"> Novo Funcionario </a>
             
            
-           <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
-    <i class="bi bi-check-circle-fill"></i> 
-    [[${message}]]
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+           	<div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			    <i class="bi bi-check-circle-fill"></i> 
+			    [[${message}]]
+			    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			</div>
 
-</br>
+			</br>
 
             
             
