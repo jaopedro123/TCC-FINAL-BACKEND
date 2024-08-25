@@ -94,10 +94,16 @@
         <tbody>
           <tr th:each="Categoria : ${listarCategorias}">
             <td>[[${Categoria.id}]]</td>
+<!--			<td>-->
+<!--				<img th:if="${Categoria.imagem == null}" th:src="@{/imagens/image-light.png}" style="width: 150px; height: 150px;"/>-->
+<!--				<img th:if="${Categoria.imagem!= null}" id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.getImagemPath}}" style="width: 150px; height: 150px;" />-->
+<!--			</td>-->
 			<td>
-				<img th:if="${Categoria.imagem == null}" th:src="@{/imagens/image-light.png}" style="width: 150px; height: 150px;"/>
-				<img th:if="${Categoria.imagem!= null}" id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.getImagemPath}}" style="width: 150px; height: 150px;" />
-			</td>
+                <img th:if="${Categoria.imagem != null}" th:src="@{${categoria.getImagemPath}}">
+            </td>
+			<td>
+                <img th:src="@{/imagens/image-light.png}">
+            </td>
             <td>[[${Categoria.nome}]]</td>
             <td>[[${Categoria.alias}]]</td>
             <td>[[${Categoria.habilitado}]]</td>

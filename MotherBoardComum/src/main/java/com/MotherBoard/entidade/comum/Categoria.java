@@ -49,6 +49,7 @@ public class Categoria {
 	public Categoria(String nome) {
 		this.nome = nome;
 		this.alias = nome;
+		this.imagem = "/imagens/image-light.png";
 	}
 	
 	public Categoria(String nome, Categoria pai) {
