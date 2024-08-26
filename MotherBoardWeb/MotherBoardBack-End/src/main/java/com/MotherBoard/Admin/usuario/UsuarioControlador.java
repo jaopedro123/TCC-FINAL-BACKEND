@@ -6,6 +6,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -28,13 +30,44 @@ public class UsuarioControlador {
 	private UsuarioServico service;
 	
 	@GetMapping("/Usuarios")
-	public String ListaTodosUsuarios(Model model) {
-		List<Usuario> listUsuarios = service.listarTodosUsuarios();
-		model.addAttribute("listUsuarios", listUsuarios);
-		
-		
-		return "Usuarios";
+	public String listaPrimeiraPag(Model model) {
+		return listByPage(1, model, "nomeCompleto", "asc");
 	}
+	
+	@GetMapping("/Usuarios/pag/{pagNum}")
+	public String listByPage(@PathVariable(name = "pagNum") int pagNum, Model model, @Param("sortField") String sortField, @Param("sortDir") String sortDir) {
+		
+	    if (sortField == null || sortField.isEmpty()) {
+	        sortField = "nomeCompleto";
+	    }
+	    if (sortDir == null || sortDir.isEmpty()) {
+	        sortDir = "asc";
+	    }
+		
+	    Page<Usuario> pag = service.listByPage(pagNum, sortField, sortDir);
+	    List<Usuario> listUsuarios = pag.getContent();
+	    
+	    long comecaAConta = (pagNum - 1) * UsuarioServico.USUARIOS_POR_PAG + 1;
+	    long terminaDeConta = comecaAConta + UsuarioServico.USUARIOS_POR_PAG - 1;
+	    if (terminaDeConta > pag.getTotalElements()) {
+	        terminaDeConta = pag.getTotalElements();
+	    }
+	    
+	    String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+	    
+	    model.addAttribute("PaginaAtual", pagNum);
+	    model.addAttribute("ultimaPag", pag.getTotalPages());
+	    model.addAttribute("comecaAConta", comecaAConta);
+	    model.addAttribute("terminaDeConta", terminaDeConta);
+	    model.addAttribute("TotalDePaginas", pag.getTotalPages());
+	    model.addAttribute("listUsuarios", listUsuarios);
+	    model.addAttribute("sortField", sortField);
+	    model.addAttribute("sortDir", sortDir);
+	    model.addAttribute("reverseSortDir", reverseSortDir);
+	    
+	    return "Usuarios";
+	}
+
 	
 	@GetMapping("/Usuarios/new")
 	public String novoUsuario(Model model) {

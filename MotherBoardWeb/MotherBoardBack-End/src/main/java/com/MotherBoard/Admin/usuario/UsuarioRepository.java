@@ -1,5 +1,7 @@
 package com.MotherBoard.Admin.usuario;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -21,6 +23,8 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer>{
 	@Query("UPDATE Usuario u SET u.permitido = ?2 WHERE u.id = ?1")
 	@Modifying
 	public void updateEnabledStatus(Integer id, boolean enabled);
+
+	public Page<Usuario> findAll(Pageable pageable);
 
 	
 }

@@ -74,7 +74,7 @@
             </nav>
         </header>
    
-        	<body class="bg-dark text-light">
+        
 				</br/>
      	 <div class="container mt-5">
             <a th:href="@{/Usuarios/new}"> Novo Funcionario </a>
@@ -96,7 +96,23 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Foto</th>
-                        <th scope="col">Nome Completo</th>
+                        
+                        <th scope="col">
+  							<a th:if="${sortField != 'nomeCompleto'}" th:href="@{'/Usuarios/pag/' + ${PaginaAtual} + '?sortField=nomeCompleto&sortDir=' + ${sortDir}}" style="text-decoration: none; color: rgb(128, 128, 128);"> 
+								  Nome Completo
+						    </a>
+						    
+							<a th:if="${sortField == 'nomeCompleto'}" th:href="@{'/Usuarios/pag/' + ${PaginaAtual} + '?sortField=nomeCompleto&sortDir=' + ${reverseSortDir}}" style="text-decoration: none; color: rgb(128, 128, 128);"> 
+								  Nome Completo 
+						    </a> 
+						    
+						    
+  				<p style="display: inline;" th:if="${sortField == 'nomeCompleto'}"
+     				th:class="${sortDir == 'asc' ? 'bi bi-caret-up-fill' : 'bi bi-caret-down-fill'}">
+  				</p>
+						</th>
+
+						
                         <th scope="col">E-mail</th>
                         <th scope="col">CPF</th>
                         <th scope="col">Roles</th>
@@ -145,6 +161,41 @@
                 </tbody>
             </table>
         </div>
+        <br />
+        <div class="text-center	m-1" th:if="${TotalDePaginas > 0}">
+			<p> mostrando funcionario [[${comecaAConta}]] A [[${terminaDeConta}]] DE [[${TotalDePaginas}]]</p>
+        </div>
+        
+        <div class="text-center	m-1" th:unless="${TotalDePaginas > 0}">
+			 <P> Funcionarios nao encontrados</P>
+        </div>
+        
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+	  
+	  <li th:class="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
+		  <a class="page-link" th:href="@{'/Usuarios/pag/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Primeira Pagina</a>
+	  </li>
+	  
+    <li th:class="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
+      <a class="page-link" th:href="@{'/Usuarios/pag/' + ${PaginaAtual - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Anterior</a>
+    </li>
+    
+    <li th:each="i : ${#numbers.sequence(1, TotalDePaginas)}" 
+        th:class="${PaginaAtual != i ? 'page-item' : 'page-item active'}">
+		<a class="page-link" th:href="@{'/Usuarios/pag/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+	</li>
+   
+    <li th:class="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
+      <a class="page-link" th:href="@{'/Usuarios/pag/' + ${PaginaAtual + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Próximo</a>
+    </li>
+    
+    <li th:class="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
+      <a class="page-link" th:href="@{'/Usuarios/pag/' + ${TotalDePaginas} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Última</a>
+    </li>
+  </ul>
+</nav>
+
 			
     <div class="modal fade text-center" id="confirmModal">
         <div class="modal-dialog">
