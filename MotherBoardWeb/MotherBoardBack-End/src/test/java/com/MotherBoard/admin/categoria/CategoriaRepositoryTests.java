@@ -34,7 +34,7 @@ public class CategoriaRepositoryTests {
 	
 	@Test
 	public void testeCreateSubCategoria() {
-		Categoria pai = new Categoria(1);
+		Categoria pai = new Categoria(12);
 		Categoria processador = new Categoria("Processador", pai);
 		Categoria memoriaRam = new Categoria("Memória Ram", pai);
 		Categoria placaDeVideo = new Categoria("Placa de Vídeo", pai);

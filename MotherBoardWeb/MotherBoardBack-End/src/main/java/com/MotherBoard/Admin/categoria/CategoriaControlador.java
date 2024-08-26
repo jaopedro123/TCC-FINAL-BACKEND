@@ -11,14 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.entidade.comum.Categoria;
-import com.MotherBoard.entidade.comum.Usuario;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 
@@ -46,7 +43,7 @@ public class CategoriaControlador {
 		return "Categoria_form";
 	}
 	
-/* 	@PostMapping("/categorias/salvar")
+	/* @PostMapping("/categorias/salvar")
 	public String nome(Categoria categoria) {
 		List<Categoria>  listarCategorias = service.listarCategoriasForm();
 		
@@ -65,25 +62,25 @@ public class CategoriaControlador {
 /* 	  @PostMapping("/categorias/salvar") public String salvarCategoria(Categoria
 	  categoria,
 	  
-	  @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
+	  @RequestParam("img") MultipartFile multipartFile) throws IOException {
 	  String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 	  categoria.setImagem(fileName);
 	  
 	  Categoria savedCategoria = service.save(categoria); 
-	  String uploadDir = "../categoria-imagens/" + savedCategoria.getId();
+	  String uploadDir = "categoria-imagens/" + savedCategoria.getId();
 	  FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	  
 	  return "redirect:/categorias"; } */
 	
 	@PostMapping("/categorias/salvar") 
-	public String salvarCategoria(Categoria categoria, RedirectAttributes redirectAttributes, @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
+	public String salvarCategoria(Categoria categoria, RedirectAttributes redirectAttributes, @RequestParam("img") MultipartFile multipartFile) throws IOException {
 
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			categoria.setImagem(fileName); 
 			Categoria savedCategoria = service.save(categoria); 
 			
-			String uploadDir = "/categoria-imagens/" + savedCategoria.getId();
+			String uploadDir = "categoria-imagens/" + savedCategoria.getId();
 			
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
@@ -93,14 +90,15 @@ public class CategoriaControlador {
 			service.save(categoria);
 		}
 		
-		if (categoria.getId() != null) {
+/* 		if (categoria.getId() != null) {
 			redirectAttributes.addFlashAttribute("message", "Dados da Categoria atualizado!");
 		} 
 		else {
 			redirectAttributes.addFlashAttribute("message", "A Categoria foi cadastrada com sucesso!");
-		}
+		} */
 	
-	return "redirect:/categorias"; }
+		return "redirect:/categorias"; 
+	}
 	 
 	
 }

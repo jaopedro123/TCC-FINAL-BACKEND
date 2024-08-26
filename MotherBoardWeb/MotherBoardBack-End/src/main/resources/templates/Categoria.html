@@ -96,9 +96,13 @@
         <tbody>
           <tr th:each="Categoria : ${listarCategorias}">
             <td>[[${Categoria.id}]]</td>
-			<td>
+            <td>
+                <img th:if="${Categoria.imagem == null}" th:src="@{/imagens/imagem-default.png}" style="width: 150px; height: 150px;"/>
+                <img th:if="${Categoria.imagem != null}" th:src="@{${Categoria.getImagemPath}}" alt="adfsjlfdsajlksdfa" id="thumbnail" style="width: 150px; height: 150px;" />
+            </td>
+			<!-- <td>
 				<img th:src="@{${Categoria.imagem}}" style="width: 150px;">
-			</td>
+			</td> -->
             <td>[[${Categoria.nome}]]</td>
             <td>[[${Categoria.alias}]]</td>
             <td>
