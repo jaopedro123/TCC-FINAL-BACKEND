@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
-
 @Controller
 public class CategoriaControlador {
 	@Autowired
@@ -43,35 +41,6 @@ public class CategoriaControlador {
 		return "Categoria_form";
 	}
 	
-	/* @PostMapping("/categorias/salvar")
-	public String nome(Categoria categoria) {
-		List<Categoria>  listarCategorias = service.listarCategoriasForm();
-		
-		System.out.println("Id: "+listarCategorias);
-		System.out.println("Nome: "+categoria.getNome());
-		System.out.println("Alias: "+categoria.getAlias());
-		System.out.println("Ativo: "+categoria.isHabilitado());
-
-
-		service.save(categoria);
-		
-		return "redirect:/categorias";
-	} */
-	
-
-/* 	  @PostMapping("/categorias/salvar") public String salvarCategoria(Categoria
-	  categoria,
-	  
-	  @RequestParam("img") MultipartFile multipartFile) throws IOException {
-	  String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	  categoria.setImagem(fileName);
-	  
-	  Categoria savedCategoria = service.save(categoria); 
-	  String uploadDir = "categoria-imagens/" + savedCategoria.getId();
-	  FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-	  
-	  return "redirect:/categorias"; } */
-	
 	@PostMapping("/categorias/salvar") 
 	public String salvarCategoria(Categoria categoria, RedirectAttributes redirectAttributes, @RequestParam("img") MultipartFile multipartFile) throws IOException {
 
@@ -89,13 +58,6 @@ public class CategoriaControlador {
 			if (categoria.getImagem().isEmpty()) categoria.setImagem(null);
 			service.save(categoria);
 		}
-		
-/* 		if (categoria.getId() != null) {
-			redirectAttributes.addFlashAttribute("message", "Dados da Categoria atualizado!");
-		} 
-		else {
-			redirectAttributes.addFlashAttribute("message", "A Categoria foi cadastrada com sucesso!");
-		} */
 	
 		return "redirect:/categorias"; 
 	}

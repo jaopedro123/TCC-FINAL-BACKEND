@@ -26,15 +26,10 @@ public class CategoriaServico {
 		List<Categoria> listarTodasCategorias = new ArrayList<>();
 		Iterable<Categoria> categoriasNoBD = repo.findAll();
 
-		/* categoriasNoBD.forEach(categorias -> System.out.println(categorias.getId())); */
-
 		for(Categoria categoria : categoriasNoBD) {
 			if(categoria.getPai() == null) {
 
-				/* String teste = "Id: " + categoria.getId() + ", categoria: " + categoria.getNome(); */
 				listarTodasCategorias.add(Categoria.copiarIdENome(categoria));
-				
-				/* System.out.println("BBBBBBBBBBBBBBBBBBBB"+Categoria.copiarIdENome(categoria)); */
 				
 				Set<Categoria> filho = categoria.getFilho();
 				
@@ -42,15 +37,11 @@ public class CategoriaServico {
 					String nome = "---- " + "Id: " + subCategoria.getId() + ", subCategoria: " + subCategoria.getNome();
 					listarTodasCategorias.add(Categoria.copiarIdENome(subCategoria.getId(), nome));
 
-					/* System.out.println("AAAAAAAAAAAAAAAAAAA"+Categoria.copiarIdENome(subCategoria.getId(), nome)); */
-					
 					mostrarFilhoSubCategoria(listarTodasCategorias, subCategoria);
 				}
 				
 			}
 		}
-
-		/* System.out.println("TESTEEEEEEEEE: "+listarTodasCategorias); */
 
 		return listarTodasCategorias;
 		
@@ -64,8 +55,6 @@ public class CategoriaServico {
 			String nome = "----" + subCategoria.getNome();
 
 			listarTodasCategorias.add(Categoria.copiarIdENome(subCategoria.getId(), nome));
-			
-			/* System.out.println("GGGGGGGGGGGGGGGGG2"+nome); */
 			
 			mostrarFilhoSubCategoria(listarTodasCategorias, subCategoria);
 		}

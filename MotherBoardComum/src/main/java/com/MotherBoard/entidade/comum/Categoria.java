@@ -132,10 +132,6 @@ public class Categoria {
 	@Transient
 	public String getImagemPath() {
 	    if (id == null ||imagem == null) return "/imagens/imagem-default.png";
-	    
-		System.out.println("/categoria-imagens/" + this.id + "/" + this.imagem);
-
-		/* "/categoria-imagens/" + this.id + "/" + this.imagem */
 
 	    return "/categoria-imagens/" + this.id + "/" + this.imagem;
 	}
