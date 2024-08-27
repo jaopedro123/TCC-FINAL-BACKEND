@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.Categoria;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class CategoriaServico {
 	@Autowired
 	private CategoriaRepository repo;
@@ -60,5 +63,8 @@ public class CategoriaServico {
 		}
 	}
 
+	public void updateCategoriaStatus(Integer id, boolean habilitado) {
+    	repo.updateCategoriaStatus(id, habilitado);
+    }
 
 }

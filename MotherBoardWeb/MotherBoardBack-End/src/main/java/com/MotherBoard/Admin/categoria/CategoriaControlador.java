@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.entidade.comum.Categoria;
@@ -60,6 +61,17 @@ public class CategoriaControlador {
 		}
 	
 		return "redirect:/categorias"; 
+	}
+
+	@GetMapping("/categorias/{id}/habilitado/{status}")
+	public String updateCategoriaStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) {
+
+	    service.updateCategoriaStatus(id, habilitado);
+	    String status = habilitado ? "Habilitado" : "Desabilitado";
+	    String message = "A Categoria com " + id + " foi " + status;
+	    redirectAttributes.addFlashAttribute("message", message);
+	    
+		return "redirect:/categorias";
 	}
 	 
 	
