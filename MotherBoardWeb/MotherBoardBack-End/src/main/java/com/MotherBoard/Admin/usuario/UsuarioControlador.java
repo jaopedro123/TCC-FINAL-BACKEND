@@ -3,6 +3,7 @@ package com.MotherBoard.Admin.usuario;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.entidade.comum.Role;
 import com.MotherBoard.entidade.comum.Usuario;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Controller
 public class UsuarioControlador {
 
@@ -31,20 +34,24 @@ public class UsuarioControlador {
 	
 	@GetMapping("/Usuarios")
 	public String listaPrimeiraPag(Model model) {
-		return listByPage(1, model, "nomeCompleto", "asc");
+		return listByPage(1, model, "nomeCompleto", "asc", null, null);
 	}
 	
 	@GetMapping("/Usuarios/pag/{pagNum}")
-	public String listByPage(@PathVariable(name = "pagNum") int pagNum, Model model, @Param("sortField") String sortField, @Param("sortDir") String sortDir) {
-		
+	public String listByPage(@PathVariable(name = "pagNum") int pagNum, Model model, 
+	                         @Param("sortField") String sortField, 
+	                         @Param("sortDir") String sortDir, 
+	                         @Param("keyword") String keyword, 
+	                         @RequestParam(name = "filterBy", required = false, defaultValue = "nomeCompleto") String filterBy) {
+	    
 	    if (sortField == null || sortField.isEmpty()) {
 	        sortField = "nomeCompleto";
 	    }
 	    if (sortDir == null || sortDir.isEmpty()) {
 	        sortDir = "asc";
 	    }
-		
-	    Page<Usuario> pag = service.listByPage(pagNum, sortField, sortDir);
+
+	    Page<Usuario> pag = service.listByPage(pagNum, sortField, sortDir, keyword, filterBy);
 	    List<Usuario> listUsuarios = pag.getContent();
 	    
 	    long comecaAConta = (pagNum - 1) * UsuarioServico.USUARIOS_POR_PAG + 1;
@@ -64,9 +71,12 @@ public class UsuarioControlador {
 	    model.addAttribute("sortField", sortField);
 	    model.addAttribute("sortDir", sortDir);
 	    model.addAttribute("reverseSortDir", reverseSortDir);
+	    model.addAttribute("keyword", keyword);
+	    model.addAttribute("filterBy", filterBy);
 	    
 	    return "Usuarios";
 	}
+
 
 	
 	@GetMapping("/Usuarios/new")
@@ -92,7 +102,7 @@ public class UsuarioControlador {
 	        Usuario saveUsuario = service.salva(usuario); 
 	        
 	        String uploadDir = "fotos-usuario/" + saveUsuario.getId();
-	        
+	        	        
 	        FileUploadUtil.cleanDir(uploadDir);
 	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	    } 
@@ -110,8 +120,6 @@ public class UsuarioControlador {
 	    
 	    return "redirect:/Usuarios";
 	}
-
-
 	
 	@GetMapping("/usuarios/editar/{id}")
 	public String editaUsuario(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes redirectAttributes) {
@@ -157,6 +165,33 @@ public class UsuarioControlador {
 	    redirectAttributes.addFlashAttribute("message", message);
 	    return "redirect:/Usuarios";
 	}
+	
+	@GetMapping("/Usuarios/export/excel")
+	public void exportToExcel(HttpServletResponse response) throws IOException {
+	    List<Usuario> listUsers = service.listAll();
+	    
+	    if (listUsers == null) {
+	        listUsers = new ArrayList<>();
+	     
+	    }
 
+	    UserExcelExporter exporter = new UserExcelExporter();
+	    exporter.export(listUsers, response);
+	}
+
+
+	@GetMapping("/Usuarios/export/pdf")
+	public void exportToPdf(HttpServletResponse response) throws IOException {
+	    List<Usuario> listUsers = service.listAll();
+	    
+	    if (listUsers == null) {
+	        listUsers = new ArrayList<>();
+	     
+	    }
+
+	    UserPdfExporter exporter = new UserPdfExporter();
+	    exporter.export(listUsers, response);
+	}
+	
 
 }

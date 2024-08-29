@@ -77,8 +77,15 @@
         
 				</br/>
      	 <div class="container mt-5">
-            <a th:href="@{/Usuarios/new}"> Novo Funcionario </a>
-            
+			  
+			  <div>
+            <a th:href="@{/Usuarios/new}" class="btn btn-primary mr-2"> Novo Funcionario </a>
+                 &nbsp;  
+            <a th:href="@{/Usuarios/export/excel}" class="btn btn-primary mr-2"> Exportar funcionarios para o EXCEL</a>
+                &nbsp;  
+            <a th:href="@{/Usuarios/export/pdf}" class="btn btn-primary mr-2"> Exportar funcionarios para o PDF</a>
+           
+			  </div>
            
            <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center" role="alert">
     <i class="bi bi-check-circle-fill"></i> 
@@ -88,7 +95,31 @@
 
 </br>
 
-            
+<div>
+    <form th:action="@{/Usuarios/pag/1}" class="form-inline m-5 d-flex align-items-center">
+        <label class="mr-2">Filtrar por: </label>
+        
+        <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto" th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
+        <label for="filterByName" class="mr-2">Nome</label>
+
+        <input type="radio" id="filterByCpf" name="filterBy" value="cpf" th:checked="${filterBy == 'cpf'}" onclick="toggleSearchInput()">
+        <label for="filterByCpf" class="mr-2">CPF</label>
+        
+        <span id="instructionText" class="text-muted ml-2">Selecione um filtro para habilitar a barra de pesquisa.</span>
+        
+        &nbsp;       
+        <input type="hidden" name="sortField" th:value="${sortField}" />
+        <input type="hidden" name="sortDir" th:value="${sortDir}" />
+        &nbsp;       
+        <input type="search" name="keyword" th:value="${keyword}" class="form-control form-control-sm mr-2" required disabled id="searchInput" maxlength="50" />
+        &nbsp;
+        <input type="submit" value="Procurar" class="btn btn-primary mr-2" />
+        &nbsp;
+        <input type="button" value="Limpar" class="btn btn-secondary" onclick="limparFiltro()" />
+    </form>
+</div>
+
+
             
             <h2 class="text-center mb-4">Tabela de Funcionario</h2>
             <table class="table table-dark table-striped">
@@ -146,7 +177,7 @@
                       <td>
 						  
                           <a th:href="@{'/usuarios/editar/' + ${Usuario.id}}">
-                              <i class="bi bi-pen" title="Editar esse usuario" style="color: rgb(0, 128, 64); font-size: 24px;"></i>
+                              <i class="bi bi-pen" title="Editar esse usuario" style="color: rgb(149, 208, 172); font-size: 24px;"></i>
                           </a> 
                           
                        </td>
@@ -169,7 +200,9 @@
         <div class="text-center	m-1" th:unless="${TotalDePaginas > 0}">
 			 <P> Funcionarios nao encontrados</P>
         </div>
-        
+   
+   
+   <div th:if="${TotalDePaginas > 0}">     
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
 	  
@@ -195,7 +228,7 @@
     </li>
   </ul>
 </nav>
-
+   </div>
 			
     <div class="modal fade text-center" id="confirmModal">
         <div class="modal-dialog">
@@ -218,19 +251,71 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(".delete-link").on("click", function(e) {
-                e.preventDefault();
-                var link = $(this);
-                var userId = link.attr("userId");
-                var deleteUrl = link.attr("href");
-                $("#confirmText").text("Você tem certeza que quer deletar esse funcionário ID: " + userId);
-                $("#confirmDelete").attr("href", deleteUrl);
-                $("#confirmModal").modal('show');
-            });
-        });
-    </script>
+	<script type="text/javascript">
+	    $(document).ready(function() {
+	        $(".delete-link").on("click", function(e) {
+	            e.preventDefault();
+	            var link = $(this);
+	            var userId = link.attr("userId");
+	            var deleteUrl = link.attr("href");
+	            $("#confirmText").text("Você tem certeza que quer deletar esse funcionário ID: " + userId);
+	            $("#confirmDelete").attr("href", deleteUrl);
+	            $("#confirmModal").modal('show');
+	        });
+	    });
+	    
+	    function limparFiltro() {
+	        window.location = "[[@{/Usuarios}]]";
+	    }
+	
+function toggleSearchInput() {
+    var searchInput = document.getElementById("searchInput");
+    var instructionText = document.getElementById("instructionText");
+
+    searchInput.value = ''; 
+    searchInput.disabled = false; 
+    instructionText.style.display = 'none'; 
+
+
+    searchInput.addEventListener("input", validateInput);
+    
+    if (document.getElementById("filterByCpf").checked) {
+        searchInput.addEventListener("input", maskCpfInput);
+    } else {
+        searchInput.removeEventListener("input", maskCpfInput);
+    }
+}
+
+	    function validateInput() {
+	        var searchInput = document.getElementById("searchInput");
+	        var filterByName = document.getElementById("filterByName");
+	
+	        if (filterByName.checked) {	
+
+	            searchInput.value = searchInput.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+	        }
+	    }
+	
+	    function maskCpfInput(e) {
+
+	        let value = this.value.replace(/\D/g, '');
+	
+	        // Aplica a máscara
+	        if (value.length > 11) value = value.slice(0, 11); 
+	        if (value.length > 9) {
+	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+	            value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
+	        } else if (value.length > 6) {
+	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+	            value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
+	        } else if (value.length > 3) {
+	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+	        }
+	
+	        this.value = value;
+	    }
+	</script>
 			
     <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4"  data-bs-theme="dark">
         <div class="container text-center text-md-left">

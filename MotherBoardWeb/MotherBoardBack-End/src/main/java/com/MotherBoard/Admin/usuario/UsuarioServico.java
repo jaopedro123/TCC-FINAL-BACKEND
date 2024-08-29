@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import com.MotherBoard.entidade.comum.Role;
 import com.MotherBoard.entidade.comum.Usuario;
@@ -35,14 +36,24 @@ public class UsuarioServico {
         return (List<Usuario>) usuarioRepo.findAll();
     }
 
-    public Page<Usuario> listByPage (int pagNum, String sortField, String sortDir) {
+    public Page<Usuario> listByPage(int pagNum, String sortField, String sortDir, String keyword, String filterBy) {
         
-    	Sort sort = Sort.by(sortField);
+        Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         
-		Pageable pageable = PageRequest.of(pagNum - 1, USUARIOS_POR_PAG, sort);
-		return usuarioRepo.findAll(pageable);	
+        Pageable pageable = PageRequest.of(pagNum - 1, USUARIOS_POR_PAG, sort);
+        
+        if (keyword != null && !keyword.isEmpty()) {
+            if ("cpf".equals(filterBy)) {
+                return usuarioRepo.findAllByCpfContaining(keyword, pageable);
+            } else {
+                return usuarioRepo.findAllByNomeCompletoContaining(keyword, pageable);
+            }
+        }
+        
+        return usuarioRepo.findAll(pageable);
     }
+
     
     public List<Role> listRoles() {
         return (List<Role>) roleRepo.findAll();
@@ -103,5 +114,12 @@ public class UsuarioServico {
     public void updateUserPermStatus(Integer id, boolean permitido) {
     	usuarioRepo.updateEnabledStatus(id, permitido);
     }
+
+    public List<Usuario> listAll() {
+        return (List<Usuario>) usuarioRepo.findAll();
+    }
+
+
+	
 
 }
