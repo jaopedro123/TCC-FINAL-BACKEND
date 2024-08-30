@@ -157,7 +157,7 @@
                       <td>[[${Usuario.id}]]</td>
                       	<td>
     						<img th:if="${Usuario.fotos == null}" th:src="@{/imagens/imagem-default.png}" style="width: 150px; height: 150px;"/>
-    						<img th:if="${Usuario.fotos != null}" id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${Usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
+    						<img th:if="${Usuario.fotos != null}" id="thumbnail" alt="Preview das fotos" th:src="@{${Usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
 						</td>
 
                       <td>[[${Usuario.nomeCompleto}]]</td>
@@ -300,16 +300,17 @@ function toggleSearchInput() {
 
 	        let value = this.value.replace(/\D/g, '');
 	
-	        // Aplica a máscara
 	        if (value.length > 11) value = value.slice(0, 11); 
 	        if (value.length > 9) {
 	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
 	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
 	            value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
-	        } else if (value.length > 6) {
+	        } 
+	        else if (value.length > 6) {
 	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
 	            value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
-	        } else if (value.length > 3) {
+	        } 
+	        else if (value.length > 3) {
 	            value = value.replace(/(\d{3})(\d)/, '$1.$2');
 	        }
 	

@@ -52,21 +52,9 @@ public class UserPdfExporter extends AbstractExporter{
 	    document.close();
 	}
 
-	private void writeTableData(PdfPTable table, List<Usuario> listUsers) {
-	    for (Usuario usuario : listUsers) {
-	        table.addCell(String.valueOf(usuario.getId()));
-	        table.addCell(usuario.getNomeCompleto());
-	        table.addCell(usuario.getEmail());
-	        table.addCell(usuario.getCpf());
-	        table.addCell(usuario.getRoles().toString());
-	        table.addCell(String.valueOf(usuario.isPermitido()));
-	    }
-	}
-
-
 	private void writeTableHeader(PdfPTable table) {
 	    PdfPCell cell = new PdfPCell();
-	    cell.setBackgroundColor(Color.gray);
+	    cell.setBackgroundColor(new Color(221, 160, 221)); 
 	    cell.setPadding(5);
 
 	    Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN);
@@ -87,9 +75,42 @@ public class UserPdfExporter extends AbstractExporter{
 	    cell.setPhrase(new Phrase("Roles", font));
 	    table.addCell(cell);
 	    
-	    cell.setPhrase(new Phrase("Permitdo", font));
+	    cell.setPhrase(new Phrase("Permitido", font));
 	    table.addCell(cell);
+	}
 
+	
+	private void writeTableData(PdfPTable table, List<Usuario> listUsers) {
+	    Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN);
+	    font.setColor(Color.BLACK);
+
+	    for (Usuario usuario : listUsers) {
+	        PdfPCell cell;
+
+	        cell = new PdfPCell(new Phrase(String.valueOf(usuario.getId()), font));
+	        cell.setBackgroundColor(new Color(255, 255, 204));
+	        table.addCell(cell);
+
+	        cell = new PdfPCell(new Phrase(usuario.getNomeCompleto(), font));
+	        cell.setBackgroundColor(new Color(255, 255, 204)); 
+	        table.addCell(cell);
+
+	        cell = new PdfPCell(new Phrase(usuario.getEmail(), font));
+	        cell.setBackgroundColor(new Color(255, 255, 204)); 
+	        table.addCell(cell);
+
+	        cell = new PdfPCell(new Phrase(usuario.getCpf(), font));
+	        cell.setBackgroundColor(new Color(255, 255, 204));
+	        table.addCell(cell);
+
+	        cell = new PdfPCell(new Phrase(usuario.getRoles().toString(), font));
+	        cell.setBackgroundColor(new Color(255, 255, 204)); 
+	        table.addCell(cell);
+
+	        cell = new PdfPCell(new Phrase(String.valueOf(usuario.isPermitido()), font));
+	        cell.setBackgroundColor(new Color(255, 255, 204)); 
+	        table.addCell(cell);
+	    }
 	}
 
 
