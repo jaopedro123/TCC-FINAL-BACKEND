@@ -32,12 +32,11 @@ public class RoleRepositoryTests {
 	
 	@Test
 	public void testCreateRestRoles() {
-	    Role roleVendedor = new Role("Vendedor", "Realizar vendas de produtos ou serviços. Atender clientes, entender suas necessidades e oferecer soluções adequadas. Manter um relacionamento positivo com os clientes. Atingir metas de vendas estabelecidas pela empresa. Realizar demonstrações de produtos e serviços.");
 	    Role roleEditor = new Role("Editor", "Revisar e editar conteúdo para publicações. Garantir a precisão e a clareza do conteúdo. Trabalhar com escritores e outros colaboradores para melhorar a qualidade do material publicado. Manter o estilo e o tom editorial da empresa.");
 	    Role roleExportador = new Role("Exportador", "Gerenciar o processo de exportação de produtos. Coordenar com fornecedores e transportadoras. Garantir que toda a documentação necessária esteja correta e completa. Supervisionar o cumprimento das normas internacionais de exportação.");
-	    Role roleAssistente = new Role("Assistente", "nem pessoa e");
+	    Role roleAssistente = new Role("Assistente", "Ajuda os caba");
 
-	    repo.saveAll(List.of(roleVendedor, roleEditor, roleExportador, roleAssistente));
+	    repo.saveAll(List.of(roleEditor, roleExportador, roleAssistente));
 	}
 
 	
