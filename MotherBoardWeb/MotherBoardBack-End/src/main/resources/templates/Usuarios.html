@@ -202,50 +202,44 @@
         </div>
    
    
-   <div th:if="${TotalDePaginas > 0}">     
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-	  
-	  <li th:class="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
-		  <a class="page-link" th:href="@{'/Usuarios/pag/1?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Primeira Pagina</a>
-	  </li>
-	  
-    <li th:class="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
-      <a class="page-link" th:href="@{'/Usuarios/pag/' + ${PaginaAtual - 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Anterior</a>
-    </li>
-    
-    <li th:each="i : ${#numbers.sequence(1, TotalDePaginas)}" 
-        th:class="${PaginaAtual != i ? 'page-item' : 'page-item active'}">
-		<a class="page-link" th:href="@{'/Usuarios/pag/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-	</li>
-   
-    <li th:class="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
-      <a class="page-link" th:href="@{'/Usuarios/pag/' + ${PaginaAtual + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Próximo</a>
-    </li>
-    
-    <li th:class="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
-      <a class="page-link" th:href="@{'/Usuarios/pag/' + ${TotalDePaginas} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Última</a>
-    </li>
-  </ul>
-</nav>
-   </div>
-			
-    <div class="modal fade text-center" id="confirmModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Deletar funcionário</h4>
-                </div>
-                <div class="modal-body">
-                    <span id="confirmText">Você tem certeza que quer deletar esse funcionário?</span>
-                </div>
-                <div class="modal-footer">
-                    <a id="confirmDelete" class="btn btn-success" href="">Sim</a>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Não</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<div th:if="${TotalDePaginas > 0}">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+
+            <li th:classappend="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link" th:href="@{|/Usuarios/pag/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
+                    Primeira Página
+                </a>
+            </li>
+
+            <li th:classappend="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link" th:href="@{|/Usuarios/pag/${PaginaAtual - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
+                    Anterior
+                </a>
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(1, TotalDePaginas)}"
+                th:classappend="${PaginaAtual != i ? 'page-item' : 'page-item active'}">
+                <a class="page-link" th:href="@{|/Usuarios/pag/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
+                    [[${i}]]
+                </a>
+            </li>
+
+            <li th:classappend="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link" th:href="@{|/Usuarios/pag/${PaginaAtual + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
+                    Próximo
+                </a>
+            </li>
+
+            <li th:classappend="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link" th:href="@{|/Usuarios/pag/${TotalDePaginas}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
+                    Última
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>

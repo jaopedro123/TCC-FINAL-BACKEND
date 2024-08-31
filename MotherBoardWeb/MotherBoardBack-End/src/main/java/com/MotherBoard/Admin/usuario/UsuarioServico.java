@@ -21,7 +21,7 @@ import jakarta.transaction.Transactional;
 @Transactional
 public class UsuarioServico {
 	
-	public static final int USUARIOS_POR_PAG = 3;
+	public static final int USUARIOS_POR_PAG = 2;
 
     @Autowired
     private UsuarioRepository usuarioRepo;
