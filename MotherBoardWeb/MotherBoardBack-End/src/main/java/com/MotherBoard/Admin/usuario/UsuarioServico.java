@@ -25,7 +25,7 @@ public class UsuarioServico {
 
     @Autowired
     private UsuarioRepository usuarioRepo;
-
+    
     @Autowired
     private RoleRepository roleRepo;
 

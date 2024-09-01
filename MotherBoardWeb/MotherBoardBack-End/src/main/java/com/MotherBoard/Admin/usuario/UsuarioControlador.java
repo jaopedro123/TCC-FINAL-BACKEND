@@ -32,6 +32,7 @@ public class UsuarioControlador {
 	@Autowired
 	private UsuarioServico service;
 	
+
 	@GetMapping("/Usuarios")
 	public String listaPrimeiraPag(Model model) {
 		return listByPage(1, model, "nomeCompleto", "asc", null, null);

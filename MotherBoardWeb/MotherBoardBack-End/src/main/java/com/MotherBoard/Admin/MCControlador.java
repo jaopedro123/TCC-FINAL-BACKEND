@@ -11,5 +11,10 @@ public class MCControlador {
 			return "Index";
 		}
 	
+	@GetMapping("/login")
+	public String Login() {
+		return "login";
+	}
+	
 	
 }
