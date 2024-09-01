@@ -31,21 +31,21 @@ public class WebSecurityConfig {
     }
 
 
-    @Bean
-    SecurityFilterChain configureHttp(HttpSecurity http) throws Exception {
-        http.authenticationProvider(authenticationProvider());
-
-        http.authorizeHttpRequests(auth -> auth
-            .anyRequest().authenticated()
-        )
-        .formLogin(form -> form
-            .loginPage("/login")
-            .usernameParameter("email")
-            .permitAll()
-        );
-
-        return http.build();
-    }
+	    @Bean
+	    SecurityFilterChain configureHttp(HttpSecurity http) throws Exception {
+	        http.authenticationProvider(authenticationProvider());
+	
+	        http.authorizeHttpRequests(auth -> auth
+	            .anyRequest().authenticated()
+	        )
+	        .formLogin(form -> form
+	            .loginPage("/login")
+	            .usernameParameter("email")
+	            .permitAll()
+	        );
+	
+	        return http.build();
+	    }
 
     @Bean
     WebSecurityCustomizer configureWebSecurity() throws Exception {
