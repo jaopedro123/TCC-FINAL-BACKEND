@@ -5,16 +5,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Set;
 
+import org.aspectj.weaver.ast.CallExpr;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 import com.MotherBoard.Admin.categoria.CategoriaRepository;
 import com.MotherBoard.entidade.comum.Categoria;
-import com.MotherBoard.entidade.comum.Usuario;
 
 @DataJpaTest(showSql = false)
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -26,7 +27,7 @@ public class CategoriaRepositoryTests {
 	
 	@Test
 	public void testeCreateRootCategoria() {
-		Categoria categoria = new Categoria("Computadores");
+		Categoria categoria = new Categoria("teste6"); 
 		Categoria salvaCategoria = repo.save(categoria);
 		
 		assertThat(salvaCategoria.getId()).isGreaterThan(0);
@@ -34,21 +35,21 @@ public class CategoriaRepositoryTests {
 	
 	@Test
 	public void testeCreateSubCategoria() {
-		Categoria pai = new Categoria(12);
-		Categoria processador = new Categoria("Processador", pai);
-		Categoria memoriaRam = new Categoria("Memória Ram", pai);
-		Categoria placaDeVideo = new Categoria("Placa de Vídeo", pai);
-		Categoria armazenamento = new Categoria("Armazenamento", pai);
+		Categoria pai = new Categoria(5);
+		Categoria processador = new Categoria("Procasdfawerfds", pai);
+		Categoria memoriaRam = new Categoria("Memóasdfawerfds", pai);
+		Categoria placaDeVideo = new Categoria("Placa dasdfawerfds", pai);
+		Categoria armazenamento = new Categoria("Armazeasdfawerfds", pai);
 		
 //		, memoriaRam, placaDeVideo, armazenamento
 		
-		repo.saveAll(List.of(processador));
+		repo.saveAll(List.of(processador, memoriaRam, placaDeVideo, armazenamento));
 	}
 	
 	@Test
 	public void testeCreateSubDaSubCategoria() {
-		Categoria pai = new Categoria(2);
-		Categoria subSubCategoria = new Categoria("INTEL", pai);
+		Categoria pai = new Categoria(7);
+		Categoria subSubCategoria = new Categoria("AMD", pai);
 		Categoria salvaCategoria = repo.save(subSubCategoria);
 		
 		assertThat(salvaCategoria.getId()).isGreaterThan(0);
@@ -117,4 +118,19 @@ public class CategoriaRepositoryTests {
 		}
 	}
 	
+	@Test
+	public void testListarRootCategorias() {
+		List<Categoria> rootCategorias = repo.findRootCategorias(Sort.by("nome").ascending());
+
+		rootCategorias.forEach(categ -> System.out.println(categ.getNome()));
+	}
+
+	@Test 
+	public void testFindByName() {
+		String nome = "Hardware";
+		Categoria categoria = repo.findByName(nome);
+
+		assertThat(categoria).isNotNull();
+		assertThat(categoria.getNome()).isEqualTo(nome);
+	}
 }

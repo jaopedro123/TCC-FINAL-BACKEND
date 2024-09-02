@@ -1,9 +1,12 @@
 package com.MotherBoard.Admin.categoria;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,16 +27,37 @@ public class CategoriaControlador {
 	private CategoriaServico service;
 	
 	@GetMapping("/categorias")
-	public String listAll(Model model) {
-		List<Categoria> listarCategorias = service.listAll();
-		model.addAttribute("listarCategorias", listarCategorias);
-		
-		return "Categoria";
+	public String listFirtPage(@Param("sortDir") String sortDir, Model model) {
+		return listByPage(1, sortDir, null, model);
 	}
+
+	@GetMapping("/categorias/page/{pageNum}")
+	public String listByPage(@PathVariable(name = "pageNum") int pageNum, @Param("sortDir") String sortDir,@Param("keyword") String keyword, Model model) {
+
+		if (sortDir == null || sortDir.isEmpty()) {
+			sortDir = "asc";
+		}
+
+		CategoriaPaginaInfo pageInfo = new CategoriaPaginaInfo();
+
+		List<Categoria> listarCategorias = service.listByPage(pageInfo, pageNum, sortDir, keyword);
+		String reverseSortDir = sortDir.equals("asc") ? "desc" : "asc";
+
+		model.addAttribute("totalPages", pageInfo.getTotalPaginas());
+		model.addAttribute("totalItems", pageInfo.getTotalElementos());
+		model.addAttribute("paginaAtual", pageNum);
+		model.addAttribute("keyword", keyword);
+
+		model.addAttribute("listarCategorias", listarCategorias);
+		model.addAttribute("reverseSortDir", reverseSortDir);
+
+		return "Categoria";
+	}	
+	
 
 	@GetMapping("/categorias/new")
 	public String novaCategoria(Model model) {
-		List<Categoria>  listarCategorias = service.listarCategoriasForm();
+		List<Categoria> listarCategorias = service.listarCategoriasForm();
 
 		model.addAttribute("categoria", new Categoria());
 		model.addAttribute("listarCategorias", listarCategorias);
@@ -48,8 +72,8 @@ public class CategoriaControlador {
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			categoria.setImagem(fileName); 
+
 			Categoria savedCategoria = service.save(categoria); 
-			
 			String uploadDir = "categoria-imagens/" + savedCategoria.getId();
 			
 			FileUploadUtil.cleanDir(uploadDir);
@@ -60,8 +84,34 @@ public class CategoriaControlador {
 			service.save(categoria);
 		}
 	
+		if (categoria.getId() != null) {
+	        redirectAttributes.addFlashAttribute("message", "Os dados da categoria foram atualizados com sucesso!");
+	    } 
+	    else {
+	        redirectAttributes.addFlashAttribute("message", "A categoria foi cadastrada com sucesso!");
+	    }
+
 		return "redirect:/categorias"; 
 	}
+
+	@GetMapping("/categorias/editar/{id}")
+	public String editarCategoria(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra) {
+		try {
+			Categoria categoria = service.get(id);
+			List<Categoria> listarCategorias = service.listarCategoriasForm();
+
+			model.addAttribute("categoria", categoria);
+			model.addAttribute("listarCategorias", listarCategorias);
+			model.addAttribute("tituloDaPag", "Editar Categoria (ID:  "+id+ ")");
+
+			return "categoria_form";
+
+		} catch (CategoriaNotFoundException ex) {
+			ra.addFlashAttribute("message",ex.getMessage());
+			return "redirect:/categorias";
+		}
+	}
+	
 
 	@GetMapping("/categorias/{id}/habilitado/{status}")
 	public String updateCategoriaStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) {
@@ -73,6 +123,20 @@ public class CategoriaControlador {
 	    
 		return "redirect:/categorias";
 	}
-	 
+
+	@GetMapping("/categorias/deletar/{id}")
+	public String deletarCategoria(@PathVariable(name = "id") Integer id, RedirectAttributes ra) throws IOException {
+		try {
+			service.deletar(id);
+			String categoryDir = "categoria-imagens/" + id;
+			FileUploadUtil.cleanDir(categoryDir); 
+	        Files.delete(Paths.get(categoryDir));
+
+			ra.addFlashAttribute("message", "A categoria ID " + id + " foi deletada com sucesso");
+		} catch (CategoriaNotFoundException ex) {
+			ra.addFlashAttribute("message", ex.getMessage());
+		}
+		return "redirect:/categorias";
+	}
 	
 }

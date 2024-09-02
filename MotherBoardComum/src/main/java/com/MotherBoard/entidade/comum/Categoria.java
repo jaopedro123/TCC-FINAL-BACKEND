@@ -62,6 +62,25 @@ public class Categoria {
 		return copiarCategoria;
 	}
 
+	public static Categoria copiarTudo(Categoria categoria) {
+		Categoria copiarCategoria = new Categoria();
+		copiarCategoria.setId(categoria.getId());
+		copiarCategoria.setNome(categoria.getNome());
+		copiarCategoria.setImagem(categoria.getImagem());
+		copiarCategoria.setAlias(categoria.getAlias());
+		copiarCategoria.setHabilitado(categoria.isHabilitado());
+		copiarCategoria.setHasChildren(categoria.getFilho().size() > 0);
+
+		return copiarCategoria;
+	}
+
+	public static Categoria copiarTudo(Categoria categoria, String nome) { 
+		Categoria copiarCategoria = Categoria.copiarTudo(categoria);
+		copiarCategoria.setNome(nome);
+		
+		return copiarCategoria;
+	}
+
 	public Categoria(String nome) {
 		this.nome = nome;
 		this.alias = nome;
@@ -71,6 +90,12 @@ public class Categoria {
 	public Categoria(String nome, Categoria pai) {
 		this(nome);
 		this.pai = pai;
+	}
+
+	public Categoria(Integer id, String nome, String alias) {
+		this.id = id;
+		this.nome = nome;
+		this.alias = alias;
 	}
 
 	public Integer getId() {
@@ -135,6 +160,17 @@ public class Categoria {
 
 	    return "/categoria-imagens/" + this.id + "/" + this.imagem;
 	}
+
+	public boolean isHasChildren() {
+		return temFilhos;
+	}
+
+	public void setHasChildren(boolean temFilhos) {
+		this.temFilhos = temFilhos;
+	}
+
+	@Transient
+	private boolean temFilhos; 
 	
 	
 }

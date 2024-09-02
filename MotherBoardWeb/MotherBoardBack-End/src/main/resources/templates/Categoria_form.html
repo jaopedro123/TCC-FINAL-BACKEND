@@ -79,7 +79,7 @@
     <h2 style="text-align: center;">
 		[[${tituloDaPag}]]
 	</h2>
-    <!-- enctype="multipart/form-data" -->
+    <!-- onsubmit="return checkUnique(this)" -->
     <form th:action="@{/categorias/salvar}" enctype="multipart/form-data" method="post"  th:object="${categoria}">
 		
 		<input type="hidden" th:field="*{id}" id="id"/>
@@ -94,7 +94,7 @@
         </div>
         <div class="mb-3">
             <label for="categoria" class="form-label">Será filho de alguém? ou não terá pai:</label>
-            <select id="categoria" th:field="*{pai}" class="form-select" style="--bs-body-bg: #212529; --bs-body-color: none;">
+            <select th:field="*{pai}" class="form-select" style="--bs-body-bg: #212529; --bs-body-color: none;">
                 <option value="0">Sem pai :(</option>
                 
                 <th:block th:each="categoria : ${listarCategorias}">
@@ -110,17 +110,9 @@
                 <input type="checkbox" th:field="*{habilitado}" class="form-check-input">
             </div>
         </div> 
-        
-<!--		<div>-->
-<!--			<label>Image:</label>-->
-<!--			<input type="hidden" th:field="*{imagem}">-->
-<!--			<input type="file" id="imagem" name="imagem" accept="image/png, image/jpeg">-->
-
-<!--			<img id="thumbnail" alt="asdf" th:src="@{${categoria.getImagemPath}}" style="width: 210px; height: 140px;" />-->
-<!--		</div>-->
 		
 		<div class="mb-3">
-            <label for="imagem" class="form-label">Envie uma foto </label>
+            <label for="imagem" class="form-label">Envie uma imagem </label>
             
             <input type="hidden" th:field="*{imagem}"/>
             <img id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${categoria.getImagemPath}}" style="width: 150px; height: 150px;" />
@@ -149,10 +141,9 @@
         $("#foto").change(function() {
 			
 			foto = this.files[0].size;
-			
-			// 1 MB = 1048576
-			if (foto > 1048576) {
-				this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
+		
+			if (foto > 102400) {
+				this.setCustomValidity("Você so pode escolher imagens abaixo de 100KB! ");
 				this.reportvalidity();
 			} 
 			else {
@@ -170,6 +161,26 @@
             $("#thumbnail").attr("src", e.target.result);
         };
         reader.readAsDataURL(file);
+    }
+
+    function checkUnique(form) {
+        categId = $("#id").val();
+        categNome = $("#nome").val();
+        categAlias = $("#alias").val();
+
+        csrfValue = $("input[name='_csrf']").val();
+
+        url = "[[@{/categorias/check_unique}]]";
+
+        params = {id: categId, nome: categNome, alias: categAlias, _csrf: csrfValue};
+
+        $.post(url, params, function(response) {
+            alert(response);
+        }).fail(function() {
+            alert('falhou');
+        });
+
+        return false;
     }
 </script>
 			
