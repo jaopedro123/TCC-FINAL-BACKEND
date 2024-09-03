@@ -110,7 +110,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Imagem da Categoria</th>
                 <th scope="col">
-                    <a class="text-white" th:href="@{'/categorias/page/' + ${pageNum} + '?sortDir='+ ${reverseSortDir}}">Nome da Categoria</a>
+                    <a class="text-white" th:href="@{'/categorias/page/' + ${paginaAtual} + '?sortDir='+ ${reverseSortDir}}">Nome da Categoria</a>
                 </th>
                 <th scope="col">Alias</th>
                 <th scope="col">Ativa</th>
@@ -154,7 +154,9 @@
     </table>
 </main>
 
-
+<div class="text-center	m-1" th:if="${totalPages > 0}">
+    <p> mostrando categorias da página [[${paginaAtual}]] de [[${totalPages}]]</p>
+</div>
 
 <div class="text-center	m-1" th:unless="${totalPages > 0}">
      <P> Categorias não encontradas</P>

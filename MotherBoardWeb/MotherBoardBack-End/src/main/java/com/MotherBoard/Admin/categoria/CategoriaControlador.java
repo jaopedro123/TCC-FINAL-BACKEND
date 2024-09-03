@@ -1,8 +1,6 @@
 package com.MotherBoard.Admin.categoria;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.MotherBoard.Admin.FileUploadUtil;
+import com.MotherBoard.Admin.usuario.UsuarioServico;
 import com.MotherBoard.entidade.comum.Categoria;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,7 +34,7 @@ public class CategoriaControlador {
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, @Param("sortDir") String sortDir,@Param("keyword") String keyword, Model model) {
 
 		if (sortDir == null || sortDir.isEmpty()) {
-			sortDir = "asc";
+			sortDir = "desc";
 		}
 
 		CategoriaPaginaInfo pageInfo = new CategoriaPaginaInfo();
