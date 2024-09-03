@@ -1,4 +1,4 @@
-package com.MotherBoard.Admin.usuario;
+package com.MotherBoard.Admin.export;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -16,6 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.MotherBoard.Admin.usuario.AbstractExporter;
 import com.MotherBoard.entidade.comum.Usuario;
 
 import jakarta.servlet.ServletOutputStream;

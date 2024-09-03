@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en" data-bs-theme="dark">
+
+<html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
 
 <head>
     <title>MotherBoard</title>
@@ -86,14 +86,19 @@
         </nav>
     </header>
 
-    <main class="border rounded text-white tam-log my-5 m-auto p-5 h-100"
+    <main class="border rounded text-white tam-log my-5 m-auto p-5"
         style="background-color: #2B3035; border-color: #2B3035; --bs-border-color: #495057">
         <form th:action="@{/login}" method="post" id="loginForm" class="container needs-validation p-3" novalidate>
             <div th:if="${param.error}">
                 <p class="text-danger"
                     th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null ? session.SPRING_SECURITY_LAST_EXCEPTION.message : ''}"></p>
             </div>
+            
+<div th:if="${param.logout}">
+    <p class="text-warning">Você se deslogou com sucesso!</p>
+</div>
 
+            
             <div class="marg-ico">
                 <img class="ico-log" th:src="@{/imagens/logorapa.png}">
             </div>
@@ -117,8 +122,8 @@
         <label for="password" class="form-label fw-medium">Senha*</label>
         <div class="input-group">
             <input type="password" class="form-control" id="password" name="password" placeholder="Digite sua senha" required>
-            <button type="button" class="btn btn-outline-secondary" onclick="togglePasswordVisibility('password', this)">
-                <i class="bi bi-eye-fill"></i>
+            <button type="button" class="btn btn-outline-secondary bi bi-eye-fill" onclick="togglePasswordVisibility('password', this)">
+                
             </button>
         </div>
         <div id="passwordError" class="invalid-feedback" style="display: none;"></div>
@@ -130,10 +135,13 @@
                     <a href="EsqueciAsenha.html" class="linksCadastroLogin">Esqueceu a Senha?</a>
                 </div>
             </div>
+            
 
             <div class="row justify-content-center mb-1">
                 <button class="btn btn-dark col-sm col-md-7" type="submit">Acesse sua Conta</button>
             </div>
+                             
+                                
         </form>
 
         <div class="row justify-content-center">
@@ -327,3 +335,4 @@
 </body>
 
 </html>
+

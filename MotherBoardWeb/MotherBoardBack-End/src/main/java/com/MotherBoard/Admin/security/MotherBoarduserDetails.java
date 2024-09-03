@@ -65,5 +65,10 @@ public class MotherBoarduserDetails implements UserDetails{
 	public boolean isEnabled() {
 	    return usuario.isPermitido();
 	}
+	
+	public String getNomeCompleto() {
+	    return this.usuario.getNomeCompleto();
+	}
+
 
 }

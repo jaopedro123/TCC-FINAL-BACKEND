@@ -1,9 +1,10 @@
-package com.MotherBoard.Admin.usuario;
+package com.MotherBoard.Admin.export;
 
 import java.awt.Color;
 import java.io.IOException;
 import java.util.List;
 
+import com.MotherBoard.Admin.usuario.AbstractExporter;
 import com.MotherBoard.entidade.comum.Usuario;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;

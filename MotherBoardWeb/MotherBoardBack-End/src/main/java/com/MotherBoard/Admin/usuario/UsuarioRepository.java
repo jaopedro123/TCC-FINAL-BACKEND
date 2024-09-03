@@ -2,6 +2,7 @@ package com.MotherBoard.Admin.usuario;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.MotherBoard.entidade.comum.Usuario;
 
-public interface UsuarioRepository extends CrudRepository<Usuario, Integer>{
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	
 	@Query("SELECT u FROM Usuario u WHERE u.email = :email")
 	public Usuario getUserByEmail(@Param("email") String email);

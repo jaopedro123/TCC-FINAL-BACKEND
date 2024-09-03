@@ -31,6 +31,10 @@ public class UsuarioServico {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    public Usuario getByEmail(String email) {
+    	return usuarioRepo.getUserByEmail(email);
+    }
 
     public List<Usuario> listarTodosUsuarios() {
         return (List<Usuario>) usuarioRepo.findAll();
@@ -76,6 +80,27 @@ public class UsuarioServico {
 
        return usuarioRepo.save(usuario);
     }
+    
+    public Usuario updateConta(Usuario usuarioform) {
+    	Usuario usuarioNoBD = usuarioRepo.findById(usuarioform.getId()).get();
+    	
+    	if (!usuarioform.getSenha().isEmpty()) {
+    		usuarioNoBD.setSenha(null);
+    	    encodePassword(usuarioNoBD);
+    	}
+
+    	if (usuarioform.getFotos() != null) {
+    		usuarioNoBD.setFotos(usuarioform.getFotos());
+    	}
+
+    	usuarioNoBD.setNomeCompleto(usuarioform.getNomeCompleto());
+
+    	return usuarioRepo.save(usuarioNoBD);
+
+    }
+    
+    
+    
 
     private void encodePassword(Usuario usuario) {
         String encodedPassword = passwordEncoder.encode(usuario.getSenha());

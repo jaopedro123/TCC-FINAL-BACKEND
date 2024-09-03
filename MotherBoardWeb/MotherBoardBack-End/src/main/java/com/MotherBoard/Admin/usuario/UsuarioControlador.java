@@ -21,6 +21,8 @@ import org.springframework.web.servlet.mvc.method.annotation.RedirectAttributesM
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MotherBoard.Admin.FileUploadUtil;
+import com.MotherBoard.Admin.export.UserExcelExporter;
+import com.MotherBoard.Admin.export.UserPdfExporter;
 import com.MotherBoard.entidade.comum.Role;
 import com.MotherBoard.entidade.comum.Usuario;
 

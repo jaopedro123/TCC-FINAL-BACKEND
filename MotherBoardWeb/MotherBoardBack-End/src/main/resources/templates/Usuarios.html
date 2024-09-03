@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en" data-bs-theme=dark>
+
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>MotherBoard</title>
         <meta charset="utf-8" />
@@ -63,11 +63,15 @@
                                     <i class="bi bi-cart iconeheader"></i>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Conta.html">
-                                    <i class="bi bi-person-circle iconeheader"></i>
-                                </a>
-                            </li>
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" sec:authentication="principal.NomeCompleto()" th:href="@{/conta}">
+        <i class="bi bi-person-circle iconeheader"></i> 
+    </a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+    </div>
+</li>
+
                         </ul>
                     </div>
                 </div>
@@ -399,6 +403,10 @@ function toggleSearchInput() {
 
         </div>
     </footer>    
+    
+        
+    
+    
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
