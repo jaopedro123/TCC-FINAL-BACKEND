@@ -80,17 +80,17 @@
 		[[${tituloDaPag}]]
 	</h2>
     <!-- onsubmit="return checkUnique(this)" -->
-    <form th:action="@{/categorias/salvar}" enctype="multipart/form-data" method="post"  th:object="${categoria}">
+    <form th:action="@{/categorias/salvar}" enctype="multipart/form-data" method="post"  th:object="${categoria}" onsubmit="return checkUnique(this)">
 		
 		<input type="hidden" th:field="*{id}" id="id"/>
 		
         <div class="mb-3">
             <label for="categoria" class="form-label">Nome da Categoria:</label>
-            <input type="text" th:field="*{nome}" class="form-control" id="nomeCategoria" placeholder="Digite o nome da Categoria" required minlength="3" maxlength="128">
+            <input type="text" th:field="*{nome}" class="form-control" id="nome" placeholder="Digite o nome da Categoria" required minlength="3" maxlength="128">
         </div>
         <div class="mb-3">
             <label for="aliasCategoria" class="form-label">Alias:</label>
-            <input type="text" th:field="*{alias}" class="form-control" id="aliasCategoria" placeholder="Digite " required minlength="3" maxlength="64">
+            <input type="text" th:field="*{alias}" class="form-control" id="alias" placeholder="Digite " required minlength="3" maxlength="64">
         </div>
         <div class="mb-3">
             <label for="categoria" class="form-label">Será filho de alguém? ou não terá pai:</label>
@@ -130,6 +130,22 @@
         </div>
     </form>
     
+</div>
+
+<div class="modal fade text-center" id="modalDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle"></h4>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+              
+            </div>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -175,12 +191,27 @@
         params = {id: categId, nome: categNome, alias: categAlias, _csrf: csrfValue};
 
         $.post(url, params, function(response) {
-            alert(response);
+           
+            if (response == "OK") {
+                return true;
+            } else if (response == "Nome Duplicado") {
+                showModalDialog("Erro ao criar categoria","Nome já utilizado, por favor troque ele para prosseguir");
+                return false;
+            } else if (response == "Alias Duplicado") {
+                showModalDialog("Erro ao criar categoria","Alias já utilizado, por favor troque ele para prosseguir");
+            }
+        
         }).fail(function() {
-            alert('falhou');
+            showModalDialog("Erro", "Resposta desconhecida do servidor");
+            return false;
         });
 
-        return false;
+    }
+
+    function showModalDialog(title, message) {
+        $("#modalTitle").text(title);
+        $("#modalBody").text(message);
+        $("#modalDialog").modal('show');
     }
 </script>
 			

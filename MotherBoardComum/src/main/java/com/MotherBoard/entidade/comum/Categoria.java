@@ -142,7 +142,7 @@ public class Categoria {
 		return pai;
 	}
 
-	public void setParent(Categoria pai) {
+	public void setPai(Categoria pai) {
 		this.pai = pai;
 	}
 
