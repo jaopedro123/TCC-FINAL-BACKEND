@@ -130,7 +130,7 @@ public class CategoriaControlador {
 			service.deletar(id);
 			String categoryDir = "categoria-imagens/" + id;
 			FileUploadUtil.cleanDir(categoryDir); 
-	        Files.delete(Paths.get(categoryDir));
+	        FileUploadUtil.deleteDir(categoryDir);
 
 			ra.addFlashAttribute("message", "A categoria ID " + id + " foi deletada com sucesso");
 		} catch (CategoriaNotFoundException ex) {
