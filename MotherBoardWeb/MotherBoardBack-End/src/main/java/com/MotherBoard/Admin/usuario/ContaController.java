@@ -36,7 +36,7 @@ public class ContaController {
 	}
 	
 	@PostMapping("/conta/update")
-	public String salvaUsuariodetalhes(Usuario usuario, RedirectAttributes redirectAttributes, @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
+	public String salvaUsuariodetalhes(Usuario usuario, RedirectAttributes redirectAttributes, @AuthenticationPrincipal MotherBoarduserDetails UsuarioLogado, @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
 	    
 	    if (!multipartFile.isEmpty()) {
 	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
@@ -52,6 +52,8 @@ public class ContaController {
 	    	if (usuario.getFotos().isEmpty()) usuario.setFotos(null);
 	        service.updateConta(usuario);
 	    }
+	    
+	    UsuarioLogado.setNomeCompleto(usuario.getNomeCompleto());
 	    
 	        redirectAttributes.addFlashAttribute("message", "Os seus dados foram alterados com sucesso!");
 	  

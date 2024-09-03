@@ -89,10 +89,11 @@
     <main class="border rounded text-white tam-log my-5 m-auto p-5"
         style="background-color: #2B3035; border-color: #2B3035; --bs-border-color: #495057">
         <form th:action="@{/login}" method="post" id="loginForm" class="container needs-validation p-3" novalidate>
-            <div th:if="${param.error}">
-                <p class="text-danger"
-                    th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null ? session.SPRING_SECURITY_LAST_EXCEPTION.message : ''}"></p>
-            </div>
+<div th:if="${param.error}">
+    <p class="text-danger"
+        th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null ? (session.SPRING_SECURITY_LAST_EXCEPTION.message.contains('Bad credentials') ? 'Credenciais inválidas. Verifique seu E-mail ou senha.' : session.SPRING_SECURITY_LAST_EXCEPTION.message) :''}"></p>
+</div>
+
             
 <div th:if="${param.logout}">
     <p class="text-warning">Você se deslogou com sucesso!</p>

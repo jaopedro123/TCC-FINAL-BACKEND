@@ -70,5 +70,8 @@ public class MotherBoarduserDetails implements UserDetails{
 	    return this.usuario.getNomeCompleto();
 	}
 
+	public void setNomeCompleto(String nome) {
+	    this.usuario.setNomeCompleto(nome);
+	}
 
 }

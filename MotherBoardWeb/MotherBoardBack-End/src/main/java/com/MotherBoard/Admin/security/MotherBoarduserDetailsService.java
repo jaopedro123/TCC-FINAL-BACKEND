@@ -23,7 +23,9 @@ public class MotherBoarduserDetailsService implements UserDetailsService {
         if (usuario != null) {
             return new MotherBoarduserDetails(usuario);
         }
-
-        throw new UsernameNotFoundException("Usuario nao encontrado pelo E-mail: " + email);
+        
+        throw new UsernameNotFoundException("E-mail não cadastrado: " + email); 
     }
+
+
 }

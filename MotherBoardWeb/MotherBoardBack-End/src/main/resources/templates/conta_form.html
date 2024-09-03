@@ -1,5 +1,5 @@
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
     <head>
         <title>MotherBoard</title>
         <meta charset="utf-8" />
@@ -12,6 +12,14 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     </head>
     <body class="bg-dark text-light">
+		
+		
+		<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+    <input type="submit" />
+</form>
+		
+		
+		
         <header class="mb-3">
             <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
                 <div class="container-fluid">
@@ -55,6 +63,7 @@
                             <li class="nav-item">
                                 <a class="nav-link " href="Favoritos.html">
                                     <i class="bi bi-bookmark iconeheader" ></i>
+
                                 </a>
                             </li>
         
@@ -62,20 +71,52 @@
                                 <a class="nav-link " href="Carrinho.html">
                                     <i class="bi bi-cart iconeheader"></i>
                                 </a>
-                            <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" sec:authentication="principal.NomeCompleto()" th:href="@{/conta}">
+                            </li>
+                            
+                            
+<li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" th:href="@{/conta}">
         <i class="bi bi-person-circle iconeheader"></i> 
+     <div th:if="${#authentication.principal}">
+    <p th:text="${#authentication.principal.nomeCompleto}"></p>
+</div>
+
     </a>
     <div class="dropdown-menu">
-        <a class="dropdown-item" href="#" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+        <a class="dropdown-item" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
     </div>
 </li>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#logoutLink").on("click", function(e) {
+        e.preventDefault();
+        document.getElementById('logoutForm').submit();
+    });
+
+    customizeDropDownMenu();
+
+    function customizeDropDownMenu() {
+        $(".dropdown > a").click(function() {
+            location.href = this.href;
+        });
+
+        $(".nav-item.dropdown").on("mouseenter", function() {
+            $(this).find(".dropdown-menu").stop(true, true).slideDown(200);
+        }).on("mouseleave", function() {
+            $(this).find(".dropdown-menu").stop(true, true).slideUp(200);
+        });
+    }
+});
+</script>
+
 
                         </ul>
                     </div>
                 </div>
             </nav>
-        </header>	
+        </header>
             
 <div class="container mt-5">
     <h2 style="text-align: center;">
@@ -94,11 +135,11 @@
         
         <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" th:field="*{email}" class="form-control" id="email" style="background-color: rgb(255, 128, 192);" placeholder="Digite seu email" readonly="readonly">
+            <input type="email" th:field="*{email}" class="form-control" id="email" style="background-color: rgb(0, 0, 0);" readonly="readonly">
         </div>
         <div class="mb-3">
             <label for="cpf" class="form-label">CPF</label>
-            <input type="text" th:field="*{cpf}" class="form-control" id="cpf" style="background-color: rgb(255, 128, 192);" placeholder="Digite seu CPF" readonly="readonly">
+            <input type="text" th:field="*{cpf}" class="form-control" id="cpf" style="background-color: rgb(0, 0, 0);" readonly="readonly">
         </div>
         
         
@@ -127,9 +168,11 @@
         <div class="mb-3">
             <label class="form-label">Funções Designada: </label>
             <div class="form-check">
-                	<span><b>[[${usuario.roles}]]</b></span>
+                	<span><b style="color: aqua;">[[${usuario.roles}]]</b></span>
             </div>
         </div>
+
+</br>
 
         <div class="mb-3">
             <label for="foto" class="form-label">Envie uma foto </label>
@@ -146,8 +189,8 @@
         <br>
         <br>
         <div>
-            <input type="submit" value="salvar" class="btn btn-primary">
-            <input type="button" value="cancelar" class="btn btn-secondary" id="buttonCancel">
+            <input type="submit" value="Salvar" class="btn btn-primary">
+            <input type="button" value="Cancelar" class="btn btn-secondary" id="buttonCancel">
         </div>
     </form>
     
@@ -174,7 +217,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("#buttonCancel").on("click", function() {
-            window.location = "[[@{/Usuarios}]]";
+            window.location = "[[@{/}]]";
         });
         
         $("#nomeCompleto").on("input", function() {
