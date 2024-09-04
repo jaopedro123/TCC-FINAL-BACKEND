@@ -12,15 +12,9 @@
     </head>
     <body class="bg-dark text-light">
 		
-		
-		
-		
 		<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
-    <input type="submit" />
-</form>
-		
-		
-		
+            <input type="submit" />
+        </form>
 		
         <header class="mb-3">
             <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -65,7 +59,7 @@
                             <li class="nav-item">
                                 <a class="nav-link " href="Favoritos.html">
                                     <i class="bi bi-bookmark iconeheader" ></i>
-
+        
                                 </a>
                             </li>
         
@@ -74,46 +68,22 @@
                                     <i class="bi bi-cart iconeheader"></i>
                                 </a>
                             </li>
-                            
-                            
-<li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" th:href="@{/conta}">
-        <i class="bi bi-person-circle iconeheader"></i> 
-     <div th:if="${#authentication.principal}">
-    <p th:text="${#authentication.principal.nomeCompleto}"></p>
-</div>
-
-    </a>
-    <div class="dropdown-menu">
-        <a class="dropdown-item" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-    </div>
-</li>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    $("#logoutLink").on("click", function(e) {
-        e.preventDefault();
-        document.getElementById('logoutForm').submit();
-    });
-
-    customizeDropDownMenu();
-
-    function customizeDropDownMenu() {
-        $(".dropdown > a").click(function() {
-            location.href = this.href;
-        });
-
-        $(".nav-item.dropdown").on("mouseenter", function() {
-            $(this).find(".dropdown-menu").stop(true, true).slideDown(200);
-        }).on("mouseleave", function() {
-            $(this).find(".dropdown-menu").stop(true, true).slideUp(200);
-        });
-    }
-});
-</script>
-
-
+        
+                            <li class="nav-item">
+                                <div class="btn-group dropstart">
+                                    <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-person-circle iconeheader"></i> 
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <a class="nav-link" th:href="@{/conta}">
+                                            <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                                        </a>
+                                        <a class="nav-link btn text-center" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                                        
+                                    </ul>
+                                  </div>
+                            </li>
+        
                         </ul>
                     </div>
                 </div>
@@ -282,13 +252,14 @@ $(document).ready(function() {
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript">
 	    $(document).ready(function() {
 	        $(".delete-link").on("click", function(e) {
 	            e.preventDefault();
+
 	            var link = $(this);
 	            var userId = link.attr("userId");
 	            var deleteUrl = link.attr("href");
@@ -302,23 +273,23 @@ $(document).ready(function() {
 	        window.location = "[[@{/Usuarios}]]";
 	    }
 	
-function toggleSearchInput() {
-    var searchInput = document.getElementById("searchInput");
-    var instructionText = document.getElementById("instructionText");
+        function toggleSearchInput() {
+            var searchInput = document.getElementById("searchInput");
+            var instructionText = document.getElementById("instructionText");
 
-    searchInput.value = ''; 
-    searchInput.disabled = false; 
-    instructionText.style.display = 'none'; 
+            searchInput.value = ''; 
+            searchInput.disabled = false; 
+            instructionText.style.display = 'none'; 
 
 
-    searchInput.addEventListener("input", validateInput);
-    
-    if (document.getElementById("filterByCpf").checked) {
-        searchInput.addEventListener("input", maskCpfInput);
-    } else {
-        searchInput.removeEventListener("input", maskCpfInput);
-    }
-}
+            searchInput.addEventListener("input", validateInput);
+            
+            if (document.getElementById("filterByCpf").checked) {
+                searchInput.addEventListener("input", maskCpfInput);
+            } else {
+                searchInput.removeEventListener("input", maskCpfInput);
+            }
+        }
 
 	    function validateInput() {
 	        var searchInput = document.getElementById("searchInput");
@@ -362,23 +333,23 @@ function toggleSearchInput() {
                         <img class="imgMother mb-4" src="Imagens/image-light.png">
                     </a>  
                     <section class="mb-4">
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i class="bi bi-facebook"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhottw" href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta" href="https://www.instagram.com/motherboardtecnologic1" role="button"><i class="bi bi-instagram"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou" href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i class="bi bi-youtube"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhogit" href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-                  </section>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw" href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta" href="https://www.instagram.com/motherboardtecnologic1" role="button"><i class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou" href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit" href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
                 </div>
                 
 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Dúvidas:</h6>
                     <p>
-                      <a href="Politica.html" class="links2"> Reembolso</a>
+                        <a href="Politica.html" class="links2"> Reembolso</a>
                         
                     </p>
                     <p>
-                      <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
+                        <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
                     </p>
                     <p>
                         
@@ -402,14 +373,14 @@ function toggleSearchInput() {
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
                     <p>
-                      <a href="SobreNos.html" class=" links2"> Sobre nós</a>
+                        <a href="SobreNos.html" class=" links2"> Sobre nós</a>
                         
                     </p>
                     <p>
-                      <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
+                        <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
                     </p>
                     <p>
-                      <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
                         
                     </p>
                 </div>
@@ -422,24 +393,19 @@ function toggleSearchInput() {
             </div>
 
         </div>
-    </footer>    
-    
         
-    
-    
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
+        
+    </footer>   
+    <script
+        src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"
+    ></script>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
-           
-            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    
     </body>
 </html>

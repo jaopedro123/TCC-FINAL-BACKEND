@@ -22,6 +22,10 @@
 .nav-link{
 	color: white;
 }
+.btn-conta-form-back-end:hover {
+	--bs-nav-link-hover-color: #643c96;
+	transition: 1s;
+}
 .iconeheader{
 	font-size: 30px; 
 	width: 30px; 
