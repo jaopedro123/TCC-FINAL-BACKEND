@@ -138,6 +138,8 @@ public class Usuario{
 	public String getPhotosImagePath() {
 	    if (id == null || fotos == null) return "/imagens/imagem-default.png";
 	    
+		System.out.println("/fotos-usuario/" + this.id + "/" + this.fotos);
+
 	    return "/fotos-usuario/" + this.id + "/" + this.fotos;
 	}
 
