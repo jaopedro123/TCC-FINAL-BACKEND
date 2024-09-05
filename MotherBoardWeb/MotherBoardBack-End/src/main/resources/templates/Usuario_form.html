@@ -1,313 +1,350 @@
-
 <html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
-    <head>
-        <title>MotherBoard</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-        <link rel="shortcut icon" href="icones/logorapa.png">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <link rel="stylesheet" th:href="@{/css/styles.css}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    </head>
-    <body class="bg-dark text-light">
-		
-		
-		<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
-    <input type="submit" />
-</form>
-		
-		
-		
-<header class="mb-3">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <a href="index.html" class="navbar-brand">
-                <img class="imgMother" th:src="@{/imagens/image-light.png}">
-            </a>
-            <div class="dropdown">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                    <i class="bi bi-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i class="bi bi-motherboard me-2"></i>Hardware</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i class="bi bi-pc-display me-2"></i>Computadores</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i class="bi bi-mouse me-2"></i>Perifericos</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i class="bi bi-controller me-2"></i>Eletronicos</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i class="bi bi-display me-2"></i>Monitores</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i class="bi bi-joystick me-2"></i>Espaço gamer</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="Configuracao.html"><i class="bi bi-gear me-2"></i>Configurações</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                </ul>
-            </div>
+<head>
+    <title>MotherBoard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" href="icones/logorapa.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
-                    <input class="form-control me-2 custom-search barradepesquisa" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" id="corcaraio" type="submit"><i class="bi bi-search"></i></button>
-                </form>
+<body class="bg-dark text-light">
 
-                <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link " href="Favoritos.html">
-                            <i class="bi bi-bookmark iconeheader" ></i>
 
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link " href="Carrinho.html">
-                            <i class="bi bi-cart iconeheader"></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <div class="btn-group dropstart">
-                            <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle iconeheader"></i> 
-                            </button>
-                            <ul class="dropdown-menu">
-                                <a class="nav-link" th:href="@{/conta}"></a>
-                                <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-                                <a class="nav-link btn text-center" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-                                
-                            </ul>
-                          </div>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-        
-        
-        
-        
-            
-<div class="container mt-5">
-    <h2 style="text-align: center;">
-        [[${tituloDaPag}]]
-    </h2>
-    
-    <form th:action="@{/usuarios/salvar}" method="post" enctype="multipart/form-data" th:object="${usuario}" onsubmit="return validateForm(this);">
-        
-        
-        <input type="hidden" th:field="*{id}" id="id"/>
-        
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Digite seu email" required minlength="8" maxlength="128">
-        </div>
-        <div class="mb-3">
-            <label for="nomeCompleto" class="form-label">Nome Completo</label>
-            <input type="text" th:field="*{nomeCompleto}" class="form-control" id="nomeCompleto" placeholder="Digite seu nome completo" required minlength="3" maxlength="45">
-        </div>
-        <div class="mb-3">
-            <label for="cpf" class="form-label">CPF</label>
-            <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="Digite seu CPF" required minlength="14" maxlength="14">
-        </div>
-        
-
-<div class="mb-3">
-    <label for="senha" class="form-label">Senha</label>
-    
-    <input type="password" th:if="${usuario != null and usuario.id == null}" th:field="*{senha}" class="form-control" id="senha" placeholder="Digite sua senha" required minlength="8" maxlength="20">
-    
-    <input type="password" th:if="${usuario != null and usuario.id != null}" th:field="*{senha}" class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20">
-</div>
-
-    
-        <div class="mb-3">
-            <label class="form-label">Funções</label>
-            <div class="form-check">
-                <th:block th:each="role : ${listRoles}">
-                    <input type="checkbox" th:field="*{roles}" th:text="${role.nome}" th:value="${role.id}" class="form-check-input">
-                    - <small class="form-text">[[${role.Descricao}]]</small>
-                    <br>
-                </th:block>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Permitido</label>
-            <div class="form-check">
-                <input type="checkbox" th:field="*{permitido}" class="form-check-input">
-            </div>
-        </div> 
-
-        <div class="mb-3">
-            <label for="foto" class="form-label">Envie uma foto </label>
-            
-            <input type="hidden" th:field="*{fotos}"/>
-            <img id="thumbnail" alt="Preview das fotos" class="rounded float-end" th:src="@{${usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
-
-            
-             </br>
-            <input class="form-control" type="file" name="imagem" id="foto" >
-            
-        </div>
-        
-        <br>
-        <br>
-        <div>
-            <input type="submit" value="salvar" class="btn btn-primary">
-            <input type="button" value="cancelar" class="btn btn-secondary" id="buttonCancel">
-        </div>
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+        <input type="submit" />
     </form>
-    
-</div>
 
-<div class="modal fade text-center" id="modalDialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle">Cuidado</h4>
+
+
+    <header class="mb-3">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a href="index.html" class="navbar-brand">
+                    <img class="imgMother" th:src="@{/imagens/image-light.png}">
+                </a>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-display="static"
+                        aria-expanded="false">
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-motherboard me-2"></i>Hardware</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-pc-display me-2"></i>Computadores</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-mouse me-2"></i>Perifericos</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-controller me-2"></i>Eletronicos</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-display me-2"></i>Monitores</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-joystick me-2"></i>Espaço gamer</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Configuracao.html"><i
+                                    class="bi bi-gear me-2"></i>Configurações</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
+                        <input class="form-control me-2 custom-search barradepesquisa" type="search"
+                            placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" id="corcaraio" type="submit"><i
+                                class="bi bi-search"></i></button>
+                    </form>
+
+                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link " href="Favoritos.html">
+                                <i class="bi bi-bookmark iconeheader"></i>
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="Carrinho.html">
+                                <i class="bi bi-cart iconeheader"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <div class="btn-group dropstart">
+                                <button type="button" class="btn btn-conta-form-back-end nav-link"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-person-circle iconeheader"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <a class="nav-link" th:href="@{/conta}"></a>
+                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                                    <a class="nav-link btn text-center" href="#" id="logoutLink"
+                                        onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+
+                                </ul>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
             </div>
-            <div class="modal-body">
-                <span id="modalBody"></span>
+        </nav>
+    </header>
+
+
+    <main class="border rounded-4 mt-5 m-auto px-3 pt-3 text-white INTRAcontaForm">
+
+        <form th:action="@{/usuarios/salvar}" method="post" enctype="multipart/form-data" th:object="${usuario}" onsubmit="return validateForm(this);">
+
+            <div class="rounded-4 pt-3 px-4 mb-2 ms-auto me-auto" style="background-color: #33373f;">
+
+                <h2 class="p-3" style="text-align: center;">
+                    [[${tituloDaPag}]]
+                </h2>
+
+                <input type="hidden" th:field="*{id}" id="id" />
+
+            <div class="text-center">
+                <input type="hidden" th:field="*{fotos}" />
+                <img th:src="@{${usuario.photosImagePath}}" id="thumbnail" class="INTRAimgConta">
+                <input type="file" id="foto" name="imagem" style="display: none;">
+                <i class="bi bi-pencil-square fs-4 INTRAiconeImg"></i>
             </div>
-            <div class="modal-footer">
-              
+
+            <div class="mb-3">
+                <label for="email" class="form-label">Email*</label>
+                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Digite seu email"
+                    required minlength="8" maxlength="128">
+            </div>
+            <div class="mb-3">
+                <label for="nomeCompleto" class="form-label">Nome Completo*</label>
+                <input type="text" th:field="*{nomeCompleto}" class="form-control" id="nomeCompleto"
+                    placeholder="Digite seu nome completo" required minlength="3" maxlength="45">
+            </div>
+            <div class="mb-3">
+                <label for="cpf" class="form-label">CPF*</label>
+                <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="Digite seu CPF" required
+                    minlength="14" maxlength="14">
+            </div>
+
+
+            <div class="mb-3">
+                <label for="senha" class="form-label">Senha*</label>
+
+                <input type="password" th:if="${usuario != null and usuario.id == null}" th:field="*{senha}"
+                    class="form-control" id="senha" placeholder="Digite sua senha" required minlength="8"
+                    maxlength="20">
+
+                <input type="password" th:if="${usuario != null and usuario.id != null}" th:field="*{senha}"
+                    class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20">
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">Funções*</label>
+                <div class="form-check">
+                    <th:block th:each="role : ${listRoles}">
+                        <input type="checkbox" th:field="*{roles}" th:text="${role.nome}" th:value="${role.id}"
+                            class="form-check-input">
+                        - <small class="form-text">[[${role.Descricao}]]</small>
+                        <br>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="mb-3 d-flex">
+                <label class="form-label">Permitido:</label>
+                <div class="form-check ms-2">
+                    <input type="checkbox" th:field="*{permitido}" class="form-check-input">
+                </div>
+            </div>
+
+            <div class="p-3 text-center">
+                <input type="submit" value="salvar" class="btn corMurilokk">
+                <input type="button" value="cancelar" class="btn btn-outline-danger" id="buttonCancel">
+            </div>
+
+            <br>
+        </div>
+
+        </form>
+
+    </main>
+
+    <div class="modal fade text-center" id="modalDialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Cuidado</h4>
+                </div>
+                <div class="modal-body">
+                    <span id="modalBody"></span>
+                </div>
+                <div class="modal-footer">
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#buttonCancel").on("click", function () {
+                window.location = "[[@{/Usuarios}]]";
+            });
 
+            $("#nomeCompleto").on("input", function () {
+                this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+            });
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $("#buttonCancel").on("click", function() {
-            window.location = "[[@{/Usuarios}]]";
+            $("#foto").change(function () {
+
+                foto = this.files[0].size;
+
+                // 1 MB = 1048576
+                if (foto > 1048576) {
+                    this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
+                    this.reportvalidity();
+                }
+                else {
+                    this.setCustomValidity("");
+                    showImageThumbnail(this);
+                }
+            });
+
         });
-        
-        $("#nomeCompleto").on("input", function() {
-   			 this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
-        });
-        
-        $("#foto").change(function() {
-            
-            foto = this.files[0].size;
-            
-            // 1 MB = 1048576
-            if (foto > 1048576) {
-                this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
-                this.reportvalidity();
-            } 
-            else {
-            this.setCustomValidity("");
-            showImageThumbnail(this);
-            }
-        });
-        
-    });
 
         function showImageThumbnail(fileInput) {
             var file = fileInput.files[0];
             var reader = new FileReader();
-            reader.onload = function(e) {
+            reader.onload = function (e) {
                 $("#thumbnail").attr("src", e.target.result);
             };
             reader.readAsDataURL(file);
         }
-    
-    function validateForm(form) {
-        var checks = [checkEmailUnico(form), checkCpfUnico(form)];
 
-        Promise.all(checks).then(function(results) {
-            if (results.every(result => result === true)) {
-                form.submit();
-            }
-        });
+        function validateForm(form) {
+            var checks = [checkEmailUnico(form), checkCpfUnico(form)];
 
-        return false;
-    }
+            Promise.all(checks).then(function (results) {
+                if (results.every(result => result === true)) {
+                    form.submit();
+                }
+            });
 
-    function checkEmailUnico(form) {
-        var url = "[[@{/Usuarios/check_email}]]";
-        var userEmail = $("#email").val();
-        var userId = $("#id").val();
-        var csrfValue = $("input[name='_csrf']").val();
-        var params = {id: userId, email: userEmail, _csrf: csrfValue};
-
-        return $.post(url, params).then(function(response) {
-            if (response == "OK") {
-                return true;
-            } else if (response == "Duplicated") {
-                showModalDialog("Cuidado", "Esse E-mail está sendo utilizado: " + userEmail);
-                return false;
-            } else {
-                showModalDialog("Erro", "Resposta desconhecida do servidor");
-                return false;
-            }
-        });
-    }
-
-    function checkCpfUnico(form) {
-        var url = "[[@{/Usuarios/check_cpf}]]";
-        var userCpf = $("#cpf").val();
-        var userId = $("#id").val();
-        var csrfValue = $("input[name='_csrf']").val();
-        var params = {id: userId, cpf: userCpf, _csrf: csrfValue};
-
-        return $.post(url, params).then(function(response) {
-            if (response == "OK") {
-                return true;
-            } else if (response == "Duplicated") {
-                showModalDialog("Cuidado", "Esse CPF está sendo utilizado: " + userCpf);
-                return false;
-            } else {
-                showModalDialog("Erro", "Resposta desconhecida do servidor");
-                return false;
-            }
-        });
-    }
-
-    function showModalDialog(title, message) {
-        $("#modalTitle").text(title);
-        $("#modalBody").text(message);
-        $("#modalDialog").modal('show');
-    }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-    const cpfInput = document.getElementById("cpf");
-
-    cpfInput.addEventListener("input", function(e) {
-
-        let value = this.value.replace(/\D/g, '');
-
-        if (value.length > 11) value = value.slice(0, 11); 
-        if (value.length > 9) {
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
-        } else if (value.length > 6) {
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
-            value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
-        } else if (value.length > 3) {
-            value = value.replace(/(\d{3})(\d)/, '$1.$2');
+            return false;
         }
 
-        this.value = value;
-    });
-});
-</script>
+        function checkEmailUnico(form) {
+            var url = "[[@{/Usuarios/check_email}]]";
+            var userEmail = $("#email").val();
+            var userId = $("#id").val();
+            var csrfValue = $("input[name='_csrf']").val();
+            var params = { id: userId, email: userEmail, _csrf: csrfValue };
 
-        
-    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4"  data-bs-theme="dark">
+            return $.post(url, params).then(function (response) {
+                if (response == "OK") {
+                    return true;
+                } else if (response == "Duplicated") {
+                    showModalDialog("Cuidado", "Esse E-mail está sendo utilizado: " + userEmail);
+                    return false;
+                } else {
+                    showModalDialog("Erro", "Resposta desconhecida do servidor");
+                    return false;
+                }
+            });
+        }
+
+        function checkCpfUnico(form) {
+            var url = "[[@{/Usuarios/check_cpf}]]";
+            var userCpf = $("#cpf").val();
+            var userId = $("#id").val();
+            var csrfValue = $("input[name='_csrf']").val();
+            var params = { id: userId, cpf: userCpf, _csrf: csrfValue };
+
+            return $.post(url, params).then(function (response) {
+                if (response == "OK") {
+                    return true;
+                } else if (response == "Duplicated") {
+                    showModalDialog("Cuidado", "Esse CPF está sendo utilizado: " + userCpf);
+                    return false;
+                } else {
+                    showModalDialog("Erro", "Resposta desconhecida do servidor");
+                    return false;
+                }
+            });
+        }
+
+        function showModalDialog(title, message) {
+            $("#modalTitle").text(title);
+            $("#modalBody").text(message);
+            $("#modalDialog").modal('show');
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const cpfInput = document.getElementById("cpf");
+
+            cpfInput.addEventListener("input", function (e) {
+
+                let value = this.value.replace(/\D/g, '');
+
+                if (value.length > 11) value = value.slice(0, 11);
+                if (value.length > 9) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
+                } else if (value.length > 6) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                    value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
+                } else if (value.length > 3) {
+                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
+                }
+
+                this.value = value;
+            });
+        });
+
+        document.getElementById('thumbnail').addEventListener('click', function () {
+        document.getElementById('foto').click(); // Simula o clique no input de arquivo
+    });
+    </script>
+
+
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
         <div class="container text-center text-md-left">
 
             <div class="row text-center text-md-left">
@@ -315,28 +352,35 @@
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <a href="#" class="navbar-brand">
                         <img class="imgMother mb-4" src="Imagens/image-light.png">
-                    </a>  
+                    </a>
                     <section class="mb-4">
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i class="bi bi-facebook"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhottw" href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta" href="https://www.instagram.com/motherboardtecnologic1" role="button"><i class="bi bi-instagram"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou" href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i class="bi bi-youtube"></i></a>
-                      <a class="btn btn-outline-light btn-floating m-1 botaozinhogit" href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-                  </section>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
                 </div>
-                
+
 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Dúvidas:</h6>
                     <p>
-                      <a href="Politica.html" class="links2"> Reembolso</a>
-                        
+                        <a href="Politica.html" class="links2"> Reembolso</a>
+
                     </p>
                     <p>
-                      <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
+                        <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
                     </p>
                     <p>
-                        
+
                         <a href="atendimento.html" class="links2"> Formas de pagamento</a>
                     </p>
                 </div>
@@ -357,15 +401,15 @@
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
                     <p>
-                      <a href="SobreNos.html" class=" links2"> Sobre nós</a>
-                        
+                        <a href="SobreNos.html" class=" links2"> Sobre nós</a>
+
                     </p>
                     <p>
-                      <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
+                        <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
                     </p>
                     <p>
-                      <a href="Politica.html" class=" links2"> Política de Privacidade</a>
-                        
+                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+
                     </p>
                 </div>
 
@@ -377,18 +421,16 @@
             </div>
 
         </div>
-    </footer>    
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
-           
-            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </body>
+
 </html>

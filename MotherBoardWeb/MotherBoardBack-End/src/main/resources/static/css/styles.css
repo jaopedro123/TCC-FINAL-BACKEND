@@ -1701,11 +1701,6 @@ scale: 0,1;
 #resultado {
 	font-size: 1.2rem;
 }
-.alert-success {
-	background-color: #d4edda;
-	color: #155724;
-	border-color: #c3e6cb;
-}
 .alert-info {
 	background-color: #d1ecf1;
 	color: #0c5460;
@@ -2015,12 +2010,64 @@ display: none;
 /* FIM fav css*/
   
   /* Dashboard */
+  .alinhameioconta{
+    justify-content: center;
+    background-color: #343a40;
+    height: auto;
+    width: 430px;
+    border-radius: 15px;
+}
+.alinhafotoaomeio{
+	text-align: center;
+	align-items: center;
+}
+.fotopromeioporra{
+	text-align: center;
+    margin-right: 120;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+.corMurilo {
+	background-color: none; 
+    color: #7549aa;
+    border-color: #7549aa;
+	transition: 0.5s;
+}
+.corMurilo1 {
+	background-color: #5a2d91;
+	border-color: #5a2d91;
+}
+.corMurilo1:hover {
+	background-color: #441e72;
+	border-color: #5a2d91;
+	transition: 0.5s;
+}
+.corMurilo:active{
+	background-color: #5a2d91;
+	color: white;
+    border-color: #5a2d91;
+	transition: 0.5s;
+}
+.corMurilo:active{
+	background-color: rgb(0, 128, 128);
+	color: white;
+    border-color: rgb(0, 128, 128);
+	transition: 0.5s;
+}
+.corMurilo:hover {
+	background-color: #5a2d91;
+	color: white;
+    border-color: #5a2d91;
+	transition: 0.5s;
+}
+
+
 .containerdoADM {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 50vh;
-	padding: 0 15px; /* Espaço interno para evitar corte */
+	padding: 0 15px;
 }
 
 .form-control:focus{
@@ -2077,4 +2124,102 @@ display: none;
 	font-size: 16px;
 	z-index: 1;
 }
+
+.btnCadFunc{
+	color: white;
+    background-color: #694a8f;
+}
+
+.btnCadFunc:hover{
+	color: white;
+	background-color: #8542bd;
+}
+.btnCadFunc:hover:first-child:active, :not(.btn-check)+.btnCadFunc:hover:active {
+	color: white;
+    background-color: #7c3bb1;
+}
+.colorPagelink{
+	color:#b07fec;
+}
+.colorPagelink:hover{
+	color:#9c6ada;
+}
+
+.active>.colorPagelink, .colorPagelink.active {
+	color:white;
+    background-color: #b07fec;
+    border-color: #b07fec;
+}
+.colorPagelink:focus{
+	color:white;
+}
+
+.alinhameioFunc{
+    justify-content: center;
+    background-color: #343a40;
+    height: auto;
+    max-width: 800px;
+    border-radius: 15px;
+}
+.alinhafotoaomeio{
+	text-align: center;
+	align-items: center;
+}
+.alert-success {
+    background-color: #a35ef8;
+    color: white;
+    border: none;
+}
+.botaodevoltarcate {
+    background-color: #5a2d91;
+    padding: 10px;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+}
+.fundodocadastrocate{
+	background-color:#2b3035;
+	padding:30px;
+	border-radius: 30px;
+}
+.oudisplaynonequeemelhor{
+	display: none;
+}
+
+/* Conta */
+.INTRAimgConta {
+	border-radius: 50%; 
+	width: 130px; 
+	height: 130px;
+}
+.INTRAiconeImg {
+	display: block;
+    margin-bottom: 19px;
+    margin-top: -28px;
+    margin-left: 96px;
+    color: #000000;
+}
+.INTRAcontaForm {
+	background-color: #2B3035; 
+	border-color: #2B3035; 
+	--bs-border-color: #495057; 
+	max-width: 700px;
+}
+.senhaPlaceholder::placeholder {
+	font-size: 13px;
+}
+.corMurilokk {
+	background-color: none; 
+    color: rgb(0, 255, 0);
+    border-color: rgb(0, 255, 0);
+	transition: 0.5s;
+}
+.corMurilokk:hover {
+	background-color: rgb(0, 128, 64);
+	color: white;
+    border-color: rgb(0, 128, 64);
+	transition: 0.5s;
+}
+/* fim - Conta */
 /* Dashboard ADM - FIM */
+
