@@ -147,7 +147,7 @@
                         <th scope="col">
                             <a class="text-white"
                                 th:href="@{'/categorias/page/' + ${paginaAtual} + '?sortDir='+ ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">Nome da Categoria</a>
+                                style="text-decoration: none; color: rgb(128, 128, 128);">Nome da Categoria -</a>
                         </th>
                         <th scope="col">Alias</th>
                         <th scope="col">Ativa</th>
@@ -197,18 +197,19 @@
             </table>
         </div>
 
+        <div class="text-center	mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
+            <P> Categorias não encontradas</P>
+        </div>
+
         <div class="d-flex justify-content-center align-items-center">
-            <a th:href="@{/MotherBoardAdmin/categorias/new}" class="btn btnCadFunc"> Nova categoria </a>
-            <a th:href="@{/MotherBoardAdmin/}" class="btn btnCadFunc ms-2"> Voltar para Intranet</a>
+            <a th:href="@{/categorias/new}" class="btn btnCadFunc"> Nova categoria </a>
+            <a th:href="@{/}" class="btn btnCadFunc ms-2"> Voltar para Intranet</a>
         </div>
 
         <div class="text-center	m-1" th:if="${totalPages > 0}">
             <p> mostrando categorias da página [[${paginaAtual}]] de [[${totalPages}]]</p>
         </div>
 
-        <div class="text-center	m-1" th:unless="${totalPages > 0}">
-            <P> Categorias não encontradas</P>
-        </div>
 
         <div th:if="${totalPages > 0}">
             <nav aria-label="Page navigation example">

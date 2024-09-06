@@ -2185,6 +2185,12 @@ display: none;
 .oudisplaynonequeemelhor{
 	display: none;
 }
+.categNEncontrada {
+	padding-top: 62px;
+    padding-bottom: 62px;
+    margin-top: -16px;
+    background-color: #40454e;
+}
 
 /* Conta */
 .INTRAimgConta {
