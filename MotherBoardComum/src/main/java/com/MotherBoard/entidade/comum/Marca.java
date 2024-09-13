@@ -86,6 +86,9 @@ public class Marca {
 	    if (this.id == null) return "/imagens/image-thumbnail.png";
 	    return "/Marca-logos/" + this.id + "/" + this.logo;
 	}
-
+	public Marca(Integer id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 	
 }

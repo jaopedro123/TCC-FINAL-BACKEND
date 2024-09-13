@@ -1,5 +1,7 @@
 package com.MotherBoard.Admin.marca;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,5 +28,6 @@ public interface MarcaRepository extends JpaRepository <Marca,Integer> {
 
 	public Page<Marca> findAll(Pageable pageable);
 	
-	
+	@Query("SELECT NEW Marca(m.id, m.nome) FROM Marca m ORDER BY m.nome ASC")
+	public List<Marca> findAll();
 }
