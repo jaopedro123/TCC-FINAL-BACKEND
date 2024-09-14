@@ -119,7 +119,12 @@
     </header>
 
     <main class="container rounded-4 py-4 px-5 mt-5" style="background-color: #2c3036;">
-
+        <div th:if="${mensagem != null}" class="alert alert-success alert-dismissible fade show text-center mt-5"
+        role="alert">
+        <i class="bi bi-check-circle-fill"></i>
+        [[${mensagem}]]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
         <form th:action="@{/categorias/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
             style="background-color: #40454e">
 

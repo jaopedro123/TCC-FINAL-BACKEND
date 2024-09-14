@@ -49,8 +49,8 @@ public class ProdutoControlador {
  public String updateCategoriaStatus(@PathVariable("id") Integer id,
 		 @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) {
 	 produtoServico.updatePordutoHabilitadoStatus(id, habilitado);
-	 String status = habilitado ? "habilitado" : "disabilitado";
-	 String mensagem = "o produto de id " + id + "foi " + status;
+	 String status = habilitado ? "habilitado" : "desabilitado";
+	 String mensagem = "o produto de id " + id + " foi " + status;
 	 redirectAttributes.addFlashAttribute("mensagem", mensagem);
 	 return "redirect:/produtos";
  };
