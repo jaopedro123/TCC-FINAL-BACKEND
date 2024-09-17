@@ -1,0 +1,142 @@
+var extraImagesCount = 0;
+dropdownMarca = $("#marca");
+dropdownCategorias = $("#categoria");
+
+$(document).ready(function () {
+
+    $("#buttonCancel").on("click", function () {
+        window.location = "/MotherBoardAdmin/produtos";
+    });
+
+    $("#fileImage").change(function () {
+        if (!checkFileSize(this)) {
+            return;
+        }
+        showImageThumbnail(this);
+    });
+
+    $("input[name='imagemExtra']").each(function(index) {
+        extraImagesCount++;
+
+        $(this).change(function() {
+            showExtraImageThumbnail(this, index);
+        })
+    });
+
+    $("#descricaoCompleta").richText();
+    $("#descricaoCurta").richText();
+    dropdownMarca.change(function () {
+        dropdownCategorias.empty();
+        getCategorias();
+    });
+    getCategorias();
+});
+
+function showImageThumbnail(fileInput) {
+    var file = fileInput.files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        $("#thumbnail").attr("src", e.target.result);
+    };
+    reader.readAsDataURL(file);
+}
+
+function showExtraImageThumbnail(fileInput, index) {
+    var file = fileInput.files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        $("#extraThumbnail" + index).attr("src", e.target.result);
+    };
+    reader.readAsDataURL(file);
+
+    if(index >= extraImagesCount - 1) {
+        addNextExtraImageSection(index + 1);
+    }
+}
+
+function removerImagemExtra(index) {
+    $("#divImagemExtra" + index).remove();
+}
+
+function addNextExtraImageSection(index) {
+    htmlImagemExtra = `
+            <div class="col-5 mt-2 p-2" id="divImagemExtra${index}">
+                <div id="imagemExtraHeader${index}"><label>Imagem Extra #${index + 1}:</label></div>
+                <div class="col-sm-8">
+                    <input type="hidden" th:field="*{imagem_principal}" />
+                    <div class="my-1">
+                        <img src="${defaultImageThumbnailSrc}" id="extraThumbnail${index}"
+                        style="width: 130px; height: 130px;">
+                    </div>
+                    <input type="file" name="imagemExtra" 
+                        onchange="showExtraImageThumbnail(this, ${index})"
+                        accept="image/png, image/jpeg" />
+                </div>
+            </div>
+    `;
+
+    htmlLinkRemove = `
+            <a href="javascript:removerImagemExtra(${index - 1})" title="Remover essa imagem">Remover</a>
+    `;
+
+    $("#divImagensProduto").append(htmlImagemExtra);
+
+    $("#imagemExtraHeader" + (index - 1)).append(htmlLinkRemove);
+
+    extraImagesCount++;
+
+}
+
+function checkFileSize(fileInput) {
+    fileSize = fileInput.files[0].size;
+
+    if (fileSize > 502400) {
+        fileInput.setCustomValidity("Você so pode escolher imagens abaixo de 500KB! ");
+        fileInput.reportvalidity();
+
+        return false;
+    }
+    else {
+        fileInput.setCustomValidity("");
+
+        return true;
+    }
+}
+
+function getCategorias() {
+    marcaId = dropdownMarca.val();
+    url = marcamoduleURL + "/" + marcaId + "/categorias"
+
+    $.get(url, function (responseJson) {
+        $.each(responseJson, function (index, categoria) {
+            $("<option>").val(categoria.id).text(categoria.nome).appendTo(dropdownCategorias);
+        });
+    });
+
+}
+
+function checkuniqueProduto(form) {
+    const produtoId = $("#id").val();
+    const produtoNome = $("#nome").val();
+    const csrfValue = $("input[name='_csrf']").val();
+
+    const params = { id: produtoId, nome: produtoNome, _csrf: csrfValue };
+
+    $.post(checkUniqueUrl, params, function (response) {
+
+        if (response == "OK") {
+            form.submit();
+        } else if (response == "Duplicado") {
+            showModalDialog("Tem outro produto com o mesmo nome: " + produtoNome);
+        }
+    })
+        .fail(function () {
+            showModalDialog("Erro ao verificar a unicidade do produto. Tente novamente.");
+        }); return false;
+}
+
+function showModalDialog(title, message) {
+    $("#modalTitle").text(title);
+    $("#modalBody").text(message);
+    $("#modalDialog").modal('show');
+}

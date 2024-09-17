@@ -137,8 +137,6 @@ public class Usuario{
 	@Transient
 	public String getPhotosImagePath() {
 	    if (id == null || fotos == null) return "/imagens/perfilConta.png";
-	    
-		System.out.println("/fotos-usuario/" + this.id + "/" + this.fotos);
 
 	    return "/fotos-usuario/" + this.id + "/" + this.fotos;
 	}

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#buttonCancel").on("click", function () {
-        window.location = "/categorias";
+        window.location = "/MotherBoardAdmin/categorias";
     });
 
     $("#foto").change(function () {

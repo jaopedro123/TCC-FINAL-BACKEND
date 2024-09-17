@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.Marca;
-import com.MotherBoard.entidade.comum.Usuario;
 
 @Service
 public class MarcaServico {

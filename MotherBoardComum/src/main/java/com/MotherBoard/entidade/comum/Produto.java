@@ -1,7 +1,12 @@
 package com.MotherBoard.entidade.comum;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,223 +14,261 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 
 @Entity
 @Table(name = "produtos")
 public class Produto {
-	       @Id
-	       @GeneratedValue(strategy = GenerationType.IDENTITY)
-           private Integer id;
-	     
-	       @Column(length = 256, nullable = false, unique = true)
-           private String nome;
-	       
-	       @Column(length = 256, nullable = false, unique = true)
-           private String alias;
-	       
-	       @Column(length = 512, nullable = false, name = "descricao_curta")
-           private String descricaoCurta;
-	       
-	       @Column(length = 4096, nullable = false, name = "descricao_completa")
-           private String descricaoCompleta;
-           
-	       @Column(name = "tempo_daCriacao")
-           private Date tempoDaCriacao;
-	       
-	       @Column(name = "tempo_atualizado")
-           private Date tempoAtualizado;
-           
-           private boolean habilitado;
-           
-           @Column(name = "no_stoque")
-           private boolean noStoque;
-           
-           private float custo;
-           
-           private float preco;
-           
-           @Column(name = "des_conto")
-           private float desconto;
-           
-           private float comprimento;
-           private float largura;
-           private float altura;
-           private float peso;
-           
-           @ManyToOne
-           @JoinColumn(name = "categoria_id")
-           private Categoria categoria;
-           
-           @ManyToOne
-           @JoinColumn(name = "marca_id")
-            private Marca marca;
-           
-           
-           
-           
-           
-		public Integer getId() {
-			return id;
-		}
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
-		public void setId(Integer id) {
-			this.id = id;
-		}
+	@Column(length = 256, nullable = false, unique = true)
+	private String nome;
 
-		public String getNome() {
-			return nome;
-		}
+	@Column(length = 256, nullable = false, unique = true)
+	private String alias;
 
-		public void setNome(String nome) {
-			this.nome = nome;
-		}
+	@Column(length = 512, nullable = false, name = "descricao_curta")
+	private String descricaoCurta;
 
-		public String getAlias() {
-			return alias;
-		}
+	@Column(length = 4096, nullable = false, name = "descricao_completa")
+	private String descricaoCompleta;
 
-		public void setAlias(String alias) {
-			this.alias = alias;
-		}
+	@Column(name = "tempo_daCriacao")
+	private Date tempoDaCriacao;
 
-		public String getDescricaoCurta() {
-			return descricaoCurta;
-		}
+	@Column(name = "tempo_atualizado")
+	private Date tempoAtualizado;
 
-		public void setDescricaoCurta(String descricaoCurta) {
-			this.descricaoCurta = descricaoCurta;
-		}
+	private boolean habilitado;
 
-		public String getDescricaoCompleta() {
-			return descricaoCompleta;
-		}
+	@Column(name = "no_stoque")
+	private boolean noStoque;
 
-		public void setDescricaoCompleta(String descricaoCompleta) {
-			this.descricaoCompleta = descricaoCompleta;
-		}
+	private float custo;
 
-		public Date getTempoDaCriacao() {
-			return tempoDaCriacao;
-		}
+	private float preco;
 
-		public void setTempoDaCriacao(Date tempoDaCriacao) {
-			this.tempoDaCriacao = tempoDaCriacao;
-		}
+	@Column(name = "des_conto")
+	private float desconto;
 
-		public Date getTempoAtualizado() {
-			return tempoAtualizado;
-		}
+	private float comprimento;
+	private float largura;
+	private float altura;
+	private float peso;
 
-		public void setTempoAtualizado(Date tempoAtualizado) {
-			this.tempoAtualizado = tempoAtualizado;
-		}
+	@Column(name = "imagem_principal", nullable = false)
+	private String imagem_principal;
 
-		public boolean isHabilitado() {
-			return habilitado;
-		}
+	@ManyToOne
+	@JoinColumn(name = "categoria_id")
+	private Categoria categoria;
 
-		public void setHabilitado(boolean habilitado) {
-			this.habilitado = habilitado;
-		}
+	@ManyToOne
+	@JoinColumn(name = "marca_id")
+	private Marca marca;
 
-		public boolean isNoStoque() {
-			return noStoque;
-		}
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	private Set<ProdutoImagem> imagens = new HashSet<>();
 
-		public void setNoStoque(boolean noStoque) {
-			this.noStoque = noStoque;
-		}
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	private List<ProdutoDetalhes> detalhes = new ArrayList<>();
 
-		public float getCusto() {
-			return custo;
-		}
+	public Integer getId() {
+		return id;
+	}
 
-		public void setCusto(float custo) {
-			this.custo = custo;
-		}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-		public float getPreco() {
-			return preco;
-		}
+	public String getNome() {
+		return nome;
+	}
 
-		public void setPreco(float preco) {
-			this.preco = preco;
-		}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-		public float getDesconto() {
-			return desconto;
-		}
+	public String getAlias() {
+		return alias;
+	}
 
-		public void setDesconto(float desconto) {
-			this.desconto = desconto;
-		}
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
 
-		public float getComprimento() {
-			return comprimento;
-		}
+	public String getDescricaoCurta() {
+		return descricaoCurta;
+	}
 
-		public void setComprimento(float comprimento) {
-			this.comprimento = comprimento;
-		}
+	public void setDescricaoCurta(String descricaoCurta) {
+		this.descricaoCurta = descricaoCurta;
+	}
 
-		public float getLargura() {
-			return largura;
-		}
+	public String getDescricaoCompleta() {
+		return descricaoCompleta;
+	}
 
-		public void setLargura(float largura) {
-			this.largura = largura;
-		}
+	public void setDescricaoCompleta(String descricaoCompleta) {
+		this.descricaoCompleta = descricaoCompleta;
+	}
 
-		public float getAltura() {
-			return altura;
-		}
+	public Date getTempoDaCriacao() {
+		return tempoDaCriacao;
+	}
 
-		public void setAltura(float altura) {
-			this.altura = altura;
-		}
+	public void setTempoDaCriacao(Date tempoDaCriacao) {
+		this.tempoDaCriacao = tempoDaCriacao;
+	}
 
-		public float getPeso() {
-			return peso;
-		}
+	public Date getTempoAtualizado() {
+		return tempoAtualizado;
+	}
 
-		public void setPeso(float peso) {
-			this.peso = peso;
-		}
+	public void setTempoAtualizado(Date tempoAtualizado) {
+		this.tempoAtualizado = tempoAtualizado;
+	}
 
-		public Categoria getCategoria() {
-			return categoria;
-		}
+	public boolean isHabilitado() {
+		return habilitado;
+	}
 
-		public void setCategoria(Categoria categoria) {
-			this.categoria = categoria;
-		}
+	public void setHabilitado(boolean habilitado) {
+		this.habilitado = habilitado;
+	}
 
-		@Override
-		public String toString() {
-			return "Produto [id=" + id + ", nome=" + nome + "]";
-		}
+	public boolean isNoStoque() {
+		return noStoque;
+	}
 
-		public Marca getMarca() {
-			return marca;
-		}
+	public void setNoStoque(boolean noStoque) {
+		this.noStoque = noStoque;
+	}
 
-		public void setMarca(Marca marca) {
-			this.marca = marca;
-		}
+	public float getCusto() {
+		return custo;
+	}
 
-		public void setEnabled(boolean b) {
-			// TODO Auto-generated method stub
-			
-		}
+	public void setCusto(float custo) {
+		this.custo = custo;
+	}
 
-		public void setInStock(boolean b) {
-			// TODO Auto-generated method stub
-			
-		}
-           
-         
-           
-           
+	public float getPreco() {
+		return preco;
+	}
+
+	public void setPreco(float preco) {
+		this.preco = preco;
+	}
+
+	public float getDesconto() {
+		return desconto;
+	}
+
+	public void setDesconto(float desconto) {
+		this.desconto = desconto;
+	}
+
+	public float getComprimento() {
+		return comprimento;
+	}
+
+	public void setComprimento(float comprimento) {
+		this.comprimento = comprimento;
+	}
+
+	public float getLargura() {
+		return largura;
+	}
+
+	public void setLargura(float largura) {
+		this.largura = largura;
+	}
+
+	public float getAltura() {
+		return altura;
+	}
+
+	public void setAltura(float altura) {
+		this.altura = altura;
+	}
+
+	public float getPeso() {
+		return peso;
+	}
+
+	public void setPeso(float peso) {
+		this.peso = peso;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", nome=" + nome + "]";
+	}
+
+	public Marca getMarca() {
+		return marca;
+	}
+
+	public void setMarca(Marca marca) {
+		this.marca = marca;
+	}
+
+	public void setEnabled(boolean b) {
+		// TODO Auto-generated method stub
+	}
+
+	public void setInStock(boolean b) {
+		// TODO Auto-generated method stub
+	}
+
+	public String getImagem_principal() {
+		return imagem_principal;
+	}
+
+	public void setImagem_principal(String imagem_principal) {
+		this.imagem_principal = imagem_principal;
+	}
+
+	public Set<ProdutoImagem> getImagens() {
+		return imagens;
+	}
+
+	public void setImagens(Set<ProdutoImagem> imagens) {
+		this.imagens = imagens;
+	}
+
+	public void addImagemExtra(String nomeImagem) {
+		this.imagens.add(new ProdutoImagem(nomeImagem, this));
+	} 
+
+	public String getImagemPrincipalPath() {
+		if (id == null || imagem_principal == null) return "/imagens/image-thumbnail.png";
+
+		return "/produto-imagens/" + this.id + "/" + this.imagem_principal;
+	}
+
+	public List<ProdutoDetalhes> getDetalhes() {
+		return detalhes;
+	}
+
+	public void setDetalhes(List<ProdutoDetalhes> detalhes) {
+		this.detalhes = detalhes;
+	}
+
+	public void addDetalhes(String nome, String valor) {
+		this.detalhes.add(new ProdutoDetalhes(nome, valor, this));
+	}
+
 }

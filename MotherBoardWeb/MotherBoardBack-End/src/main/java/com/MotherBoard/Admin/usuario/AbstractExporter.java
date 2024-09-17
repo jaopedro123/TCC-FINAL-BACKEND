@@ -3,9 +3,6 @@ package com.MotherBoard.Admin.usuario;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date; 
-import java.util.List;
-
-import com.MotherBoard.entidade.comum.Usuario;
 
 import jakarta.servlet.http.HttpServletResponse;
 

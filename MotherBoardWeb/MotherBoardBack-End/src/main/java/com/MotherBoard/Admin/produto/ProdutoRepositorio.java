@@ -20,11 +20,10 @@ public interface ProdutoRepositorio extends PagingAndSortingRepository<Produto, 
 
 	public Produto findByNome(String nome);
 
-	
- @Query("UPDATE Produto p SET p.habilitado = ?2 WHERE p.id = ?1")
+	@Query("UPDATE Produto p SET p.habilitado = ?2 WHERE p.id = ?1")
+	@Modifying
+	public void updateHabilitadoStatus(Integer id, boolean habilitado);
 
-@Modifying
-public void updateHabilitadoStatus(Integer id, boolean habilitado);
-
+	public Long countById(Integer id);
 
 }

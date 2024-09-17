@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.MotherBoard.Admin.FileUploadUtil;
-import com.MotherBoard.Admin.usuario.UsuarioServico;
 import com.MotherBoard.entidade.comum.Categoria;
 
 import org.springframework.web.bind.annotation.PostMapping;

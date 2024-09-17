@@ -25,22 +25,6 @@ public class MvcConfig implements WebMvcConfigurer{
 		
 		registry.addResourceHandler("/" + dirNameCategoria + "/**")
 				.addResourceLocations("file:/" + categoriaImagensPath + "/");
-
-/* 		String dirNameCategoria = "../categoria-imagens";
-		Path categoriaImagensDir = Paths.get(dirNameCategoria);
-		String categoriaImagensPath = categoriaImagensDir.toFile().getAbsolutePath();
-		
-		registry.addResourceHandler("/categoria-imagens/**")
-				.addResourceLocations("file:/" + categoriaImagensPath + "/"); */
-		
-		
-		
-		/*String dirName = "fotos-usuario";
-	    Path userPhotosDir = Paths.get(dirName);
-	    String userPhotosPath = userPhotosDir.toFile().getAbsolutePath();
-	    
-	    registry.addResourceHandler("/" + dirName + "/**")
-	            .addResourceLocations("file:/" + userPhotosPath + "/");*/
 		
 		String brandLogosDirName = "Marca-logos";
 		Path brandLogosDir = Paths.get(brandLogosDirName);
@@ -49,7 +33,11 @@ public class MvcConfig implements WebMvcConfigurer{
 		registry.addResourceHandler("/" + brandLogosDirName + "/**") 
 		        .addResourceLocations("file:/" + brandLogosPath + "/");
 
+		String dirNameProduto = "produto-imagens";
+		Path produtoImagensDir = Paths.get(dirNameProduto);
+		String produtoImagensPath = produtoImagensDir.toFile().getAbsolutePath();
 		
-		
+		registry.addResourceHandler("/" + dirNameProduto + "/**")
+				.addResourceLocations("file:/" + produtoImagensPath + "/");
 		}	
 	}
