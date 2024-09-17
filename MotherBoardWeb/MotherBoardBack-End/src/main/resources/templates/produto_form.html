@@ -161,25 +161,23 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="visaoGeral" role="tabpanel" >
-                            <div th:replace="produto_visaoGeral :: conteudo">
-                    
-                            </div>
+                            <div th:replace="produto_visaoGeral :: conteudo"></div>
                         </div>
                         <div class="tab-pane" id="descricao" role="tabpanel" >
-                            <div th:replace="produto_descricao :: conteudo">
-                    
-                            </div>
+                            <div th:replace="produto_descricao :: conteudo"></div>
                         </div>
                         <div class="tab-pane" id="Imagens" role="tabpanel">
-                            <div th:replace="produto_imagens :: conteudo">
-
+                            <div th:replace="produto_imagens :: conteudo"></div>
+                        </div>
+                        <div class="tab-pane" id="detalhes" role="tabpanel">
+                            <div th:replace="produto_detalhes :: conteudo"></div>
+                            <div>
+                                <input type="button" class="btn btn-secondary" value="Adicionar mais detalhes" 
+                                        onclick="addNextDetalhesSection()" />
                             </div>
                         </div>
-                        <div class="tab-pane" id="detalhes" role="tabpanel">Detalhes</div>
                         <div class="tab-pane" id="envio" role="tabpanel">
-                            <div th:replace="produto_envio :: conteudo">
-
-                            </div>
+                            <div th:replace="produto_envio :: conteudo"></div>
                         </div>
                     </div>
                     <div class="p-3 text-center">
@@ -294,7 +292,9 @@
         </div>
     </footer>
 
-    <script th:src="@{/scripts/produto_form.js}"></script>
+    <script th:src="@{/scripts/produto_form_overview.js}"></script>
+    <script th:src="@{/scripts/produto_form_imagens.js}"></script>
+    <script th:src="@{/scripts/produto_form_detalhes.js}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
