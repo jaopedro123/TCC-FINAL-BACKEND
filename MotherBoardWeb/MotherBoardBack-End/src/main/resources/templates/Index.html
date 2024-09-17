@@ -100,7 +100,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        <!-- <li class="nav-item">
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -115,7 +115,7 @@
 
                                 </ul>
                             </div>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
@@ -125,23 +125,23 @@
 
     <div class="containerdoADM py-5 mb-5">
 
-        <div
+<!--         <div
             style="background-color: #2c3036; border-radius: 10px; text-align: center; width: auto; padding: 10px; margin-bottom: 50px;">
             <br>
             <a th:href="@{/conta}">
                 <div th:if="${#authentication.principal}">
                     <p th:text="${#authentication.principal.nomeCompleto}"></p>
                 </div>
-            </a>
+            </a>sec:authorize="hasAuthority('Admin')"
             <p th:each="role : ${#authentication.principal.authorities}" th:text="${role.authority}"></p>
-        </div>
+        </div> -->
 
         <div class="col-12 d-flex justify-content-center flex-wrap container py-3 fundoprod">
             <h4 class="text-center cargo p-3 w-50 mb-5 rounded-5" style="background-color: #41454a;"><b>INTRANET</b>
             </h4>
             <div class="row justify-content-center align-items-center">
 
-                <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
+                <a class="nav-link squaredoADM"  th:href="@{/Usuarios}">
                     <i class="bi bi-person-badge"></i>
                     <h5><b>Funcionario</b></h5>
                 </a>

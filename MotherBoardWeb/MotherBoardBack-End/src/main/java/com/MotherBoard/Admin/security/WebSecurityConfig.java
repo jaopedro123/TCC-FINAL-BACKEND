@@ -14,8 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class WebSecurityConfig {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    /* @Autowired
+    private UserDetailsService userDetailsService; */
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -23,6 +23,12 @@ public class WebSecurityConfig {
     }
 
     @Bean
+	SecurityFilterChain configureHttpSecurity(HttpSecurity http) throws Exception {
+	    http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+	    return http.build();
+	}
+
+    /* @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
@@ -60,6 +66,6 @@ public class WebSecurityConfig {
     @Bean
     WebSecurityCustomizer configureWebSecurity() throws Exception {
         return (web) -> web.ignoring().requestMatchers("/imagens/**","/css/**", "/scripts/**", "/webjars/**");
-    }
+    } */
     
 }
