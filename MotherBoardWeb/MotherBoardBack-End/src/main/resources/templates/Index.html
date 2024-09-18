@@ -22,85 +22,14 @@
     <header class="mb-3">
         <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <a href="index.html" class="navbar-brand">
+
+                <a th:href="@{/}" class="navbar-brand">
                     <img class="imgMother" th:src="@{/imagens/image-light.png}">
                 </a>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-display="static"
-                        aria-expanded="false">
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-motherboard me-2"></i>Hardware</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-pc-display me-2"></i>Computadores</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-mouse me-2"></i>Perifericos</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-controller me-2"></i>Eletronicos</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-display me-2"></i>Monitores</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-joystick me-2"></i>Espaço gamer</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Configuracao.html"><i
-                                    class="bi bi-gear me-2"></i>Configurações</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                    </ul>
-                </div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
-                        <input class="form-control me-2 custom-search barradepesquisa" type="search"
-                            placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" id="corcaraio" type="submit"><i
-                                class="bi bi-search"></i></button>
-                    </form>
 
-                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link " href="Favoritos.html">
-                                <i class="bi bi-bookmark iconeheader"></i>
-
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link " href="Carrinho.html">
-                                <i class="bi bi-cart iconeheader"></i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
+                       
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -115,31 +44,22 @@
 
                                 </ul>
                             </div>
-                        </li>
+                       
 
                     </ul>
                 </div>
-            </div>
+            
         </nav>
     </header>
 
     <div class="containerdoADM py-5 mb-5">
 
-        <div
-            style="background-color: #2c3036; border-radius: 10px; text-align: center; width: auto; padding: 10px; margin-bottom: 50px;">
-            <br>
-            <a th:href="@{/conta}">
-                <div th:if="${#authentication.principal}">
-                    <p th:text="${#authentication.principal.nomeCompleto}"></p>
-                </div>
-            </a>
-            <p th:each="role : ${#authentication.principal.authorities}" th:text="${role.authority}"></p>
-        </div>
-
-        <div class="col-12 d-flex justify-content-center flex-wrap container py-3 fundoprod">
-            <h4 class="text-center cargo p-3 w-50 mb-5 rounded-5" style="background-color: #41454a;"><b>INTRANET</b>
-            </h4>
+        <div class="col-12 d-flex justify-content-center flex-wrap container py-3 fundoprod mt-5">
+            <h4 class="text-center cargo p-3 w-50 mb-5 rounded-5 mt-3 mb-5" style="background-color: #41454a;"><b>INTRANET</b>
+				
+            
             <div class="row justify-content-center align-items-center">
+				
 
                 <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
                     <i class="bi bi-person-badge"></i>
@@ -147,15 +67,6 @@
                 </a>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-                    <a class="nav-link squaredoADM" th:href="@{/pessoaFisica}">
-                        <i class="bi bi-person-circle"></i>
-                        <h5><b>Pessoa Física</b></h5>
-                    </a>
-
-                    <a class="nav-link squaredoADM" th:href="@{/pessoaJuridica}">
-                        <i class="bi bi-person-square"></i>
-                        <h5><b>Pessoa Jurídica</b></h5>
-                    </a>
 
                     <a class="nav-link squaredoADM" th:href="@{/categorias}">
                         <i class="bi bi-grid-3x3-gap-fill"></i>
@@ -163,7 +74,7 @@
                     </a>
                 </th:block>
 
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador')">
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
                     <a class="nav-link squaredoADM" th:href="@{/produtos}">
                         <i class="bi bi-box2-fill"></i>
                         <h5><b>Produtos</b></h5>
@@ -176,51 +87,23 @@
                         <h5><b>Marcas</b></h5>
                     </a>
                 </th:block>
+				
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				    <a class="nav-link squaredoADM" th:href="@{/inventario}">
+				        <i class="bi bi-box2-fill"></i>
+				        <h5><b>Inventario</b></h5>
+				    </a>
+				</th:block>
+				
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				    <a class="nav-link squaredoADM" th:href="@{/conta}">
+				        <i class="bi bi-box2-fill"></i>
+				        <h5><b>Minha Conta</b></h5>
+				    </a>
+				</th:block>
             </div>
-
-            <div class="row justify-content-center align-items-center mb-5">
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Exportador', 'Assistente')">
-                    <a class="nav-link squaredoADM" th:href="@{/ordems}">
-                        <i class="bi bi-envelope-paper-fill"></i>
-                        <h5><b>Ordems</b></h5>
-                    </a>
-                </th:block>
-
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Exportador')">
-                    <a class="nav-link squaredoADM" th:href="@{/envio}">
-                        <i class="bi bi-check-circle-fill"></i>
-                        <h5><b>Envio</b></h5>
-                    </a>
-
-                </th:block>
-
-                <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/reportedevenda}">
-                    <i class="bi bi-graph-down"></i>
-                    <h5><b>Reporte de Venda</b></h5>
-                </a>
-
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-                    <a class="nav-link squaredoADM" th:href="@{/artigos}">
-                        <i class="bi bi-journal-text"></i>
-                        <h5><b>Artigos</b></h5>
-                    </a>
-
-                    <a class="nav-link squaredoADM" th:href="@{/menus}">
-                        <i class="bi bi-list"></i>
-                        <h5><b>Menus</b></h5>
-                    </a>
-                </th:block>
-
-                <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/config}">
-                    <i class="bi bi-gear-fill"></i>
-                    <h5><b>Config</b></h5>
-                </a>
-
-            </div>
+			</h4>
         </div>
-    </div>
-
-    </div>
     </div>
 
 
@@ -230,9 +113,12 @@
             <div class="row text-center text-md-left">
 
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <a href="#" class="navbar-brand">
-                        <img class="imgMother mb-4" src="Imagens/image-light.png">
-                    </a>
+					
+					<a th:href="@{/}" class="navbar-brand">
+					    <img class="imgMother" th:src="@{/imagens/image-light.png}">
+					</a>
+					<br /><br /><br />
+					
                     <section class="mb-4">
                         <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
                                 class="bi bi-facebook"></i></a>
@@ -251,42 +137,14 @@
 
 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Dúvidas:</h6>
-                    <p>
-                        <a href="Politica.html" class="links2"> Reembolso</a>
-
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
-                    </p>
-                    <p>
-
-                        <a href="atendimento.html" class="links2"> Formas de pagamento</a>
-                    </p>
-                </div>
-
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Cliente:</h6>
-                    <p>
-                        <a href="Conta.html" class="links2"> Minha Conta</a>
-                    </p>
-                    <p>
-                        <a href="Conta.html" class="links2"> Meus pedidos</a>
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Atendimento ao Cliente</a>
-                    </p>
-                </div>
-
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
                     <p>
                         <a href="SobreNos.html" class=" links2"> Sobre nós</a>
 
                     </p>
-                    <p>
-                        <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
-                    </p>
+					<p>
+					    <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
+					</p>
                     <p>
                         <a href="Politica.html" class=" links2"> Política de Privacidade</a>
 
@@ -304,6 +162,7 @@
 
 
     </footer>
+	
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
