@@ -55,6 +55,8 @@ public class ProdutoControlador {
 		model.addAttribute("produto", produto);
 		model.addAttribute("listMarcas", listMarcas);
 		model.addAttribute("tituloDaPag", "Criar novo produto");
+		model.addAttribute("numeroDeImagensExtras", 0);
+		
 		return "produto_form";
 	}
 
@@ -96,7 +98,7 @@ public class ProdutoControlador {
 				if (!produto.contemImagemNome(filename)) {
 					try {
 						Files.delete(file);
-						LOGGER.info("Imagem extra deletada: " + file);
+						LOGGER.info("Imagem extra deletada: " + filename);
 
 					} catch (IOException e) {
 						LOGGER.error("Não foi possível deletar a imagem extra: " + filename);
@@ -109,10 +111,9 @@ public class ProdutoControlador {
 
 	}
 
-	private void setImagensExtraNomesExistentes(String[] imagemIDs, String[] imagemNomes,
-			Produto produto) {
-		if (imagemIDs == null || imagemIDs.length == 0)
-			return;
+	private void setImagensExtraNomesExistentes(String[] imagemIDs, String[] imagemNomes, Produto produto) {
+
+		if (imagemIDs == null || imagemIDs.length == 0)	return;
 
 		Set<ProdutoImagem> imagens = new HashSet<>();
 		for (int count = 0; count < imagemIDs.length; count++) {
@@ -172,7 +173,7 @@ public class ProdutoControlador {
 				if (!multipartFile.isEmpty()) {
 					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 
-					if (produto.contemImagemNome(fileName)) {
+					if (!produto.contemImagemNome(fileName)) {
 						produto.addImagemExtra(fileName);
 					}
 				}
@@ -217,8 +218,8 @@ public class ProdutoControlador {
 	}
 
 	@GetMapping("/produtos/editar/{id}")
-	public String editarProdutos(@PathVariable("id") Integer id, Model model,
-			RedirectAttributes ra) {
+	public String editarProdutos(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+		
 		try {
 			Produto produto = produtoServico.get(id);
 			List<Marca> listMarcas = marcaServico.listAll();
@@ -229,13 +230,18 @@ public class ProdutoControlador {
 			model.addAttribute("tituloDaPag", "Editar produto (ID: " + id + ")");
 			model.addAttribute("numeroDeImagensExtras", numeroDeImagensExtras);
 
+			System.out.println("aqui1");
+
 			return "produto_form";
 
 		} catch (ProdutoNotFoundException e) {
 			ra.addFlashAttribute("message", e.getMessage());
 
+			System.out.println("aqui2");
+
 			return "redirect:/produtos";
 		}
+
 	}
 
 	@GetMapping("/produtos/detalhes/{id}")

@@ -281,11 +281,17 @@ public class Produto {
 
 		while (iterator.hasNext()) {
 			ProdutoImagem imagem = iterator.next();
+
+			System.out.println(imagemNome + "<-----imagemNOme------------getNome----------->" +imagem.getNome());
+
 			if (imagem.getNome().equals(imagemNome)) {
+				System.out.println("TRUE");
+
 				return true;
 			}
 		}	
 
+		System.out.println("FALSE");
 		return false;
 	}
 
