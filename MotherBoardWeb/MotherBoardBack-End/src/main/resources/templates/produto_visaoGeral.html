@@ -2,16 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
         <div th:fragment="conteudo" th:remove="tag">
-            <div class="mb-3">
+            <div class="my-3">
                 <label for="categoria" class="form-label">Nome do produto:</label>
                 <input type="text" name="_csrf" th:field="*{nome}" class="form-control" placeholder="Digite o nome do produto" required minlength="3" maxlength="256">
-				<br/>
             </div>
 
             <div class="mb-3">
                 <label  class="form-label">alias:</label>
                 <input type="text" th:field="*{alias}" class="form-control"  placeholder="Digite o alias" required minlength="3" maxlength="256">
-				<br/>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">marcas:</label>
@@ -20,13 +18,11 @@
                         <option th:value="${marca.id}">[[${marca.nome}]]</option>
                     </th:block>
                 </select>
-				<br/>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">categoria:</label>
                 <select class="form-control" th:field="*{categoria}" required>
                 </select>
-				<br/>
             </div>
             <div class="mb-3 d-flex">
                 <label class="form-label">Ativo:</label>
@@ -44,17 +40,14 @@
             <div class="mb-3">
                 <label for="categoria" class="form-label">Custo:</label>
                 <input type="number"  th:field="*{custo}" class="form-control" placeholder="Digite o valor do custo" />
-				<br/>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">preco:</label>
                 <input type="number"  th:field="*{preco}" class="form-control" placeholder="Digite o valor do preco" />
-				<br/>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">desconto:</label>
                 <input type="number"  th:field="*{desconto}" class="form-control" placeholder="Digite o valor do desconto" />
-				<br/>
             </div>
         </div>
     </body>

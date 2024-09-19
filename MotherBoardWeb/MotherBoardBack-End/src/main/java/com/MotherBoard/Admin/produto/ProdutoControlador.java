@@ -1,8 +1,15 @@
 package com.MotherBoard.Admin.produto;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,9 +25,12 @@ import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.Admin.marca.MarcaServico;
 import com.MotherBoard.entidade.comum.Marca;
 import com.MotherBoard.entidade.comum.Produto;
+import com.MotherBoard.entidade.comum.ProdutoImagem;
 
 @Controller
 public class ProdutoControlador {
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProdutoControlador.class);
+
 	@Autowired
 	private ProdutoServico produtoServico;
 	@Autowired
@@ -52,31 +62,81 @@ public class ProdutoControlador {
 	public String saveProduto(Produto produto, RedirectAttributes ra,
 			@RequestParam("fileImage") MultipartFile imagemPrincipalMultipart,
 			@RequestParam("imagemExtra") MultipartFile[] imagemExtraMultiparts,
-			@RequestParam(name = "nomeDetalhes", required = false) String[] nomeDetalhes,
-			@RequestParam(name = "valorDetalhes", required = false) String[] valorDetalhes)
+			@RequestParam(name = "detalhesIDs", required = false) String[] detalhesIDs,
+			@RequestParam(name = "detalhesNomes", required = false) String[] detalhesNomes,
+			@RequestParam(name = "detalhesValor", required = false) String[] detalhesValor,
+			@RequestParam(name = "imagemIDs", required = false) String[] imagemIDs,
+			@RequestParam(name = "imagemNomes", required = false) String[] imagemNomes)
 			throws IOException {
-		
-		setImagemPrincipalNome(imagemPrincipalMultipart, produto);
-		setImagemExtraNome(imagemExtraMultiparts, produto);
-		setProdutoDetalhes(nomeDetalhes, valorDetalhes, produto);
 
-		Produto salvarProduto = produtoServico.save(produto); 
+		setImagemPrincipalNome(imagemPrincipalMultipart, produto);
+		setImagensExtraNomesExistentes(imagemIDs, imagemNomes, produto);
+		setNewImagemExtraNome(imagemExtraMultiparts, produto);
+		setProdutoDetalhes(detalhesIDs, detalhesNomes, detalhesValor, produto);
+
+		Produto salvarProduto = produtoServico.save(produto);
 
 		saveUploadedImages(imagemPrincipalMultipart, imagemExtraMultiparts, salvarProduto);
-		
+
+		deletarImagensExtrasRemovidasDoForm(produto);
+
 		ra.addFlashAttribute("mensagem", "o produto foi salvo com sucesso");
-		
+
 		return "redirect:/produtos";
 	}
 
-	private void setProdutoDetalhes(String[] nomeDetalhes, String[] valorDetalhes, Produto produto) {
-		if (nomeDetalhes == null || nomeDetalhes.length == 0) return;
+	private void deletarImagensExtrasRemovidasDoForm(Produto produto) {
+		String imagensExtraProdutoDir = "produto-imagens/" + produto.getId() + "/extras";
+		Path dirPath = Paths.get(imagensExtraProdutoDir);
 
-		for(int count = 0; count < nomeDetalhes.length; count++) {
-			String nome = nomeDetalhes[count];
-			String valor = valorDetalhes[count];
+		try {
+			Files.list(dirPath).forEach(file -> {
+				String filename = file.toFile().getName();
 
-			if (!nome.isEmpty() && !valor.isEmpty()) {
+				if (!produto.contemImagemNome(filename)) {
+					try {
+						Files.delete(file);
+						LOGGER.info("Imagem extra deletada: " + file);
+
+					} catch (IOException e) {
+						LOGGER.error("Não foi possível deletar a imagem extra: " + filename);
+					}
+				}
+			});
+		} catch (IOException ex) {
+			LOGGER.error("Não foi possível deletar o diretório: " + dirPath);
+		}
+
+	}
+
+	private void setImagensExtraNomesExistentes(String[] imagemIDs, String[] imagemNomes,
+			Produto produto) {
+		if (imagemIDs == null || imagemIDs.length == 0)
+			return;
+
+		Set<ProdutoImagem> imagens = new HashSet<>();
+		for (int count = 0; count < imagemIDs.length; count++) {
+			Integer id = Integer.parseInt(imagemIDs[count]);
+			String nome = imagemNomes[count];
+
+			imagens.add(new ProdutoImagem(id, nome, produto));
+		}
+
+		produto.setImagens(imagens);
+	}
+
+	private void setProdutoDetalhes(String[] detalhesIDs, String[] detalhesNomes, String[] detalhesValor, Produto produto) {
+		if (detalhesNomes == null || detalhesNomes.length == 0)
+			return;
+
+		for (int count = 0; count < detalhesNomes.length; count++) {
+			String nome = detalhesNomes[count];
+			String valor = detalhesValor[count];
+			Integer id = Integer.parseInt(detalhesIDs[count]);
+
+			if (id != 0) {
+				produto.addDetalhes(id, nome, valor);
+			} else if (!nome.isEmpty() && !valor.isEmpty()) {
 				produto.addDetalhes(nome, valor);
 			}
 		}
@@ -97,20 +157,24 @@ public class ProdutoControlador {
 			String uploadDir = "produto-imagens/" + salvarProduto.getId() + "/extras";
 
 			for (MultipartFile multipartFile : imagemExtraMultiparts) {
-				if (!multipartFile.isEmpty()) continue;
+				if (!multipartFile.isEmpty()) {
 
-				String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-				FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-			};
+					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+					FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+				}
+			}
 		}
 	}
 
-	private void setImagemExtraNome(MultipartFile[] imagemExtraMultiparts, Produto produto) {
+	private void setNewImagemExtraNome(MultipartFile[] imagemExtraMultiparts, Produto produto) {
 		if (imagemExtraMultiparts.length > 0) {
 			for (MultipartFile multipartFile : imagemExtraMultiparts) {
 				if (!multipartFile.isEmpty()) {
 					String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-					produto.addImagemExtra(fileName);
+
+					if (produto.contemImagemNome(fileName)) {
+						produto.addImagemExtra(fileName);
+					}
 				}
 			}
 		}
@@ -134,12 +198,13 @@ public class ProdutoControlador {
 	};
 
 	@GetMapping("/produtos/deletar/{id}")
-	public String deletarProduto(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra) throws IOException {
+	public String deletarProduto(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra)
+			throws IOException {
 		try {
 			produtoServico.deletar(id);
 			String imagemProdutoDir = "produto-imagens/" + id;
 			String imagensExtraProdutoDir = "produto-imagens/" + id + "/extras";
-			
+
 			FileUploadUtil.deleteDir(imagemProdutoDir);
 			FileUploadUtil.deleteDir(imagensExtraProdutoDir);
 
@@ -149,5 +214,43 @@ public class ProdutoControlador {
 		}
 
 		return "redirect:/produtos";
+	}
+
+	@GetMapping("/produtos/editar/{id}")
+	public String editarProdutos(@PathVariable("id") Integer id, Model model,
+			RedirectAttributes ra) {
+		try {
+			Produto produto = produtoServico.get(id);
+			List<Marca> listMarcas = marcaServico.listAll();
+			Integer numeroDeImagensExtras = produto.getImagens().size();
+
+			model.addAttribute("produto", produto);
+			model.addAttribute("listMarcas", listMarcas);
+			model.addAttribute("tituloDaPag", "Editar produto (ID: " + id + ")");
+			model.addAttribute("numeroDeImagensExtras", numeroDeImagensExtras);
+
+			return "produto_form";
+
+		} catch (ProdutoNotFoundException e) {
+			ra.addFlashAttribute("message", e.getMessage());
+
+			return "redirect:/produtos";
+		}
+	}
+
+	@GetMapping("/produtos/detalhes/{id}")
+	public String verDetalhesProdutos(@PathVariable("id") Integer id, Model model,
+			RedirectAttributes ra) {
+		try {
+			Produto produto = produtoServico.get(id);
+			model.addAttribute("produto", produto);
+
+			return "produto_detalhes_modal";
+
+		} catch (ProdutoNotFoundException e) {
+			ra.addFlashAttribute("message", e.getMessage());
+
+			return "redirect:/produtos";
+		}
 	}
 }

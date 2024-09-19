@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "produtos_imagem")
@@ -25,8 +26,12 @@ public class ProdutoImagem {
     private Produto produto;
 
     public ProdutoImagem() {
-        super();
-        // TODO Auto-generated constructor stub
+    }
+
+    public ProdutoImagem(Integer id, String nome, Produto produto) {
+        this.id = id;
+        this.nome = nome;
+        this.produto = produto;
     }
 
     public ProdutoImagem(String nome, Produto produto) {
@@ -56,6 +61,11 @@ public class ProdutoImagem {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    @Transient
+    public String getImagemPath() {
+        return "/produto-imagens/" + produto.getId() + "/extras/" + this.nome;
     }
 
 }

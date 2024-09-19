@@ -30,6 +30,13 @@ public class ProdutoDetalhes {
     public ProdutoDetalhes() {
     }
 
+    public ProdutoDetalhes(Integer id, String nome, String valor, Produto produto) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.produto = produto;
+    }
+
     public ProdutoDetalhes(String nome, String valor, Produto produto) {
         this.nome = nome;
         this.valor = valor;

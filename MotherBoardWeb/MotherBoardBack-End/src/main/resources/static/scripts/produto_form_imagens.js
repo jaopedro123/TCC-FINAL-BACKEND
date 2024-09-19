@@ -16,6 +16,12 @@ $(document).ready(function () {
             showExtraImageThumbnail(this, index);
         })
     });
+
+    $("a[name='linkRemoverImagemExtra']").each(function(index) {
+        $(this).click(function() {
+            removerImagemExtra(index);
+        })
+    })
 });
 
 function showImageThumbnail(fileInput) {
@@ -29,6 +35,13 @@ function showImageThumbnail(fileInput) {
 
 function showExtraImageThumbnail(fileInput, index) {
     var file = fileInput.files[0];
+
+    fileName = file.name;
+    imagemNomeHiddenField = $("#imagemNome" + index);
+    if (imagemNomeHiddenField.length) {
+        imagemNomeHiddenField.val(fileName);
+    }
+
     var reader = new FileReader();
     reader.onload = function (e) {
         $("#extraThumbnail" + index).attr("src", e.target.result);
