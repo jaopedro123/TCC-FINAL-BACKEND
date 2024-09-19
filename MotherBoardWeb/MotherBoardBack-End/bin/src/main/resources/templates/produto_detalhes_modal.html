@@ -1,0 +1,172 @@
+<div class="modal-header">
+    <h4 class="modal-title">Detalhes do Produto</h4>
+    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">&times;</button>
+</div>
+
+<div>
+
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#visaoGeral" type="button"
+                role="tab">Visão geral</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#descricao" type="button"
+                role="tab">Descrição</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Imagens" type="button"
+                role="tab">Imagens</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#detalhes" type="button"
+                role="tab">Detalhes</button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div class="tab-pane px-4 active" id="visaoGeral" role="tabpanel">
+
+            <div class="form-group row my-3">
+                <label class="col-sm col-form-label">Nome do produto:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.nome}" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Alias:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.alias}" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Marcas:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.marca.nome}" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Categoria:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.categoria.nome}" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Ativo:</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" th:checked="${produto.habilitado}" onclick="return false;" />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">No estoque:</label>
+                <div class="col-sm-10">
+                    <input type="checkbox" th:checked="${produto.noStoque}" onclick="return false;" />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Custo:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.custo}" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Preço:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.preco}" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row mb-3">
+                <label class="col-sm col-form-label">Desconto:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" th:value="${produto.desconto}" readonly />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane p-4" id="descricao" role="tabpanel">
+
+            <div>
+                <label>Descricao curta</label>
+                <div th:utext="${produto.descricaoCurta}" class="border p-2 m-2"></div>
+            </div>
+            <div>
+                <label>Descricao completa</label>
+                <div th:utext="${produto.descricaoCompleta}" class="border p-2 m-2"></div>
+            </div>
+
+        </div>
+
+        <div class="tab-pane p-4" id="Imagens" role="tabpanel">
+
+            <div class="row" id="divImagensProduto">
+                <div class="col-5 mt-2 p-2">
+                    <label>Imagem principal: [[${produto.imagem_principal}]]</label>
+                    <div class="col-sm-8">
+                        <div class="my-1">
+                            <img alt="preview da imagem" th:src="@{${produto.imagemPrincipalPath}}" class="img-fluid"
+                                style="width: 130px; height: 130px;"/>
+                        </div>
+                    </div>
+                </div>
+    
+                <th:block th:each="produtoImagem, status : ${produto.imagens}">
+                    <div class="col-5 mt-2 p-2">
+                        <div>
+                            <label>Imagem Extra #[[${status.index + 1}]]: [[${produtoImagem.nome}]]</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="my-1"> <!-- th:src="@{${produto.imagemPath}}"  -->
+                                <img th:src="@{${produtoImagem.imagemPath}}"
+                                    th:alt="'Imagem extra #' + ${status.index + 1} + 'preview'" 
+                                    style="width: 130px; height: 130px;"/>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+
+            </div>
+
+        </div>
+
+        <div class="tab-pane p-4" id="detalhes" role="tabpanel">
+
+            <div>
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th width="40%">Nome</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="detalhes: ${produto.detalhes}">
+                            <td>[[${detalhes.nome}]]</td>
+                            <td>[[${detalhes.valor}]]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <div class="me-auto">
+        <label class="form-label">Data da atualização:</label>
+        <span th:text="${#dates.format(produto.tempoAtualizado, 'dd/MM/yyyy HH:mm')}"></span>
+    </div>
+</div>
