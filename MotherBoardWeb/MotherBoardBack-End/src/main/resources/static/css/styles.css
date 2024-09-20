@@ -9,6 +9,11 @@
 .amarelo{
 	color: #ffe865;
 }
+.iconeheader{
+	font-size: 40px; 
+	width: 30px; 
+	height: 30px;
+}
 .container3 {
 	display: flex;
 	justify-content: center;
@@ -26,13 +31,9 @@
 	--bs-nav-link-hover-color: #643c96;
 	transition: 1s;
 }
-.iconeheader{
-	font-size: 30px; 
-	width: 30px; 
-	height: 30px;
-}
+
 .nav-link:hover{
-	--bs-nav-link-hover-color: #643c96;
+	--bs-nav-link-hover-color: #b299d2;
 	transition: 1s;
 }
 .nav-link:focus-visible {
@@ -143,8 +144,8 @@ footer {
 	}
 }
 .imgMother {
-    height: 25px;
-    width:  150px;
+    height: 40px;
+    width:  185px;
 }
 .imgMotherkk {
     height: 50px;
@@ -242,6 +243,13 @@ footer {
     border-color: #5a2d91;
 	transition: 0.5s;
 }
+
+.corMurilo1:first-child:active {
+	font-weight: bold;
+	background-color: #5a2d91;
+	border-color: #5a2d91;
+}
+
 .erro-mensagem-nome, .erro-mensagem-telefone, #cepError{
 	color: #dc3545;
 }
@@ -268,6 +276,21 @@ footer {
 	}
 }
 
+.MensagemPopup {
+	font-weight: bold;
+	margin-bottom: 20px;
+    animation: bounceIn 0.8s ease;
+}
+
+@keyframes bounceIn {
+    0%, 100% {
+        transform: scale(1); /* Tamanho original */
+    }
+    50% {
+        transform: scale(0.5); /* Aumenta o tamanho */
+    }
+}
+
 .ico-google{
     width: 30px;
 }
@@ -275,11 +298,11 @@ footer {
 	display: none;
 }
 .linksCadastroLogin{
-	color: #9fc1f5;
+	color: #b07fec;
 	text-decoration: none;
 }
 .linksCadastroLogin:hover{
-	color: #5780bd;
+	color: #9875c2;
 }
 .CadLogConta{
 	color: white;
@@ -2092,7 +2115,6 @@ display: none;
 	font-size: 24px;
 	text-decoration: none;
 	border-radius: 16px;
-
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 	transition: all 0.3s ease;
 	position: relative;
@@ -2190,10 +2212,12 @@ display: none;
     padding-bottom: 62px;
     margin-top: -16px;
     background-color: #40454e;
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 /* Conta */
 .INTRAimgConta {
+	cursor: pointer;
 	border-radius: 50%; 
 	width: 130px; 
 	height: 130px;
@@ -2202,8 +2226,8 @@ display: none;
 	display: block;
     margin-bottom: 19px;
     margin-top: -28px;
-    margin-left: 96px;
-    color: #000000;
+    margin-left: 124px;
+    color: white;
 }
 .INTRAcontaForm {
 	background-color: #2B3035; 
@@ -2226,6 +2250,20 @@ display: none;
     border-color: rgb(0, 128, 64);
 	transition: 0.5s;
 }
+
 /* fim - Conta */
 /* Dashboard ADM - FIM */
+.SubmitFunc{
+	background: #694a8f;
+	border: none;
+}
+.SubmitFunc:hover{
+	background: #7a44bc;
+}
 
+.INTRACategoriaimg{
+	cursor: pointer;
+	border-radius: 12px;
+	width: 130px;
+	height: 130px;
+}

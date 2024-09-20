@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
 
 <head>
-    <title>MotherBoard</title>
+    <title>MotherBoard - Login</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="shortcut icon" href="icones/logorapa.png">
@@ -79,18 +79,6 @@
 
                     <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="Favoritos.html">
-                                <i class="bi bi-bookmark text-white"
-                                    style="font-size: 30px; width: 30px; height: 30px;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="Carrinho.html">
-                                <i class="bi bi-cart text-white"
-                                    style="font-size: 30px; width: 30px; height: 30px;"></i>
-                            </a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="Conta.html">
                                 <i class="bi bi-person-circle text-white"
                                     style="font-size: 30px; width: 30px; height: 30px;"></i>
@@ -102,18 +90,19 @@
         </nav>
     </header>
 
-    <main class="border rounded text-white tam-log my-5 m-auto p-5"
+    <main class="border rounded text-white tam-log my-5 m-auto p-5 h-auto"
         style="background-color: #2B3035; border-color: #2B3035; --bs-border-color: #495057">
-        <form th:action="@{/login}" method="post" id="loginForm" class="container needs-validation p-3" novalidate>
+        <form th:action="@{/login}" method="post" id="loginForm" class="container needs-validation" novalidate>
             <div th:if="${param.error}">
-                <p class="text-danger text-center"
+                <h5 class="text-danger text-center MensagemPopup"
                     th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null ? (session.SPRING_SECURITY_LAST_EXCEPTION.message.contains('Bad credentials') ? 'Credenciais inválidas. Verifique seu E-mail ou senha.' : session.SPRING_SECURITY_LAST_EXCEPTION.message) :''}">
-                </p>
+                </h5>
             </div>
 
 
             <div th:if="${param.logout}">
-                <p style="text-align:center; " class="text-warning">Você se deslogou com sucesso!</p>
+                <h5 class="text-success text-center MensagemPopup">Você se deslogou com sucesso!<i
+                        class="bi bi-check-circle-fill m-1"></i></h5>
             </div>
 
 
@@ -121,7 +110,7 @@
                 <img class="ico-log" th:src="@{/imagens/logorapa.png}">
             </div>
 
-            <div class="row justify-content-center mb-3">
+            <div class="row justify-content-center mb-2">
                 <div class="col-sm col-md-8">
                     <h2>Login</h2>
                 </div>
@@ -159,7 +148,7 @@
 
 
             <div class="row justify-content-center mb-1">
-                <button class="btn btn-dark col-sm col-md-7" type="submit">Acesse sua Conta</button>
+                <button class="btn col-sm col-md-7" type="submit" style="background: #694a8f">Acesse sua Conta</button>
             </div>
 
 
@@ -221,35 +210,6 @@
                     </section>
                 </div>
 
-
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Dúvidas:</h6>
-                    <p>
-                        <a href="Politica.html" class="links2"> Reembolso</a>
-
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
-                    </p>
-                    <p>
-
-                        <a href="atendimento.html" class="links2"> Formas de pagamento</a>
-                    </p>
-                </div>
-
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Cliente:</h6>
-                    <p>
-                        <a href="Conta.html" class="links2"> Minha Conta</a>
-                    </p>
-                    <p>
-                        <a href="Conta.html" class="links2"> Meus pedidos</a>
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Atendimento ao Cliente</a>
-                    </p>
-                </div>
-
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
                     <p>
@@ -257,7 +217,7 @@
 
                     </p>
                     <p>
-                        <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
+                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Cliente</a>
                     </p>
                     <p>
                         <a href="Politica.html" class=" links2"> Política de Privacidade</a>
