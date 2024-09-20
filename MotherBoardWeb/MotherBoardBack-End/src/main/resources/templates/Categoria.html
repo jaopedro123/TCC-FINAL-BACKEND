@@ -2,7 +2,7 @@
     data-bs-theme="dark">
 
 <head>
-    <title>MotherBoard</title>
+    <title>MotherBoard - Categorias</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="shortcut icon" href="icones/logorapa.png">
@@ -29,7 +29,8 @@
                 </a>
 
 
-                       
+                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
+                        <li class="nav-item">
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,25 +64,25 @@
         </div>
 
         <form th:action="@{/categorias/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-            style="background-color: #40454e">
+            style="background-color: #40454e;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
 
             <div class="container">
                 <label class="mr-2">Filtrar por nome: </label>
                 <div class="col">
                     <div class="input-group mb-3">
                         <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
-                            class="form-control" required>
+                            class="form-control rounded-2" required>
                         &nbsp;
-                        <button type="submit" class="btn btnCadFunc">Procurar</button>
-                        <button type="button" class="btn btnCadFunc" onclick="limparFiltro()">Limpar</button>
+                        <button type="submit" class="btn btnCadFunc me-2 rounded-2">Procurar</button>
+                        <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Limpar</button>
                     </div>
                 </div>
 
             </div>
         </form>
-        <div class="bg-secondary rounded-3 mt-5">
-            <h3 class="text-center p-2">Tabela de Categorias</h3>
-            <table class="table table-dark table-striped">
+        <div class="rounded-3 mt-5" style="background: #694a8f;">
+            <h3 class="text-center p-2">Tabela de Categorias <i class="bi bi-grid-3x3-gap-fill"></i></h3>
+            <table class="table table-dark table-striped" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -111,27 +112,23 @@
                         <td>
                             <a th:if="${Categoria.habilitado == true}"
                                 th:href="@{'/categorias/' + ${Categoria.id} + '/habilitado/false'}">
-                                <i class="bi bi-power" title="Desabilitar Funcionario"
-                                    style="color: green; font-size: 24px;"></i>
+                                <i class="bi bi-power link-success fs-3 m-2" title="Desabilitar Funcionario"></i>
                             </a>
 
                             <a th:if="${Categoria.habilitado == false}"
                                 th:href="@{'/categorias/' + ${Categoria.id} + '/habilitado/true'}">
-                                <i class="bi bi-power" title="Habilitar Funcionario"
-                                    style="color: rgb(255, 128, 128); font-size: 24px;"></i>
+                                <i class="bi bi-power link-danger fs-3 m-2" title="Habilitar Funcionario"></i>
                             </a>
                         </td>
                         <td>
                             <a th:href="@{'/categorias/editar/' + ${Categoria.id}}">
-                                <i class="bi bi-pen" title="Editar esse usuario"
-                                    style="color: white; font-size: 24px;"></i>
+                                <i class="bi bi-pen-fill link-light fs-4 m-2" title="Editar esse usuario"></i>
                             </a>
                         </td>
                         <td>
                             <a class="delete-link" th:if="${Categoria.hasChildren == false}"
                                 th:href="@{'/categorias/deletar/' + ${Categoria.id}}" th:categoriaId="${Categoria.id}">
-                                <i class="bi bi-trash" title="Deletar esse usuario"
-                                    style="color: rgb(255, 128, 128); font-size: 24px;"></i>
+                                <i class="bi bi-trash3-fill link-danger fs-4 m-2" title="Deletar esse usuario"></i>
                             </a>
                         </td>
                     </tr>

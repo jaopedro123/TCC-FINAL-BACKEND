@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
 
 <head>
-    <title>MotherBoard</title>
+    <title>MotherBoard - Usuário Formulário</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="shortcut icon" href="icones/logorapa.png">
@@ -27,9 +27,76 @@
                 <a th:href="@{/}" class="navbar-brand">
                     <img class="imgMother" th:src="@{/imagens/image-light.png}">
                 </a>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-display="static"
+                        aria-expanded="false">
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-motherboard me-2"></i>Hardware</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-pc-display me-2"></i>Computadores</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-mouse me-2"></i>Perifericos</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-controller me-2"></i>Eletronicos</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-display me-2"></i>Monitores</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
+                                    class="bi bi-joystick me-2"></i>Espaço gamer</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="Configuracao.html"><i
+                                    class="bi bi-gear me-2"></i>Configurações</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                    </ul>
+                </div>
 
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
+                        <input class="form-control me-2 custom-search barradepesquisa" type="search"
+                            placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" id="corcaraio" type="submit"><i
+                                class="bi bi-search"></i></button>
+                    </form>
 
-                       
+                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link " href="Favoritos.html">
+                                <i class="bi bi-bookmark iconeheader"></i>
+
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link " href="Carrinho.html">
+                                <i class="bi bi-cart iconeheader"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,10 +121,12 @@
 
 
     <main class="border rounded-4 mt-5 m-auto px-3 pt-3 text-white INTRAcontaForm">
-
         <form th:action="@{/usuarios/salvar}" method="post" enctype="multipart/form-data" th:object="${usuario}" onsubmit="return validateForm(this);">
-
+            
             <div class="rounded-4 pt-3 px-4 mb-2 ms-auto me-auto" style="background-color: #33373f;">
+                <div class="align-items-center d-flex justify-content-end">
+                <input type="button" value="Voltar" class="btn btn-outline-secondary w-25 fw-bold" id="buttonCancel">
+            </div>
 
                 <h2 class="p-3" style="text-align: center;">
                     [[${tituloDaPag}]]
@@ -74,7 +143,7 @@
 
             <div class="mb-3">
                 <label for="email" class="form-label">Email*</label>
-                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Digite seu email"
+                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="contato@gmail.com"
                     required minlength="8" maxlength="128">
             </div>
             <div class="mb-3">
@@ -84,7 +153,7 @@
             </div>
             <div class="mb-3">
                 <label for="cpf" class="form-label">CPF*</label>
-                <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="Digite seu CPF" required
+                <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="000.000.000-00" required
                     minlength="14" maxlength="14">
             </div>
 
@@ -120,9 +189,8 @@
                 </div>
             </div>
 
-            <div class="p-3 text-center">
-                <input type="submit" value="salvar" class="btn corMurilokk">
-                <input type="button" value="cancelar" class="btn btn-outline-danger" id="buttonCancel">
+            <div class="text-center">
+                <input type="submit" value="Criar Conta" class="w-100 p-2 rounded-3 SubmitFunc">
             </div>
 
             <br>

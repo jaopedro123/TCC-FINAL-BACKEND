@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme=dark>
 
 <head>
-    <title>MotherBoard</title>
+    <title>MotherBoard - Categoria Formulário</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="shortcut icon" href="icones/logorapa.png">
@@ -30,7 +30,8 @@
                 </a>
 
 
-                       
+                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
+                         <li class="nav-item">
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -68,8 +69,7 @@
 
                 <div class="text-center">
                     <input type="hidden" th:field="*{imagem}" />
-                    <img th:src="@{${categoria.getImagemPath}}" id="thumbnail"
-                        style="border-radius: 12px; width: 130px; height: 130px;">
+                    <img th:src="@{${categoria.getImagemPath}}" id="thumbnail" class="INTRACategoriaimg">
                     <input type="file" id="foto" name="img" style="display: none;">
                     <i class="bi bi-pencil-square fs-4 INTRAiconeImg"></i>
                 </div>
@@ -104,11 +104,11 @@
                     </div>
                 </div>
 
-                <div class="p-3 text-center">
-                    <input type="submit" value="salvar" class="btn corMurilokk">
-                    <input type="button" value="cancelar" class="btn btn-outline-danger" id="buttonCancel">
+                <div class="align-items-center d-flex justify-content-end p-2">
+                    <input type="submit" value="Criar Categoria" class="btn SubmitFunc w-75 me-3 p-2">
+                    <input type="button" value="Cancelar" class="btn btn-outline-danger" id="buttonCancel">
                 </div>
-
+            </div>
                 <br>
             </div>
 

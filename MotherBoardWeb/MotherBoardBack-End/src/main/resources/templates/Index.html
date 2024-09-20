@@ -2,7 +2,7 @@
     data-bs-theme="dark">
 
 <head>
-    <title>MotherBoard</title>
+    <title>MotherBoard - Intranet</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="shortcut icon" href="icones/logorapa.png">
@@ -20,7 +20,7 @@
     </form>
 
     <header class="mb-3">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
             <div class="container-fluid">
 
 
@@ -33,7 +33,7 @@
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle iconeheader"></i>
+                                    <i class="bi bi-person-circle fs-1"></i>
                                 </button>
                                 <ul class="dropdown-menu">
                                     <a class="nav-link" th:href="@{/conta}">
@@ -54,55 +54,52 @@
 
     <div class="containerdoADM py-5 mb-5">
 
-        <div class="col-12 d-flex justify-content-center flex-wrap container py-3 fundoprod mt-5">
-            <h4 class="text-center cargo p-3 w-50 mb-5 rounded-5 mt-3 mb-5" style="background-color: #41454a;"><b>INTRANET</b>
-				
+        <div class="col-12 d-flex justify-content-center flex-wrap container py-3 mt-5">  
             
-            <div class="row justify-content-center align-items-center">
+            <div class="row justify-content-center align-items-center cargo w-50 mb-5 rounded-5 mt-3 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+                <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INTRANET</b></h3>
 				
-
                 <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
-                    <i class="bi bi-person-badge"></i>
-                    <h5><b>Funcionario</b></h5>
+                    <i class="bi bi-person-badge fs-1"></i>
+                    <h5><b>Funcionário</b></h5>
                 </a>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 
                     <a class="nav-link squaredoADM" th:href="@{/categorias}">
-                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                        <i class="bi bi-grid-3x3-gap-fill fs-1"></i>
                         <h5><b>Categorias</b></h5>
                     </a>
                 </th:block>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
                     <a class="nav-link squaredoADM" th:href="@{/produtos}">
-                        <i class="bi bi-box2-fill"></i>
+                        <i class="bi bi-bag-fill fs-1"></i>
                         <h5><b>Produtos</b></h5>
                     </a>
                 </th:block>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                     <a class="nav-link squaredoADM" th:href="@{/marcas}">
-                        <i class="fas fa-comments"></i>
+                        <i class="fas fa-comments fs-1"></i>
                         <h5><b>Marcas</b></h5>
                     </a>
                 </th:block>
 				
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/inventario}">
-				        <i class="bi bi-box2-fill"></i>
+				        <i class="bi bi-box2-fill fs-1"></i>
 				        <h5><b>Inventario</b></h5>
 				    </a>
 				</th:block>
 				
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/conta}">
-				        <i class="bi bi-box2-fill"></i>
+				        <i class="bi bi-person-fill fs-1"></i>
 				        <h5><b>Minha Conta</b></h5>
 				    </a>
 				</th:block>
             </div>
-			</h4>
         </div>
     </div>
 
