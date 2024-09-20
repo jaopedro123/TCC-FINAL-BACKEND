@@ -31,6 +31,9 @@ public class Categoria {
 	private String imagem;
 	
 	private boolean habilitado;
+
+	@Column(name = "todos_pai_ids", length = 256, nullable = true)
+	private String todosOsPaisIDs;
 	
 	@ManyToOne
 	@JoinColumn(name = "pai_id", unique = false)
@@ -170,7 +173,14 @@ public class Categoria {
 	}
 
 	@Transient
-	private boolean temFilhos; 
-	
-	
+	private boolean temFilhos;
+
+	public String getTodosOsPaisIDs() {
+		return todosOsPaisIDs;
+	}
+
+	public void setTodosOsPaisIDs(String todosOsPaisIDs) {
+		this.todosOsPaisIDs = todosOsPaisIDs;
+	} 
+		
 }

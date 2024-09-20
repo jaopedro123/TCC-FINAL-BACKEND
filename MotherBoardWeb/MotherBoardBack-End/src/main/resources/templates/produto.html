@@ -60,10 +60,28 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         <form th:action="@{/produtos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-            style="background-color: #40454e">
+            style="background-color: #40454e" id="filtrarForm">
 
             <div class="container">
-                <label class="mr-2">Filtrar por nome: </label>
+                <input type="hidden" name="sortField" th:value="${sortField}" />
+                <input type="hidden" name="sortDir" th:value="${sortDir}" />
+
+                <label class="mr-2">Categorias: </label>
+                <div class="col">
+                    <div class="input-group mb-3">
+
+                        <select name="categoriaId" id="dropdownCategorias">
+                            <option value="0">Todas as Categorias</option>
+
+                            <th:block th:each="cat : ${listCategorias}">
+                                <option th:value="${cat.id}" th:selected="(${categoriaId} == ${cat.id})">[[${cat.nome}]]</option>
+                            </th:block>
+                        </select>
+                    </div>
+                </div>
+
+
+                <label class="mr-2">Filtrar: </label>
                 <div class="col">
                     <div class="input-group mb-3">
                         <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
@@ -73,7 +91,6 @@
                         <button type="button" class="btn btnCadFunc" onclick="limparFiltro()">Limpar</button>
                     </div>
                 </div>
-
             </div>
         </form>
         <div class="bg-secondary rounded-3 mt-5">
@@ -83,37 +100,36 @@
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Imagem do Produto</th>
-<!--                         <th scope="col">
+                        <th scope="col">
                             <a class="text-white"
-                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortDir='+ ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">Produto 
-                            </a>
+                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=nome&sortDir='+ ${reverseSortDir}}"
+                                style="text-decoration: none; color: rgb(128, 128, 128);">Nome do Produto -</a>
                         </th>
                         <th scope="col">
                             <a class="text-white"
-                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortDir='+ ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">Marca 
-                            </a>
+                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=marca&sortDir='+ ${reverseSortDir}}"
+                                style="text-decoration: none; color: rgb(128, 128, 128);">Marca -</a>
                         </th>
                         <th scope="col">
                             <a class="text-white"
-                            th:href="@{'/produtos/page/' + ${currentPage} + '?sortDir='+ ${reverseSortDir}}"
-                            style="text-decoration: none; color: rgb(128, 128, 128);">Categoria 
-                            </a>
-                        </th> -->
-
-                        <th scope="col">Produto</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Categoria</th>
+                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=categoria&sortDir='+ ${reverseSortDir}}"
+                                style="text-decoration: none; color: rgb(128, 128, 128);">Categoria -</a>
+                        </th>
                         <th scope="col">detalhes</th>
-                        <th scope="col">Ativa</th>
-                        <th scope="col">Editar</th>
-                        <th scope="col">Excluir</th>
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <th scope="col">Ativo</th>
+                        </th:block>
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <th scope="col">Editar</th>
+                        </th:block>
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <th scope="col">Excluir</th>
+                        </th:block>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="produto : ${listaProdutos}">
+                    <tr th:each="produto : ${listProdutos}">
                         <td>[[${[produto].id}]]</td>
                         <td>
                             <img th:if="${produto.imagem_principal == null}" th:src="@{/imagens/image-thumbnail.png}"
@@ -122,8 +138,7 @@
                                 alt="Imagem de um produto" id="thumbnail" style="width: 150px; height: 150px;" />
                         </td>
                         <td>
-                            <a class="detalhes-link" th:href="@{'/produtos/detalhes/' + ${produto.id}}">
-                            [[${produto.nome}]]</a>
+                            [[${produto.nomeCurto}]]
                         </td>
                         <td>[[${produto.marca.nome}]]</td>
                         <td>[[${produto.categoria.nome}]]</td>
@@ -132,39 +147,54 @@
                                 <i class="bi bi-clipboard-fill"
                                 style="color: rgb(255, 255, 255); font-size: 24px;"></i></a>
                         </td>
-                        <td>
-                            <a th:if="${produto.habilitado == true}"
-                                th:href="@{'/produtos/' + ${produto.id} + '/habilitado/false'}">
-                                <i class="bi bi-power" title="Desabilitar Produto"
-                                    style="color: green; font-size: 24px;"></i>
-                            </a>
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <td>
+                                <a th:if="${produto.habilitado == true}"
+                                    th:href="@{'/produtos/' + ${produto.id} + '/habilitado/false'}">
+                                    <i class="bi bi-power" title="Desabilitar Produto"
+                                        style="color: green; font-size: 24px;"></i>
+                                </a>
 
-                            <a th:if="${produto.habilitado == false}"
-                                th:href="@{'/produtos/' + ${produto.id} + '/habilitado/true'}">
-                                <i class="bi bi-power" title="Habilitar Produto"
-                                    style="color: rgb(255, 128, 128); font-size: 24px;"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="@{'/produtos/editar/' + ${produto.id}}">
-                                <i class="bi bi-pen" title="Editar esse produto"
-                                    style="color: white; font-size: 24px;"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="delete-link" th:href="@{'/produtos/deletar/' + ${produto.id}}"
-                                th:produtoId="${produto.id}">
-                                <i class="bi bi-trash" title="Deletar esse produto"
-                                    style="color: rgb(255, 128, 128); font-size: 24px;"></i>
-                            </a>
-                        </td>
+                                <a th:if="${produto.habilitado == false}"
+                                    th:href="@{'/produtos/' + ${produto.id} + '/habilitado/true'}">
+                                    <i class="bi bi-power" title="Habilitar Produto"
+                                        style="color: rgb(255, 128, 128); font-size: 24px;"></i>
+                                </a>
+                            </td>
+                        </th:block>
+
+                        
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <td>
+                                <a th:href="@{'/produtos/editar/' + ${produto.id}}">
+                                    <i class="bi bi-pen" title="Editar esse produto"
+                                        style="color: white; font-size: 24px;"></i>
+                                </a>
+                            </td>
+                        </th:block>
+                        
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                            <td>
+                                <a class="delete-link" th:href="@{'/produtos/deletar/' + ${produto.id}}"
+                                    th:produtoId="${produto.id}">
+                                    <i class="bi bi-trash" title="Deletar esse produto"
+                                        style="color: rgb(255, 128, 128); font-size: 24px;"></i>
+                                </a>
+                            </td>
+                        </th:block>
                     </tr>
                 </tbody>
             </table>
         </div>
 
+        <div class="text-center	mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
+            <P> Produtos não encontrados</P>
+        </div>
+
         <div class="d-flex justify-content-center align-items-center">
-            <a th:href="@{/produtos/new}" class="btn btnCadFunc mr-2"> Novo Produto </a>
+            <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                <a th:href="@{/produtos/new}" class="btn btnCadFunc mr-2"> Novo Produto </a>
+            </th:block>
             &nbsp;
             <a th:href="@{/}" class="btn btnCadFunc mr-2"> Voltar para Intranet</a>
         </div>
@@ -178,7 +208,7 @@
                 <ul class="pagination justify-content-center">
                     <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                            th:href="@{|/produtos/page/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''} + ${categoriaId != null ? '&categoriaId=' + categoriaId : ''}|}">
                             Primeira Página
                         </a>
                     </li>
@@ -264,6 +294,10 @@
 
                 detalhesURL = $(this).attr("href");
                 $("#detalhesModal").modal('show').find(".modal-content").load(detalhesURL);
+            })
+
+            $("#dropdownCategorias").on("change", function() {
+                $("#filtrarForm").submit();
             })
 
         })

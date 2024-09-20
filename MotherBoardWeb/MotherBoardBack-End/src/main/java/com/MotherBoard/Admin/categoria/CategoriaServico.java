@@ -91,6 +91,13 @@ public class CategoriaServico {
 	}
 
 	public Categoria save(Categoria categoria) {
+		Categoria pai = categoria.getPai();
+		if (pai != null) {
+			String todosOsPaisIDs = pai.getTodosOsPaisIDs() == null ? "-" : pai.getTodosOsPaisIDs();
+			todosOsPaisIDs += String.valueOf(pai.getId()) + "-";
+			categoria.setTodosOsPaisIDs(todosOsPaisIDs);
+		}
+
 		return repo.save(categoria);
 	}
 	

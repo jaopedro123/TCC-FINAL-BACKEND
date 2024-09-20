@@ -1,5 +1,6 @@
 package com.MotherBoard.entidade.comum;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,10 +32,10 @@ public class Produto {
 	@Column(length = 256, nullable = false, unique = true)
 	private String alias;
 
-	@Column(length = 512, nullable = false, name = "descricao_curta")
+	@Column(length = 4096, nullable = false, name = "descricao_curta")
 	private String descricaoCurta;
 
-	@Column(length = 4096, nullable = false, name = "descricao_completa")
+	@Column(length = 12288, nullable = false, name = "descricao_completa")
 	private String descricaoCompleta;
 
 	@Column(name = "tempo_daCriacao")
@@ -282,17 +283,21 @@ public class Produto {
 		while (iterator.hasNext()) {
 			ProdutoImagem imagem = iterator.next();
 
-			System.out.println(imagemNome + "<-----imagemNOme------------getNome----------->" +imagem.getNome());
-
 			if (imagem.getNome().equals(imagemNome)) {
-				System.out.println("TRUE");
 
 				return true;
 			}
 		}	
 
-		System.out.println("FALSE");
 		return false;
+	}
+
+	@Transient
+	public String getNomeCurto() {
+		if (nome.length() > 50) {
+			return nome.substring(0, 50).concat("..");
+		}
+		return nome;
 	}
 
 }
