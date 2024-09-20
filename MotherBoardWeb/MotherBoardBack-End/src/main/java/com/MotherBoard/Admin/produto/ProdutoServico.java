@@ -2,6 +2,7 @@ package com.MotherBoard.Admin.produto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,14 @@ public class ProdutoServico {
 		}
 
 		repo.deleteById(id);
+	}
+
+	public Produto get(Integer id) throws ProdutoNotFoundException {
+		try {
+			return repo.findById(id).get();
+		} catch (NoSuchElementException ex){
+			throw new ProdutoNotFoundException("Não foi possível achar nenhum produto com ID " + id);
+		}
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Iterator;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -70,10 +71,10 @@ public class Produto {
 	@JoinColumn(name = "marca_id")
 	private Marca marca;
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ProdutoImagem> imagens = new HashSet<>();
 
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ProdutoDetalhes> detalhes = new ArrayList<>();
 
 	public Integer getId() {
@@ -269,6 +270,29 @@ public class Produto {
 
 	public void addDetalhes(String nome, String valor) {
 		this.detalhes.add(new ProdutoDetalhes(nome, valor, this));
+	}
+
+	public void addDetalhes(Integer id, String nome, String valor) {
+		this.detalhes.add(new ProdutoDetalhes(id, nome, valor, this));
+	}
+
+	public boolean contemImagemNome(String imagemNome) {
+		Iterator<ProdutoImagem> iterator = imagens.iterator();
+
+		while (iterator.hasNext()) {
+			ProdutoImagem imagem = iterator.next();
+
+			System.out.println(imagemNome + "<-----imagemNOme------------getNome----------->" +imagem.getNome());
+
+			if (imagem.getNome().equals(imagemNome)) {
+				System.out.println("TRUE");
+
+				return true;
+			}
+		}	
+
+		System.out.println("FALSE");
+		return false;
 	}
 
 }
