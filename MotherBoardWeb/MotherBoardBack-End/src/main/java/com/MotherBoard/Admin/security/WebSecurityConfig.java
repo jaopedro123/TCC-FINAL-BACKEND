@@ -35,34 +35,39 @@ public class WebSecurityConfig {
     SecurityFilterChain configureHttp(HttpSecurity http) throws Exception {
         http.authenticationProvider(authenticationProvider());
 
-        http.authorizeHttpRequests(auth -> auth
-        	    .requestMatchers("/Usuarios/**").hasAuthority("Admin")
-        	    .requestMatchers("/categorias/**", "/marcas/**").hasAnyAuthority("Admin", "Editor", "Exportador")
-        	    .requestMatchers("/produtos/editar/**", "/produtos/salvar/**", "/produtos/deletar/**", "/produtos/new", "/produtos/check_uniquePorduto").hasAnyAuthority("Admin", "Editor")
-        	    .requestMatchers("/produtos/detalhes/**").hasAnyAuthority("Admin", "Editor", "Exportador")
-
-        	    .anyRequest().authenticated()
-        	)
-
-        .formLogin(form -> form
-            .loginPage("/login")
-            .usernameParameter("email")
-            .permitAll()            
-        )
-        .logout(logout -> logout
-            .logoutUrl("/logout")
-            .logoutSuccessUrl("/login?logout")
-            .invalidateHttpSession(true)
-            .permitAll() 
-        );
+        http.csrf().disable() 
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/Usuarios/**").hasAuthority("Admin")
+                .requestMatchers("/categorias/**", "/marcas/**").hasAnyAuthority("Admin", "Editor", "Exportador")
+                .requestMatchers("/produtos/editar/**", "/produtos/salvar/**", "/produtos/deletar/**", "/produtos/new", "/produtos/check_uniquePorduto").hasAnyAuthority("Admin", "Editor")
+                .requestMatchers("/produtos/detalhes/**").hasAnyAuthority("Admin", "Editor", "Exportador")
+                .requestMatchers("/inventarioMarcas/**").hasAnyAuthority("Admin", "Editor")
+                .anyRequest().authenticated() 
+            )
+            .formLogin(form -> form
+                .loginPage("/login")  
+                .usernameParameter("email") 
+                .permitAll() 
+            )
+            .logout(logout -> logout
+                .logoutUrl("/logout")  
+                .logoutSuccessUrl("/login?logout") 
+                .invalidateHttpSession(true) 
+                .permitAll()
+            )
+            .exceptionHandling(exception -> exception
+                .accessDeniedPage("/403")
+            );
 
         return http.build();
     }
 
 
+
     @Bean
     WebSecurityCustomizer configureWebSecurity() throws Exception {
-        return (web) -> web.ignoring().requestMatchers("/imagens/**","/css/**", "/scripts/**", "/webjars/**");
+        return (web) -> web.ignoring().requestMatchers("/imagens/**", "/css/**", "/scripts/**", "/webjars/**");
     }
+
     
 }

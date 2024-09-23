@@ -1,26 +1,38 @@
 package com.MotherBoard.Admin.marca;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.util.StringUtils;
+
 import com.MotherBoard.Admin.FileUploadUtil;
+import com.MotherBoard.Admin.Inventario.InventarioMarcaService;
+import com.MotherBoard.Admin.categoria.CategoriaNotFoundException;
 import com.MotherBoard.Admin.categoria.CategoriaServico;
+import com.MotherBoard.Admin.security.MotherBoarduserDetails;
+import com.MotherBoard.Admin.usuario.UsuarioServico;
 import com.MotherBoard.entidade.comum.Categoria;
+import com.MotherBoard.entidade.comum.InventarioMarca;
 import com.MotherBoard.entidade.comum.Marca;
+import com.MotherBoard.entidade.comum.Role;
+import com.MotherBoard.entidade.comum.Usuario;
+
+import jakarta.transaction.Transactional;
 
 @Controller
 public class MarcaControlador {
@@ -30,6 +42,12 @@ public class MarcaControlador {
 	
 	@Autowired
 	private CategoriaServico categoriaServico;	
+	
+	@Autowired
+	private UsuarioServico usuarioservico;
+	
+	@Autowired
+	private InventarioMarcaService inventarioMarcaService;
 	
 	@GetMapping("/marcas")
 	public String listAll(Model model) {
@@ -46,29 +64,61 @@ public class MarcaControlador {
 	    return "/marca_form";
 	}
 	
-	@PostMapping("/marcas/salvar")
-	public String salvaMarca(Marca marca, RedirectAttributes redirectAttributes, @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
-	    try {
-	        Marca saveMarca = servico.save(marca); 
+	public Usuario getUsuario() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+	    if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MotherBoarduserDetails) {
+	        MotherBoarduserDetails userDetails = (MotherBoarduserDetails) authentication.getPrincipal();
+	        return userDetails.getUsuario();  
+	    }
+
+	    return null; 
+	}
+	
+	
+
+
+
+
+	@PostMapping("/marcas/salvar")
+	public String salvaMarca(Marca marca, RedirectAttributes redirectAttributes, 
+	                         @RequestParam("fileImage") MultipartFile multipartFile) throws IOException {
+
+	    try {
+	       
+	        boolean isNovo = (marca.getId() == null);
+	        Marca saveMarca = servico.save(marca);
+
+	       
 	        if (!multipartFile.isEmpty()) {
 	            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	            saveMarca.setLogo(fileName); 
-
-	            String uploadDir = "Marca-logos/" + saveMarca.getId(); 
-
-	            FileUploadUtil.cleanDir(uploadDir); 
-	            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile); 
-
+	            saveMarca.setLogo(fileName);
+	            String uploadDir = "Marca-logos/" + saveMarca.getId();
+	            FileUploadUtil.cleanDir(uploadDir);
+	            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 	            servico.save(saveMarca); 
-	        } else {
-	            if (marca.getLogo() == null || marca.getLogo().isEmpty()) {
-	                saveMarca.setLogo(null);
-	            }
 	        }
 
-	        String message = (saveMarca.getId() != null) ? "A marca foi cadastrada com sucesso!" : "Os dados da marca foram atualizados com sucesso!";
-	        redirectAttributes.addFlashAttribute("message", message);
+	        Usuario usuario = getUsuario();
+	        
+	        if (usuario == null) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+	            return "redirect:/login";
+	        }
+
+	        
+	        Set<Role> roles = usuario.getRoles();
+	        String rolesAsString = roles.stream()
+	                                    .map(Role::getNome)  
+	                                    .reduce((role1, role2) -> role1 + ", " + role2)
+	                                    .orElse("Sem Papel");
+     
+	        String descricaoInventario = isNovo ? "Adiçao da Marca" : "Atualização da Marca";
+	            
+		    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+		    
+	        InventarioMarca inventario = new InventarioMarca(null, usuario, saveMarca, rolesAsString, dataFormatada, descricaoInventario);
+	        inventarioMarcaService.salvaRegistroInventario(inventario);
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
@@ -77,9 +127,6 @@ public class MarcaControlador {
 
 	    return "redirect:/marcas";
 	}
-
-
-	
 
 	@GetMapping("/marcas/editar/{id}")
 	public String editBrand(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra) throws MarcaNotFoundException {
@@ -90,6 +137,8 @@ public class MarcaControlador {
 	        model.addAttribute("marca", marca);
 	        model.addAttribute("listCategorias", listCategorias);
 	        model.addAttribute("tituloDaPag", "Editar Marca (ID: " + id + ")");
+	        
+	       
 	        
 	        return "/marca_form";
 	        
@@ -102,31 +151,40 @@ public class MarcaControlador {
 
 	
 	
+
+	@Transactional
 	@GetMapping("/marcas/deletar/{id}")
-	public String deleteMarca(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+	public String deleteMarca(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) throws IOException {
 	    try {
+
+	        Usuario usuario = getUsuario();
+	        if (usuario == null) {
+	            redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+	            return "redirect:/login";
+	        }
+
+	        inventarioMarcaService.deleteByMarcaId(id);
+
+	       
 	        servico.delete(id);
 
 	        String brandDir = "Marca-logos/" + id;
+	        FileUploadUtil.cleanDir(brandDir);
 	        
-	        FileUploadUtil.cleanDir(brandDir); 
 	        
-	        Path dirPath = Paths.get(brandDir);
-	        if (Files.exists(dirPath)) {
-	            Files.delete(dirPath);
-	        }
+	        
 
 	        redirectAttributes.addFlashAttribute("message", "A marca com ID " + id + " foi deletada com sucesso!");
-	    } 
-	    catch (MarcaNotFoundException ex) {
+
+	    } catch (MarcaNotFoundException ex) {
 	        redirectAttributes.addFlashAttribute("message", ex.getMessage());
-	    } 
-	    catch (IOException ex) {
-	        redirectAttributes.addFlashAttribute("message", "Erro ao deletar pasta de imagens da marca com ID: " + id);
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Erro ao deletar a marca: " + e.getMessage());
 	    }
+
 	    return "redirect:/marcas";
 	}
-	
+
 	
 	@GetMapping("/marcas/page/{pageNum}")
 	public String listByPage(
@@ -159,6 +217,41 @@ public class MarcaControlador {
 	}
 
 
+	@GetMapping("/marcas/{id}/habilitado/{status}")
+	public String updateMarcaStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) throws MarcaNotFoundException {
+	    
+	    servico.updateMarcaStatus(id, habilitado);
+	    
+	    String statusTexto = habilitado ? "Habilitado" : "Desabilitado";
+	    String message = "A Marca com ID " + id + " foi " + statusTexto;
+	    redirectAttributes.addFlashAttribute("message", message);
+	    
+	    Usuario usuario = getUsuario();
+	    
+	    if (usuario == null) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+	        return "redirect:/login";
+	    }
 
+	    Set<Role> roles = usuario.getRoles();
+	    String rolesAsString = roles.stream()
+	                                .map(Role::getNome)
+	                                .reduce((role1, role2) -> role1 + ", " + role2)
+	                                .orElse("Sem Papel");
+	    
+	    String descricaoInventario = habilitado ? "Marca Ativada" : "Marca Desativada";
+
+	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+	    
+	    InventarioMarca inventario = new InventarioMarca(null, usuario, servico.get(id), rolesAsString, dataFormatada, descricaoInventario);
+	    inventarioMarcaService.salvaRegistroInventario(inventario);
+	    
+	    return "redirect:/marcas";
+	}
+
+
+
+
+	
 	
 }

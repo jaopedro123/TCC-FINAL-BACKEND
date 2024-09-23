@@ -61,7 +61,7 @@
 				
                 <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
                     <i class="bi bi-person-badge fs-1"></i>
-                    <h5><b>Funcionário</b></h5>
+                    <h5><b>Funcionários</b></h5>
                 </a>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">

@@ -32,6 +32,17 @@ public class Marca {
 	@JoinTable(name = "marcas_categorias", joinColumns = @JoinColumn(name = "marca_id"), inverseJoinColumns = @JoinColumn(name = "Categoria_id"))
 	private Set<Categoria> categorias = new HashSet<>();
 
+	private boolean habilitado;
+
+	
+	public boolean isHabilitado() {
+		return habilitado;
+	}
+
+	public void setHabilitado(boolean habilitado) {
+		this.habilitado = habilitado;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -64,16 +75,23 @@ public class Marca {
 		this.categorias = categorias;
 	}
 
-	public Marca(Integer id, String nome, String logo, Set<Categoria> categorias) {
+	public Marca(Integer id, String nome, String logo, Set<Categoria> categorias, boolean habilitado) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.logo = logo;
 		this.categorias = categorias;
+		this.habilitado = habilitado;
 	}
 
 	public Marca() {
 		
+	}
+
+	public Marca(Integer id, boolean habilitado) {
+		super();
+		this.id = id;
+		this.habilitado = habilitado;
 	}
 
 	@Override

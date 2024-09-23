@@ -57,46 +57,41 @@
         <div class="col-12 d-flex justify-content-center flex-wrap container py-3 mt-5">  
             
             <div class="row justify-content-center align-items-center cargo w-50 mb-5 rounded-5 mt-3 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
-                <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INTRANET</b></h3>
+                <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INVENTARIO:</b></h3>
 				
-                <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
-                    <i class="bi bi-person-badge fs-1"></i>
-                    <h5><b>Funcionário</b></h5>
-                </a>
 
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-
-                    <a class="nav-link squaredoADM" th:href="@{/categorias}">
-                        <i class="bi bi-grid-3x3-gap-fill fs-1"></i>
-                        <h5><b>Categorias</b></h5>
-                    </a>
-                </th:block>
-
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
-                    <a class="nav-link squaredoADM" th:href="@{/produtos}">
-                        <i class="bi bi-bag-fill fs-1"></i>
-                        <h5><b>Produtos</b></h5>
-                    </a>
-                </th:block>
-
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-                    <a class="nav-link squaredoADM" th:href="@{/marcas}">
-                        <i class="fas fa-comments fs-1"></i>
-                        <h5><b>Marcas</b></h5>
-                    </a>
-                </th:block>
-				
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
-				    <a class="nav-link squaredoADM" th:href="@{/inventario}">
+				    <a class="nav-link squaredoADM" th:href="@{/inventarioFuncionarios}">
 				        <i class="bi bi-box2-fill fs-1"></i>
-				        <h5><b>Inventario</b></h5>
+				        <h5><b>Inventario Funcionario</b></h5>
+				    </a>
+				</th:block>
+
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				    <a class="nav-link squaredoADM" th:href="@{/inventarioProdutos}">
+				        <i class="bi bi-box2-fill fs-1"></i>
+				        <h5><b>Inventario Produto</b></h5>
 				    </a>
 				</th:block>
 				
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
-				    <a class="nav-link squaredoADM" th:href="@{/conta}">
+				    <a class="nav-link squaredoADM" th:href="@{/inventarioMarcas}">
+				        <i class="bi bi-box2-fill fs-1"></i>
+				        <h5><b>Inventario Marcas</b></h5>
+				    </a>
+				</th:block>
+				
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				    <a class="nav-link squaredoADM" th:href="@{/inventarioCategorias}">
 				        <i class="bi bi-person-fill fs-1"></i>
-				        <h5><b>Minha Conta</b></h5>
+				        <h5><b>Inventario Categorias</b></h5>
+				    </a>
+				</th:block>
+				
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				    <a class="nav-link squaredoADM" th:href="@{/}">
+				        <i class="bi bi-person-fill fs-1"></i>
+				        <h5><b>Voltar</b></h5>
 				    </a>
 				</th:block>
             </div>

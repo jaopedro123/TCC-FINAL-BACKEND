@@ -20,12 +20,11 @@ public class MotherBoarduserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.getUserByEmail(email);
 
-        if (usuario != null) {
-            return new MotherBoarduserDetails(usuario);
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuário não encontrado");
         }
         
-        throw new UsernameNotFoundException("E-mail não cadastrado: " + email); 
+        return new MotherBoarduserDetails(usuario);
     }
-
 
 }

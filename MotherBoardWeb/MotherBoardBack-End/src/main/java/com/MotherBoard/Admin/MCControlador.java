@@ -16,5 +16,9 @@ public class MCControlador {
 		return "login";
 	}
 	
+	@GetMapping("/inventario")
+	public String inventario() {
+		return "inventario";
+	}
 	
 }

@@ -5,10 +5,13 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.MotherBoard.entidade.comum.Marca;
+
+import jakarta.transaction.Transactional;
 
 public interface MarcaRepository extends JpaRepository <Marca,Integer> {
 
@@ -26,4 +29,11 @@ public interface MarcaRepository extends JpaRepository <Marca,Integer> {
 	
 	@Query("SELECT NEW Marca(m.id, m.nome) FROM Marca m ORDER BY m.nome ASC")
 	public List<Marca> findAll();
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE Marca m SET m.habilitado = ?2 WHERE m.id = ?1")
+	public void updateMarcaStatus(Integer id, boolean enabled);
+
+	
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.MotherBoard.Admin.categoria.CategoriaNotFoundException;
 import com.MotherBoard.entidade.comum.Marca;
 
 @Service
@@ -64,17 +65,13 @@ public class MarcaServico {
         return mRepository.findAll(pageable);
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-
     public Marca save(Marca marca) {
         return mRepository.save(marca);
+    }
+
+	
+	public void updateMarcaStatus(Integer id, boolean habilitado) {
+		mRepository.updateMarcaStatus(id, habilitado);
     }
 
 
