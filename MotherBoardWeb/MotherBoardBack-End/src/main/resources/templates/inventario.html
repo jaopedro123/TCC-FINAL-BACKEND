@@ -58,14 +58,6 @@
             
             <div class="row justify-content-center align-items-center cargo w-50 mb-5 rounded-5 mt-3 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
                 <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INVENTARIO:</b></h3>
-				
-
-				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
-				    <a class="nav-link squaredoADM" th:href="@{/inventarioFuncionarios}">
-				        <i class="bi bi-box2-fill fs-1"></i>
-				        <h5><b>Inventario Funcionario</b></h5>
-				    </a>
-				</th:block>
 
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/inventarioProdutos}">
@@ -154,6 +146,9 @@
 
 
     </footer>
+	
+
+	
 	
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

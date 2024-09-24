@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MotherBoard.Admin.FileUploadUtil;
-import com.MotherBoard.Admin.Inventario.InventarioMarcaService;
+import com.MotherBoard.Admin.InventarioMarca.InventarioMarcaService;
 import com.MotherBoard.Admin.categoria.CategoriaNotFoundException;
 import com.MotherBoard.Admin.categoria.CategoriaServico;
 import com.MotherBoard.Admin.security.MotherBoarduserDetails;
@@ -43,8 +43,6 @@ public class MarcaControlador {
 	@Autowired
 	private CategoriaServico categoriaServico;	
 	
-	@Autowired
-	private UsuarioServico usuarioservico;
 	
 	@Autowired
 	private InventarioMarcaService inventarioMarcaService;
@@ -75,10 +73,6 @@ public class MarcaControlador {
 	    return null; 
 	}
 	
-	
-
-
-
 
 	@PostMapping("/marcas/salvar")
 	public String salvaMarca(Marca marca, RedirectAttributes redirectAttributes, 
@@ -115,7 +109,7 @@ public class MarcaControlador {
      
 	        String descricaoInventario = isNovo ? "Adiçao da Marca" : "Atualização da Marca";
 	            
-		    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+		    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 		    
 	        InventarioMarca inventario = new InventarioMarca(null, usuario, saveMarca, rolesAsString, dataFormatada, descricaoInventario);
 	        inventarioMarcaService.salvaRegistroInventario(inventario);
@@ -241,7 +235,7 @@ public class MarcaControlador {
 	    
 	    String descricaoInventario = habilitado ? "Marca Ativada" : "Marca Desativada";
 
-	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	    
 	    InventarioMarca inventario = new InventarioMarca(null, usuario, servico.get(id), rolesAsString, dataFormatada, descricaoInventario);
 	    inventarioMarcaService.salvaRegistroInventario(inventario);

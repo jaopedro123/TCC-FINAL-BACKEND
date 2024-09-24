@@ -6,8 +6,8 @@ import java.util.Set;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "InventarioMarca")
-public class InventarioMarca {
+@Table(name = "InventarioCategoria")
+public class InventarioCategoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +18,8 @@ public class InventarioMarca {
     private Usuario usuarioId;
 
     @ManyToOne
-    @JoinColumn(name = "marca_id") 
-    private Marca marca;
+    @JoinColumn(name = "categoria_id") 
+    private Categoria categoria;
 
     @Column(name = "role_usuario")  
     private String roleUsuario;
@@ -30,20 +30,20 @@ public class InventarioMarca {
     @Column(name = "data_modificacao")  
     private String dataModificacao;
 
-    public InventarioMarca() {
+    public InventarioCategoria() {
     	
     }
 
-
-    public InventarioMarca(Integer id, Usuario usuarioId, Marca marca, String roleUsuario, String dataModificacao, String acao) {
-        this.id = id;
-        this.usuarioId = usuarioId;
-        this.marca = marca;
-        this.roleUsuario = roleUsuario;
-        this.dataModificacao = dataModificacao;
-        this.acao = acao;
-    }
-
+	public InventarioCategoria(Integer id, Usuario usuarioId, Categoria categoria, String roleUsuario, String acao,
+			String dataModificacao) {
+		super();
+		this.id = id;
+		this.usuarioId = usuarioId;
+		this.categoria = categoria;
+		this.roleUsuario = roleUsuario;
+		this.acao = acao;
+		this.dataModificacao = dataModificacao;
+	}
 
 	public Integer getId() {
 		return id;
@@ -61,12 +61,12 @@ public class InventarioMarca {
 		this.usuarioId = usuarioId;
 	}
 
-	public Marca getMarca() {
-		return marca;
+	public Categoria getCategoria() {
+		return categoria;
 	}
 
-	public void setMarca(Marca marca) {
-		this.marca = marca;
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 
 	public String getRoleUsuario() {
@@ -85,11 +85,9 @@ public class InventarioMarca {
 		this.acao = acao;
 	}
 
-
 	public String getDataModificacao() {
 		return dataModificacao;
 	}
-
 
 	public void setDataModificacao(String dataModificacao) {
 		this.dataModificacao = dataModificacao;

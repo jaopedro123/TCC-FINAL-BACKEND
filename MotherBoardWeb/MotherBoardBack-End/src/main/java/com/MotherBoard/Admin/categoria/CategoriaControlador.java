@@ -1,10 +1,15 @@
 package com.MotherBoard.Admin.categoria;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -12,7 +17,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.MotherBoard.Admin.FileUploadUtil;
+import com.MotherBoard.Admin.InventarioCategoria.InventarioCategoriaService;
+import com.MotherBoard.Admin.InventarioMarca.InventarioMarcaService;
+import com.MotherBoard.Admin.security.MotherBoarduserDetails;
 import com.MotherBoard.entidade.comum.Categoria;
+import com.MotherBoard.entidade.comum.InventarioCategoria;
+import com.MotherBoard.entidade.comum.InventarioMarca;
+import com.MotherBoard.entidade.comum.Marca;
+import com.MotherBoard.entidade.comum.Role;
+import com.MotherBoard.entidade.comum.Usuario;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +36,23 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CategoriaControlador {
 	@Autowired
 	private CategoriaServico service;
+	
+	@Autowired
+	private InventarioCategoriaService categoriaService;
+	
+	
+	
+	
+	public Usuario getUsuario() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MotherBoarduserDetails) {
+	        MotherBoarduserDetails userDetails = (MotherBoarduserDetails) authentication.getPrincipal();
+	        return userDetails.getUsuario();  
+	    }
+
+	    return null; 
+	}
 	
 	@GetMapping("/categorias")
 	public String listFirtPage(@Param("sortDir") String sortDir, Model model) {
@@ -67,6 +97,12 @@ public class CategoriaControlador {
 	@PostMapping("/categorias/salvar") 
 	public String salvarCategoria(Categoria categoria, RedirectAttributes redirectAttributes, @RequestParam("img") MultipartFile multipartFile) throws IOException {
 
+	    try {
+		       
+	        boolean isNovo = (categoria.getId() == null);
+	        Categoria savecategoria = service.save(categoria);
+		
+		
 		if (!multipartFile.isEmpty()) {
 			String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 			categoria.setImagem(fileName); 
@@ -76,17 +112,42 @@ public class CategoriaControlador {
 			
 			FileUploadUtil.cleanDir(uploadDir);
 			FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-		} 
+		}
+		
+
+        
 		else {
 			if (categoria.getImagem().isEmpty()) categoria.setImagem(null);
 			service.save(categoria);
 		}
-	
+		
+        Usuario usuario = getUsuario();
+        Set<Role> roles = usuario.getRoles();
+        String rolesAsString = roles.stream()
+                                    .map(Role::getNome)  
+                                    .reduce((role1, role2) -> role1 + ", " + role2)
+                                    .orElse("Sem Papel");
+ 
+        String descricaoInventario = isNovo ? "Adiçao da Categoria" : "Atualização da Categoria";
+            
+	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	    
+        InventarioCategoria inventario = new InventarioCategoria(null, usuario, savecategoria, rolesAsString, dataFormatada, descricaoInventario);
+        categoriaService.salvaRegistroInventario(inventario);
+		
+
+
 		if (categoria.getId() != null) {
 	        redirectAttributes.addFlashAttribute("message", "Os dados da categoria foram atualizados com sucesso!");
 	    } 
 	    else {
 	        redirectAttributes.addFlashAttribute("message", "A categoria foi cadastrada com sucesso!");
+	    }
+		
+	    } 
+	    catch (Exception e) {
+	        e.printStackTrace();
+	        redirectAttributes.addFlashAttribute("errorMessage", "Erro ao salvar a Categoria: " + e.getMessage());
 	    }
 
 		return "redirect:/categorias"; 
@@ -112,12 +173,33 @@ public class CategoriaControlador {
 	
 
 	@GetMapping("/categorias/{id}/habilitado/{status}")
-	public String updateCategoriaStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) {
+	public String updateCategoriaStatus(@PathVariable("id") Integer id, @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) throws CategoriaNotFoundException {
 
 	    service.updateCategoriaStatus(id, habilitado);
 	    String status = habilitado ? "Habilitado" : "Desabilitado";
 	    String message = "A Categoria com " + id + " foi " + status;
 	    redirectAttributes.addFlashAttribute("message", message);
+	    
+	    Usuario usuario = getUsuario();
+	    
+	    if (usuario == null) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+	        return "redirect:/login";
+	    }
+	    
+	    Set<Role> roles = usuario.getRoles();
+	    String rolesAsString = roles.stream()
+	                                .map(Role::getNome)
+	                                .reduce((role1, role2) -> role1 + ", " + role2)
+	                                .orElse("Sem Papel");
+	                                
+	    String descricaoInventario = habilitado ? "Categoria Ativada" : "Categoria Desativada";
+
+	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+	    
+        InventarioCategoria inventario = new InventarioCategoria(null, usuario, service.get(id), rolesAsString, dataFormatada, descricaoInventario);
+        categoriaService.salvaRegistroInventario(inventario);
+	    
 	    
 		return "redirect:/categorias";
 	}
