@@ -47,7 +47,7 @@ public class Produto {
 	private boolean habilitado;
 
 	@Column(name = "no_stoque")
-	private boolean noStoque;
+	private String noStoque;
 
 	private float custo;
 
@@ -142,11 +142,13 @@ public class Produto {
 		this.habilitado = habilitado;
 	}
 
-	public boolean isNoStoque() {
+
+
+	public String getNoStoque() {
 		return noStoque;
 	}
 
-	public void setNoStoque(boolean noStoque) {
+	public void setNoStoque(String noStoque) {
 		this.noStoque = noStoque;
 	}
 

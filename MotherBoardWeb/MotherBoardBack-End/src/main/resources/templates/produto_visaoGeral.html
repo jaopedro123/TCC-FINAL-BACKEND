@@ -34,7 +34,7 @@
             <div class="mb-3 d-flex">
                 <label class="form-label">No estoque:</label>
                 <div class="form-check ms-2">
-                    <input type="checkbox" th:field="*{noStoque}" class="form-check-input">
+					<input type="number" th:field="*{noStoque}" class="form-control" placeholder="Digite o nome do produto" required minlength="1" maxlength="256">
                 </div>
             </div>
             <div class="mb-3">
