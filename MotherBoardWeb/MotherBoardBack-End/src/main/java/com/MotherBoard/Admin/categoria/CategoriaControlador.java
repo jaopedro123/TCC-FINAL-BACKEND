@@ -132,7 +132,7 @@ public class CategoriaControlador {
             
 	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	    
-        InventarioCategoria inventario = new InventarioCategoria(null, usuario, savecategoria, rolesAsString, dataFormatada, descricaoInventario);
+        InventarioCategoria inventario = new InventarioCategoria(null, usuario, savecategoria, rolesAsString, descricaoInventario , dataFormatada);
         categoriaService.salvaRegistroInventario(inventario);
 		
 
@@ -197,7 +197,7 @@ public class CategoriaControlador {
 
 	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	    
-        InventarioCategoria inventario = new InventarioCategoria(null, usuario, service.get(id), rolesAsString, dataFormatada, descricaoInventario);
+        InventarioCategoria inventario = new InventarioCategoria(null, usuario, service.get(id), rolesAsString, descricaoInventario , dataFormatada);
         categoriaService.salvaRegistroInventario(inventario);
 	    
 	    
