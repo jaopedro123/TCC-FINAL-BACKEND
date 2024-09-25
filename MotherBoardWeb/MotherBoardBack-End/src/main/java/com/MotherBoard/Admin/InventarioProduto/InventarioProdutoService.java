@@ -42,7 +42,7 @@ public class InventarioProdutoService {
         PageRequest pageable = PageRequest.of(pageNum - 1, INVENTARIO_PRODUTOS_PER_PAGE, sort);
 
         if (keyword != null) {
-            return repository.findAllByKeyword(keyword, pageable);
+            return repository.pesquisar(keyword, pageable);
         }
         return repository.findAll(pageable);
     }

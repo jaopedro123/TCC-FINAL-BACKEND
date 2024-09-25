@@ -21,4 +21,14 @@ public class MCControlador {
 		return "inventario";
 	}
 	
+	@GetMapping("/SobreNos")
+	public String SobreNos() {
+		return "SobreNos";
+	}
+	
+	
+	@GetMapping("/atendimentoFunc")
+	public String atendimentoFunc() {
+		return "atendimentoFunc";
+	}
 }
