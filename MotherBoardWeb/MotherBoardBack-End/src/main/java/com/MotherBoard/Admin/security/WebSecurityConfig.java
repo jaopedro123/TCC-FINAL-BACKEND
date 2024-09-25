@@ -48,12 +48,14 @@ public class WebSecurityConfig {
                 .loginPage("/login")  
                 .usernameParameter("email") 
                 .permitAll() 
+                .defaultSuccessUrl("/", true)
             )
             .logout(logout -> logout
                 .logoutUrl("/logout")  
                 .logoutSuccessUrl("/login?logout") 
                 .invalidateHttpSession(true) 
                 .permitAll()
+                
             )
             .exceptionHandling(exception -> exception
                 .accessDeniedPage("/403")
@@ -63,11 +65,11 @@ public class WebSecurityConfig {
     }
 
 
-
     @Bean
     WebSecurityCustomizer configureWebSecurity() throws Exception {
         return (web) -> web.ignoring().requestMatchers("/imagens/**", "/css/**", "/scripts/**", "/webjars/**");
     }
+
 
     
 }
