@@ -17,17 +17,20 @@ import com.MotherBoard.entidade.comum.InventarioProduto;
 public interface InventarioMarcaRepository extends JpaRepository<InventarioMarca, Integer> {
 
 	@Modifying
-    @Query("DELETE FROM InventarioMarca im WHERE im.marca.id = :marcaId")
-    void deleteByMarcaId(@Param("marcaId") Integer marcaId);
+	@Query("DELETE FROM InventarioMarca im WHERE im.marca.id = :marcaId")
+	void deleteByMarcaId(@Param("marcaId") Integer marcaId);
+
+	
 
 	@Query("SELECT im FROM InventarioMarca im ORDER BY im.dataModificacao DESC")
 	List<InventarioMarca> listarTodos();
 
-	@Query("SELECT im FROM InventarioMarca im WHERE im.marca.nome LIKE %?1%"
-			+ "OR im.usuarioId.nomeCompleto LIKE %?1%"
-			+ "OR im.dataModificacao LIKE %?1%"
-			+ "ORDER BY im.dataModificacao DESC")
+	@Query("SELECT ip FROM InventarioMarca ip WHERE ip.marca.nome LIKE %?1% "
+	        + "OR ip.usuarioId.nomeCompleto LIKE %?1% "
+	        + "OR ip.dataModificacao LIKE %?1% "
+	        + "ORDER BY ip.dataModificacao DESC")
 	Page<InventarioMarca> pesquisar(String keyword, Pageable pageable);
+
 
 
 }

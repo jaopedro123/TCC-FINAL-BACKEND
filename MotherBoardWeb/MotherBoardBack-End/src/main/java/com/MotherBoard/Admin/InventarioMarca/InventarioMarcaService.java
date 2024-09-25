@@ -40,10 +40,12 @@ public class InventarioMarcaService {
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         PageRequest pageable = PageRequest.of(pageNum - 1, INVENTARIO_MARCAS_PER_PAGE, sort);
 
-        if (keyword != null) {
+        if (keyword != null && !keyword.isEmpty()) {
             return repository.pesquisar(keyword, pageable);
         }
         return repository.findAll(pageable);
     }
+
+
 }
     

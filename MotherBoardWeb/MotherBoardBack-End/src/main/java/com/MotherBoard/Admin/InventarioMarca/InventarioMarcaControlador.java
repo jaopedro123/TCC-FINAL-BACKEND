@@ -28,10 +28,14 @@ public class InventarioMarcaControlador {
     public String listByPage(
             @PathVariable(name = "pageNum") int pageNum,
             Model model,
-            @RequestParam(name = "sortField", defaultValue = "acao") String sortField,
-            @RequestParam(name = "sortDir", defaultValue = "asc") String sortDir,
+            @RequestParam(name = "sortField", defaultValue = "dataModificacao") String sortField,
+            @RequestParam(name = "sortDir", defaultValue = "desc") String sortDir,
             @RequestParam(name = "keyword", required = false) String keyword) {
         
+        if ("null".equals(keyword)) {
+            keyword = null;
+        }
+    	
         Page<InventarioMarca> page = inventarioMarcaService.listByPage(pageNum, sortField, sortDir, keyword);
         List<InventarioMarca> listaMarcas = page.getContent();
         

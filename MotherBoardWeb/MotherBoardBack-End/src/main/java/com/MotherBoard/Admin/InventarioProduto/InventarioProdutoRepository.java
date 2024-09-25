@@ -18,7 +18,6 @@ import jakarta.transaction.Transactional;
 public interface InventarioProdutoRepository extends JpaRepository<InventarioProduto, Integer> {
 
     @Modifying
-    @Transactional
     @Query("DELETE FROM InventarioProduto ip WHERE ip.produto.id = :produtoId")
     void deleteByProdutoId(@Param("produtoId") Integer produtoId);
 

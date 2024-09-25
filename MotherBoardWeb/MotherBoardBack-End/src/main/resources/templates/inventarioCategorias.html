@@ -109,20 +109,20 @@
 	        </tbody>
 	    </table>
 	
-	
-	 <div th:if="${totalPages > 0}">
+	<div th:if="${totalPages > 0}">
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
+            <!-- Primeira Página -->
             <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                 <a class="page-link"
-                   th:href="@{|/inventarioCategorias/page/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                   th:href="@{|/inventarioCategorias/page/1?sortField=${sortField}&sortDir=${sortDir}${keyword != null ? '&keyword=' + keyword : ''}|}">
                     Primeira Página
                 </a>
             </li>
 
             <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                 <a class="page-link"
-                   th:href="@{|/inventarioCategorias/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                   th:href="@{|/inventarioCategorias/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
                     Anterior
                 </a>
             </li>
@@ -130,28 +130,28 @@
             <li th:each="i : ${#numbers.sequence(1, totalPages)}"
                 th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
                 <a class="page-link"
-                   th:href="@{|/inventarioCategorias/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                   th:href="@{|/inventarioCategorias/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
                     [[${i}]]
                 </a>
             </li>
 
             <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                 <a class="page-link"
-                   th:href="@{|/inventarioCategorias/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                   th:href="@{|/inventarioCategorias/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
                     Próximo
                 </a>
             </li>
 
             <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                 <a class="page-link"
-                   th:href="@{|/inventarioCategorias/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                   th:href="@{|/inventarioCategorias/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
                     Última Página
                 </a>
             </li>
         </ul>
     </nav>
 </div>
-
+	
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
             <P> Inventario não encontrado</P>
             <a th:href="@{/inventarioCategorias}" class="btn btnCadFunc ms-2">Voltar para o Inventario Categoria</a>
