@@ -276,43 +276,55 @@ public class ProdutoControlador {
 
 	@GetMapping("/produtos/{id}/habilitado/{status}")
 	public String updateCategoriaStatus(@PathVariable("id") Integer id,
-			@PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes, Produto produto) {
-		produtoServico.updatePordutoHabilitadoStatus(id, habilitado);
-		String status = habilitado ? "habilitado" : "desabilitado";
-		String mensagem = "o produto de id " + id + " foi " + status;
-		redirectAttributes.addFlashAttribute("mensagem", mensagem);
-		
-		String quantidadeEstoque = produto.getNoStoque();
-		Usuario usuario = getUsuario();
-		
+	        @PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) throws ProdutoNotFoundException {
+	    
+	    Produto produto;
+	    try {
+	        produto = produtoServico.get(id);
+	    } catch (ProdutoNotFoundException e) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Produto não encontrado.");
+	        return "redirect:/produtos";
+	    }
 
-        if (usuario == null) {
-        	redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
-            return "redirect:/login";
-        }
-		
-		 Set<Role> roles = usuario.getRoles();
-	        String rolesAsString = roles.stream()
-	                                    .map(Role::getNome)  
-	                                    .reduce((role1, role2) -> role1 + ", " + role2)
-	                                    .orElse("Sem Papel");
+	    produtoServico.updatePordutoHabilitadoStatus(id, habilitado);
+	    
+	    String status = habilitado ? "habilitado" : "desabilitado";
+	    String mensagem = "O produto de id " + id + " foi " + status;
+	    redirectAttributes.addFlashAttribute("mensagem", mensagem);
+
+	   
+	    String quantidadeEstoque = produto.getNoStoque();
+	    
+	   
+	    Usuario usuario = getUsuario();
+	    if (usuario == null) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+	        return "redirect:/login";
+	    }
+
+	  
+	    String descricaoInventario = habilitado ? "Produto Ativado" : "Produto Desativado";
+
 	 
-	        String descricaoInventario = habilitado ? "Produto Ativado" : "Produto Desativado";
-	            
-		    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-		    String quantidadeEstoqueanterior = "11";
-		    
-	        InventarioProduto inventario = null;
-			try {
-				
-				inventario = new InventarioProduto(null, usuario, produtoServico.get(id), quantidadeEstoque, quantidadeEstoqueanterior, rolesAsString, dataFormatada, descricaoInventario);
-			} catch (ProdutoNotFoundException e) {
-				e.printStackTrace();
-			}
-	        inventarioProdutoService.salvaRegistroInventario(inventario);
-		
-		return "redirect:/produtos";
-	};
+	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+
+	  
+	    String quantidadeEstoqueAnterior = produtoServico.get(id).getNoStoque();
+
+	    
+	    String rolesAsString = usuario.getRoles().stream()
+	            .map(Role::getNome)
+	            .reduce((role1, role2) -> role1 + ", " + role2)
+	            .orElse("Sem Papel");
+
+	 
+	    InventarioProduto inventario = new InventarioProduto(null, usuario, produto, quantidadeEstoque, rolesAsString,descricaoInventario,dataFormatada,quantidadeEstoqueAnterior );
+	    
+	    inventarioProdutoService.salvaRegistroInventario(inventario);
+
+	    return "redirect:/produtos";
+	}
+
 
 	@GetMapping("/produtos/deletar/{id}")
 	public String deletarProduto(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra)
