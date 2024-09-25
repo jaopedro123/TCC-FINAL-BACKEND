@@ -41,7 +41,7 @@ public class InventarioCategoriaService {
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() : Sort.by(sortField).descending());
 
         if (keyword != null) {
-            return repository.findAllByKeyword(keyword, pageable);
+            return repository.pesquisar(keyword, pageable);
         }
         return repository.findAll(pageable);
     }

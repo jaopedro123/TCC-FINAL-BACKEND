@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.MotherBoard.entidade.comum.InventarioCategoria;
 import com.MotherBoard.entidade.comum.InventarioMarca;
+import com.MotherBoard.entidade.comum.InventarioProduto;
 
 public interface InventarioCategoriaRepository extends JpaRepository<InventarioCategoria, Integer> {
 
@@ -25,6 +26,9 @@ public interface InventarioCategoriaRepository extends JpaRepository<InventarioC
 	@Query("SELECT i FROM InventarioCategoria i")
 	List<InventarioCategoria> listarTodos();
 
-
+	@Query("SELECT i FROM InventarioCategoria i WHERE i.categoria.nome LIKE %?1%"
+			+ "OR i.usuarioId.nomeCompleto LIKE %?1%"
+			+ "OR i.dataModificacao LIKE %?1%")
+	Page<InventarioCategoria> pesquisar(String keyword, Pageable pageable);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.MotherBoard.entidade.comum.InventarioMarca;
+import com.MotherBoard.entidade.comum.InventarioProduto;
 
 public interface InventarioMarcaRepository extends JpaRepository<InventarioMarca, Integer> {
 
@@ -19,6 +20,10 @@ public interface InventarioMarcaRepository extends JpaRepository<InventarioMarca
 	@Query("SELECT im FROM InventarioMarca im WHERE im.acao LIKE %:keyword%")
 	Page<InventarioMarca> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
 
+	@Query("SELECT im FROM InventarioMarca im WHERE im.marca.nome LIKE %?1%"
+			+ "OR im.usuarioId.nomeCompleto LIKE %?1%"
+			+ "OR im.dataModificacao LIKE %?1%")
+	Page<InventarioMarca> pesquisar(String keyword, Pageable pageable);
 
 
 }
