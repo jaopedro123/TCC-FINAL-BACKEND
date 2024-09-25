@@ -20,7 +20,7 @@ public class InventarioProdutoControlador {
 
     @GetMapping("/inventarioProdutos")
     public String listarInventarioMarcas(Model model) {
-        return listByPage(1, model, "acao", "asc", null);
+        return listByPage(1, model, "dataModificacao", "desc", null);
     }
 
     @GetMapping("/inventarioProdutos/page/{pageNum}")

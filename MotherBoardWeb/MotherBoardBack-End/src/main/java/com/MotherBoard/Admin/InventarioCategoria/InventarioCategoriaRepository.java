@@ -19,16 +19,13 @@ public interface InventarioCategoriaRepository extends JpaRepository<InventarioC
     @Query("DELETE FROM InventarioCategoria i WHERE i.categoria.id = :categoria")
     void deleteByCategoriaId(@Param("categoria") Integer categoriaId);
 
-	@Query("SELECT i FROM InventarioCategoria i WHERE i.acao LIKE %:keyword%")
-	Page<InventarioCategoria> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
-
-
-	@Query("SELECT i FROM InventarioCategoria i")
+	@Query("SELECT i FROM InventarioCategoria i ORDER BY i.dataModificacao DESC")
 	List<InventarioCategoria> listarTodos();
 
 	@Query("SELECT i FROM InventarioCategoria i WHERE i.categoria.nome LIKE %?1%"
 			+ "OR i.usuarioId.nomeCompleto LIKE %?1%"
-			+ "OR i.dataModificacao LIKE %?1%")
+			+ "OR i.dataModificacao LIKE %?1%"
+			+ "ORDER BY i.dataModificacao DESC")
 	Page<InventarioCategoria> pesquisar(String keyword, Pageable pageable);
 
 }

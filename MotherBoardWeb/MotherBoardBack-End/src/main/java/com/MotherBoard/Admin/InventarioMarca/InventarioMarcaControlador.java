@@ -21,7 +21,7 @@ public class InventarioMarcaControlador {
     public String listarInventarioMarcas(Model model) {
         List<InventarioMarca> listaMarcas = inventarioMarcaService.listarTodos();
         model.addAttribute("listaMarcas", listaMarcas);
-        return listByPage(1, model, "acao", "asc", null);
+        return listByPage(1, model, "dataModificacao", "desc", null);
     }
 
     @GetMapping("/inventarioMarcas/page/{pageNum}")

@@ -31,4 +31,9 @@ public class MCControlador {
 	public String atendimentoFunc() {
 		return "atendimentoFunc";
 	}
+	
+	@GetMapping("/Politica")
+	public String Politica() {
+		return "Politica";
+	}
 }

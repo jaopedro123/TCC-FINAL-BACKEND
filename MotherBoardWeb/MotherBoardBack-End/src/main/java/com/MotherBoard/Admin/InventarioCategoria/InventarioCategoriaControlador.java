@@ -25,7 +25,7 @@ public class InventarioCategoriaControlador {
 
     @GetMapping("/inventarioCategorias")
     public String listarInventarioCategorias(Model model) {
-        return listByPage(1, model, "acao", "asc", null);
+        return listByPage(1, model, "dataModificacao", "desc", null);
     }
 
     @GetMapping("/inventarioCategorias/page/{pageNum}")
