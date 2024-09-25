@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+    data-bs-theme="dark">
 <div class="modal-header">
     <h4 class="modal-title">Detalhes do Produto</h4>
     <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">&times;</button>
@@ -170,3 +172,5 @@
         <span th:text="${#dates.format(produto.tempoAtualizado, 'dd/MM/yyyy HH:mm')}"></span>
     </div>
 </div>
+
+</html>

@@ -47,7 +47,7 @@ public class ProductRepositoryTests {
 		produto.setPreco(333);
 		produto.setCusto(662);
 		produto.setHabilitado(true);
-		produto.setNoStoque(true);
+		//produto.setNoStoque(true);
 		produto.setTempoDaCriacao(new Date());
 		produto.setTempoAtualizado(new Date());
 

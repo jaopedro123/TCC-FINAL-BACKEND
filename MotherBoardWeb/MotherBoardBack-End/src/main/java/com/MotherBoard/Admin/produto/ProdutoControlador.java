@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Provider.Service;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,12 +29,20 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MotherBoard.Admin.FileUploadUtil;
+import com.MotherBoard.Admin.InventarioCategoria.InventarioCategoriaService;
+import com.MotherBoard.Admin.InventarioProduto.InventarioProdutoService;
 import com.MotherBoard.Admin.categoria.CategoriaServico;
 import com.MotherBoard.Admin.marca.MarcaServico;
+import com.MotherBoard.Admin.security.MotherBoarduserDetails;
 import com.MotherBoard.entidade.comum.Categoria;
+import com.MotherBoard.entidade.comum.InventarioCategoria;
+import com.MotherBoard.entidade.comum.InventarioMarca;
+import com.MotherBoard.entidade.comum.InventarioProduto;
 import com.MotherBoard.entidade.comum.Marca;
 import com.MotherBoard.entidade.comum.Produto;
 import com.MotherBoard.entidade.comum.ProdutoImagem;
+import com.MotherBoard.entidade.comum.Role;
+import com.MotherBoard.entidade.comum.Usuario;
 
 @Controller
 public class ProdutoControlador {
@@ -41,10 +54,24 @@ public class ProdutoControlador {
 	private MarcaServico marcaServico;
 	@Autowired
 	private CategoriaServico categoriaServico;
+	
+	@Autowired
+	private InventarioProdutoService inventarioProdutoService;
 
 	@GetMapping("/produtos")
 	public String listFirstPage(Model model) {
 		return listByPage(1, model, "id", "asc", null, 0);
+	}
+	
+	public Usuario getUsuario() {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+	    if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof MotherBoarduserDetails) {
+	        MotherBoarduserDetails userDetails = (MotherBoarduserDetails) authentication.getPrincipal();
+	        return userDetails.getUsuario();  
+	    }
+
+	    return null; 
 	}
 
 	@GetMapping("/produtos/page/{pageNum}")
@@ -100,31 +127,52 @@ public class ProdutoControlador {
 
 	@PostMapping("/produtos/salvar")
 	public String saveProduto(Produto produto, RedirectAttributes ra,
-			@RequestParam("fileImage") MultipartFile imagemPrincipalMultipart,
-			@RequestParam("imagemExtra") MultipartFile[] imagemExtraMultiparts,
-			@RequestParam(name = "detalhesIDs", required = false) String[] detalhesIDs,
-			@RequestParam(name = "detalhesNomes", required = false) String[] detalhesNomes,
-			@RequestParam(name = "detalhesValor", required = false) String[] detalhesValor,
-			@RequestParam(name = "imagemIDs", required = false) String[] imagemIDs,
-			@RequestParam(name = "imagemNomes", required = false) String[] imagemNomes)
-			throws IOException {
+	        @RequestParam("fileImage") MultipartFile imagemPrincipalMultipart,
+	        @RequestParam("imagemExtra") MultipartFile[] imagemExtraMultiparts,
+	        @RequestParam(name = "detalhesIDs", required = false) String[] detalhesIDs,
+	        @RequestParam(name = "detalhesNomes", required = false) String[] detalhesNomes,
+	        @RequestParam(name = "detalhesValor", required = false) String[] detalhesValor,
+	        @RequestParam(name = "imagemIDs", required = false) String[] imagemIDs,
+	        @RequestParam(name = "imagemNomes", required = false) String[] imagemNomes)
+	        throws IOException, ProdutoNotFoundException {
 
-		setImagemPrincipalNome(imagemPrincipalMultipart, produto);
-		setImagensExtraNomesExistentes(imagemIDs, imagemNomes, produto);
-		setNewImagemExtraNome(imagemExtraMultiparts, produto);
-		setProdutoDetalhes(detalhesIDs, detalhesNomes, detalhesValor, produto);
+	    setImagemPrincipalNome(imagemPrincipalMultipart, produto);
+	    setImagensExtraNomesExistentes(imagemIDs, imagemNomes, produto);
+	    setNewImagemExtraNome(imagemExtraMultiparts, produto);
+	    setProdutoDetalhes(detalhesIDs, detalhesNomes, detalhesValor, produto);
 
-		Produto salvarProduto = produtoServico.save(produto);
+	    boolean isNovo = (produto.getId() == null);
+	    String quantidadeEstoqueAnterior = isNovo ? "0" : produtoServico.get(produto.getId()).getNoStoque();
+	    Produto salvarProduto = produtoServico.save(produto);
 
-		saveUploadedImages(imagemPrincipalMultipart, imagemExtraMultiparts, salvarProduto);
+	    saveUploadedImages(imagemPrincipalMultipart, imagemExtraMultiparts, salvarProduto);
+	    deletarImagensExtrasRemovidasDoForm(produto);
 
-		deletarImagensExtrasRemovidasDoForm(produto);
+	    Usuario usuario = getUsuario();
+	    if (usuario == null) {
+	        ra.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+	        return "redirect:/login";
+	    }
 
-		ra.addFlashAttribute("mensagem", "o produto foi salvo com sucesso");
+	    String rolesAsString = usuario.getRoles().stream()
+	        .map(Role::getNome)
+	        .reduce((role1, role2) -> role1 + ", " + role2)
+	        .orElse("Sem Papel");
 
-		return "redirect:/produtos";
+	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+
+	    String descricaoInventario = isNovo ? "Adição do Produto" : "Atualização do Produto";
+	    String quantidadeEstoqueAtual = produto.getNoStoque();
+	
+	        InventarioProduto inventario = new InventarioProduto(null, usuario, salvarProduto, quantidadeEstoqueAtual,rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
+	        inventarioProdutoService.salvaRegistroInventario(inventario);
+	    
+
+	    ra.addFlashAttribute("mensagem", "O produto foi salvo com sucesso.");
+	    return "redirect:/produtos";
 	}
 
+	
 	private void deletarImagensExtrasRemovidasDoForm(Produto produto) {
 		String imagensExtraProdutoDir = "produto-imagens/" + produto.getId() + "/extras";
 		Path dirPath = Paths.get(imagensExtraProdutoDir);
@@ -228,11 +276,41 @@ public class ProdutoControlador {
 
 	@GetMapping("/produtos/{id}/habilitado/{status}")
 	public String updateCategoriaStatus(@PathVariable("id") Integer id,
-			@PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes) {
+			@PathVariable("status") boolean habilitado, RedirectAttributes redirectAttributes, Produto produto) {
 		produtoServico.updatePordutoHabilitadoStatus(id, habilitado);
 		String status = habilitado ? "habilitado" : "desabilitado";
 		String mensagem = "o produto de id " + id + " foi " + status;
 		redirectAttributes.addFlashAttribute("mensagem", mensagem);
+		
+		String quantidadeEstoque = produto.getNoStoque();
+		Usuario usuario = getUsuario();
+		
+
+        if (usuario == null) {
+        	redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
+            return "redirect:/login";
+        }
+		
+		 Set<Role> roles = usuario.getRoles();
+	        String rolesAsString = roles.stream()
+	                                    .map(Role::getNome)  
+	                                    .reduce((role1, role2) -> role1 + ", " + role2)
+	                                    .orElse("Sem Papel");
+	 
+	        String descricaoInventario = habilitado ? "Produto Ativado" : "Produto Desativado";
+	            
+		    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+		    String quantidadeEstoqueanterior = "11";
+		    
+	        InventarioProduto inventario = null;
+			try {
+				
+				inventario = new InventarioProduto(null, usuario, produtoServico.get(id), quantidadeEstoque, quantidadeEstoqueanterior, rolesAsString, dataFormatada, descricaoInventario);
+			} catch (ProdutoNotFoundException e) {
+				e.printStackTrace();
+			}
+	        inventarioProdutoService.salvaRegistroInventario(inventario);
+		
 		return "redirect:/produtos";
 	};
 
