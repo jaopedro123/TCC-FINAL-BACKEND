@@ -165,7 +165,7 @@ public class ProdutoControlador {
 	    String descricaoInventario = isNovo ? "Adição do Produto" : "Atualização do Produto";
 
 	    // Garante que estamos criando um novo registro de inventário
-	    InventarioProduto inventario = new InventarioProduto(null, usuario, salvarProduto, quantidadeEstoqueAtual, rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
+	    InventarioProduto inventario = new InventarioProduto(null,usuario, salvarProduto, quantidadeEstoqueAtual, rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
 	    
 	    // Salva o novo registro de inventário
 	    inventarioProdutoService.salvaRegistroInventario(inventario);

@@ -110,36 +110,37 @@
             </div>
         </form>
 
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Funcionário</th>
-                    <th>ID do Funcionário</th>
-                    <th>Função</th>
-                    <th>Produto</th>
-                    <th>ID do Produto</th>
-                    <th>Quantidade no Estoque</th>
-                    <th>Quantidade Anterior no Estoque</th>
-                    <th>Ação</th>
-                    <th>Data de Modificação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="produto : ${listaProdutos}">
-                    <td th:text="${produto.id}"></td>
-                    <td th:text="${produto.usuarioId.nomeCompleto}"></td>
-                    <td th:text="${produto.usuarioId.id}"></td>
-                    <td th:text="${produto.roleUsuario}"></td>
-                    <td th:text="${produto.Produto.nome}"></td>
-                    <td th:text="${produto.Produto.id}"></td>
-                    <td th:text="${produto.Produto.noStoque}"></td>
-                    <td th:text="${produto.quantidadeEstoqueAnterior}"></td>
-                    <td th:text="${produto.acao}"></td>
-                    <td th:text="${produto.dataModificacao}"></td>
-                </tr>
-            </tbody>
-        </table>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Funcionário</th>
+            <th>ID do Funcionário</th>
+            <th>Função</th>
+            <th>Produto</th>
+            <th>ID do Produto</th>
+            <th>Quantidade no Estoque</th>
+            <th>Nova Quantidade</th>
+            <th>Ação</th>
+            <th>Data de Modificação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="produto : ${listaProdutos}">
+            <td th:text="${produto.id}"></td>
+            <td th:text="${produto.usuarioId.nomeCompleto}"></td>
+            <td th:text="${produto.usuarioId.id}"></td>
+            <td th:text="${produto.roleUsuario}"></td>
+            <td th:text="${produto.Produto.nome}"></td>
+            <td th:text="${produto.Produto.id}"></td>
+            <td th:text="${produto.estoque}"></td>
+            <td th:text="${produto.quantidadeEstoqueAnterior}"></td>
+            <td th:text="${produto.acao}"></td>
+            <td th:text="${produto.dataModificacao}"></td>
+        </tr>
+    </tbody>
+</table>
+
 
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
             <p>Inventário não encontrado</p>
