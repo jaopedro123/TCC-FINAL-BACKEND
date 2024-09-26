@@ -72,7 +72,7 @@
                     </a>
                 </th:block>
 
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                     <a class="nav-link squaredoADM" th:href="@{/produtos}">
                         <i class="bi bi-bag-fill fs-1"></i>
                         <h5><b>Produtos</b></h5>
@@ -86,14 +86,14 @@
                     </a>
                 </th:block>
 				
-				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/inventario}">
 				        <i class="bi bi-box2-fill fs-1"></i>
 				        <h5><b>Inventario</b></h5>
 				    </a>
 				</th:block>
 				
-				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Exportador', 'Assistente')">
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/conta}">
 				        <i class="bi bi-person-fill fs-1"></i>
 				        <h5><b>Minha Conta</b></h5>
