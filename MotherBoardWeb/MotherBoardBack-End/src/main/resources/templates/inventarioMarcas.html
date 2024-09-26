@@ -57,34 +57,32 @@
         <form th:action="@{/inventarioMarcas/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
             style="background-color: #40454e;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
 
-            <div class="container">
-                <label>Filtrar por: </label>
+<div class="container">
+    <label>Filtrar por: </label>
 
-                <div class="filter-options">
-                    <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
-                        th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
-                    <label for="filterByName" class="mr-2">Nome</label>
+    <div class="filter-options">
+        <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
+            th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
+        <label for="filterByName" class="mr-2">Nome</label>
 
-                    <input type="radio" id="filterByData" name="filterBy" value="dataModificacao"
-                        th:checked="${filterBy == 'dataModificacao'}" onclick="toggleSearchInput()">
-                    <label for="filterByData" class="mr-2">Data</label>
-                </div>
+        <input type="radio" id="filterByData" name="filterBy" value="dataModificacao"
+            th:checked="${filterBy == 'dataModificacao'}" onclick="toggleSearchInput()">
+        <label for="filterByData" class="mr-2">Data</label>
+    </div>
 
-                <span id="instructionText" class="instruction-text">Selecione um filtro para habilitar a barra de
-                    pesquisa.</span>
-            </div>
-            &nbsp;
-            <input type="hidden" name="sortField" th:value="${sortField}" />
-            <input type="hidden" name="sortDir" th:value="${sortDir}" />
-            &nbsp;
-            <input type="search" name="keyword" th:value="${keyword}" class="form-control" required disabled
-                id="searchInput" placeholder="Procurar..." maxlength="50" />
-            &nbsp;
-            <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
-            &nbsp;
-            <input type="button" value="Limpar" class="btn btnCadFunc" onclick="limparFiltro()" />
+    <span id="instructionText" class="instruction-text">Selecione um filtro para habilitar a barra de pesquisa.</span>
+</div>
+&nbsp;
+<input type="hidden" name="sortField" th:value="${sortField}" />
+<input type="hidden" name="sortDir" th:value="${sortDir}" />
+&nbsp;
+<input type="search" name="keyword" th:value="${keyword}" class="form-control" required disabled id="searchInput" placeholder="Procurar..." maxlength="50" />
+&nbsp;
+<button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
+&nbsp;
+<input type="button" value="Limpar" class="btn btnCadFunc" onclick="limparFiltro()" />
         </form>
-
+        
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -230,56 +228,68 @@
 
     </footer>
 
-    <script>
-        function limparFiltro() {
-            window.location = "[[@{/inventarioMarcas}]]";
+<script>
+    function limparFiltro() {
+        window.location = "[[@{/inventarioMarcas}]]";
+    }
+
+    function toggleSearchInput() {
+        var searchInput = document.getElementById("searchInput");
+        var instructionText = document.getElementById("instructionText");
+        searchInput.value = '';
+        searchInput.disabled = false;
+        instructionText.style.display = 'none';
+        searchInput.addEventListener("input", validateInput);
+
+        if (document.getElementById("filterByData").checked) {
+            searchInput.addEventListener("input", maskDateInput);
+        } else {
+            searchInput.removeEventListener("input", maskDateInput);
         }
+    }
 
-        function toggleSearchInput() {
-            var searchInput = document.getElementById("searchInput");
-            var instructionText = document.getElementById("instructionText");
-            searchInput.value = '';
-            searchInput.disabled = false;
-            instructionText.style.display = 'none';
-            searchInput.addEventListener("input", validateInput);
+    function validateInput() {
+        var searchInput = document.getElementById("searchInput");
+        var filterByName = document.getElementById("filterByName");
 
-            if (document.getElementById("filterByData").checked) {
-                searchInput.addEventListener("input", maskDateInput);
-            } else {
-                searchInput.removeEventListener("input", maskDateInput);
-            }
+        if (filterByName.checked) {
+            searchInput.value = searchInput.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
         }
+    }
 
-        function validateInput() {
-            var searchInput = document.getElementById("searchInput");
-            var filterByName = document.getElementById("filterByName");
+function maskDateInput(e) {
+    let value = this.value.replace(/\D/g, '');  // Remove tudo que não for número
 
-            if (filterByName.checked) {
-                searchInput.value = searchInput.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
-            }
-        }
+    // Limitar comprimento máximo a 12 caracteres (ddMMyyyyHHmm)
+    if (value.length > 12) value = value.slice(0, 12);
 
-        function maskDateInput(e) {
-            let value = this.value.replace(/\D/g, '');
+    // Dividindo os componentes da data e hora
+    let day = value.substring(0, 2);
+    let month = value.substring(2, 4);
+    let year = value.substring(4, 8);
+    let hour = value.substring(8, 10);
+    let minute = value.substring(10, 12);
 
-            if (value.length > 8) value = value.slice(0, 8);
+    // Validar dias, meses, horas e minutos
+    if (parseInt(day) > 31) day = '31';
+    if (parseInt(month) > 12) month = '12';
+    if (hour && parseInt(hour) > 23) hour = '23';
+    if (minute && parseInt(minute) > 59) minute = '59';
 
-            let day = parseInt(value.substring(0, 2));
-            let month = parseInt(value.substring(2, 4));
+    // Monta a string formatada
+    let formattedValue = '';
+    if (day) formattedValue = day;
+    if (month) formattedValue += '/' + month;
+    if (year) formattedValue += '/' + year;
+    if (hour) formattedValue += ' ' + hour;
+    if (minute) formattedValue += ':' + minute;
 
-            if (day > 31) value = `31${value.substring(2)}`;
-            if (month > 12) value = `${value.substring(0, 2)}12${value.substring(4)}`;
+    this.value = formattedValue;  // Atualiza o campo com a nova formatação
+}
 
-            if (value.length > 4) {
-                value = value.replace(/(\d{2})(\d)/, '$1/$2');
-                value = value.replace(/(\d{2})(\d)/, '$1/$2');
-            } else if (value.length > 2) {
-                value = value.replace(/(\d{2})(\d)/, '$1/$2');
-            }
 
-            this.value = value;
-        }
-    </script>
+
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
