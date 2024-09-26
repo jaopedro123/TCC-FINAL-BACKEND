@@ -138,12 +138,17 @@ public class ProdutoControlador {
 	    setProdutoDetalhes(detalhesIDs, detalhesNomes, detalhesValor, produto);
 
 	    boolean isNovo = (produto.getId() == null);
+
+	    // Captura o estoque anterior antes de salvar o produto
 	    String quantidadeEstoqueAnterior = isNovo ? "0" : produtoServico.get(produto.getId()).getNoStoque();
+
+	    // Salva o produto e captura o estoque atualizado
 	    Produto salvarProduto = produtoServico.save(produto);
 
-	    saveUploadedImages(imagemPrincipalMultipart, imagemExtraMultiparts, salvarProduto);
-	    deletarImagensExtrasRemovidasDoForm(produto);
+	    // Captura o estoque atualizado após salvar o produto
+	    String quantidadeEstoqueAtual = salvarProduto.getNoStoque();
 
+	    // Cria uma nova instância do InventarioProduto para esta modificação
 	    Usuario usuario = getUsuario();
 	    if (usuario == null) {
 	        ra.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
@@ -158,15 +163,18 @@ public class ProdutoControlador {
 	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
 	    String descricaoInventario = isNovo ? "Adição do Produto" : "Atualização do Produto";
-	    String quantidadeEstoqueAtual = produto.getNoStoque();
-	
-	        InventarioProduto inventario = new InventarioProduto(null, usuario, salvarProduto, quantidadeEstoqueAtual,rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
-	        inventarioProdutoService.salvaRegistroInventario(inventario);
+
+	    // Garante que estamos criando um novo registro de inventário
+	    InventarioProduto inventario = new InventarioProduto(null, usuario, salvarProduto, quantidadeEstoqueAtual, rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
 	    
+	    // Salva o novo registro de inventário
+	    inventarioProdutoService.salvaRegistroInventario(inventario);
 
 	    ra.addFlashAttribute("mensagem", "O produto foi salvo com sucesso.");
 	    return "redirect:/produtos";
 	}
+
+
 
 	
 	private void deletarImagensExtrasRemovidasDoForm(Produto produto) {

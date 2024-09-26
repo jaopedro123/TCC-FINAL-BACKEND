@@ -25,7 +25,7 @@ public class InventarioProduto {
     @JoinColumn(name = "produto_id") 
     private Produto produto;
     
-    @JoinColumn(name = "estoque") 
+    @Column(name = "estoque") 
     private String estoque;
 
     @Column(name = "role_usuario")  
@@ -39,6 +39,7 @@ public class InventarioProduto {
     
     @Column(name = "quantidadeEstoqueAnterior") 
     private String quantidadeEstoqueAnterior; 
+   
     
     public InventarioProduto() {
     	
