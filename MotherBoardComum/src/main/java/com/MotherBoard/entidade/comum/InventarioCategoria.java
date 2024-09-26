@@ -1,8 +1,5 @@
 package com.MotherBoard.entidade.comum;
 
-import java.time.LocalDateTime;
-import java.util.Set;
-
 import jakarta.persistence.*;
 
 @Entity

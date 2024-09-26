@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.MotherBoard.Admin.categoria.CategoriaNotFoundException;
 import com.MotherBoard.entidade.comum.Marca;
 
 @Service

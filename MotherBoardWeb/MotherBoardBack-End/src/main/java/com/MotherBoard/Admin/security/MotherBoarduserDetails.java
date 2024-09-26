@@ -13,8 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.MotherBoard.entidade.comum.Role;
 import com.MotherBoard.entidade.comum.Usuario;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.MotherBoard.Admin.security.MotherBoarduserDetails;
 
 public class MotherBoarduserDetails implements UserDetails{

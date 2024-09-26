@@ -22,10 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.Admin.InventarioMarca.InventarioMarcaService;
-import com.MotherBoard.Admin.categoria.CategoriaNotFoundException;
 import com.MotherBoard.Admin.categoria.CategoriaServico;
 import com.MotherBoard.Admin.security.MotherBoarduserDetails;
-import com.MotherBoard.Admin.usuario.UsuarioServico;
 import com.MotherBoard.entidade.comum.Categoria;
 import com.MotherBoard.entidade.comum.InventarioMarca;
 import com.MotherBoard.entidade.comum.Marca;

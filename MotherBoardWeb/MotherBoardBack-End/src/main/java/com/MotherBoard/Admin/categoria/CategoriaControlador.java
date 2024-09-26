@@ -18,12 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.MotherBoard.Admin.FileUploadUtil;
 import com.MotherBoard.Admin.InventarioCategoria.InventarioCategoriaService;
-import com.MotherBoard.Admin.InventarioMarca.InventarioMarcaService;
 import com.MotherBoard.Admin.security.MotherBoarduserDetails;
 import com.MotherBoard.entidade.comum.Categoria;
 import com.MotherBoard.entidade.comum.InventarioCategoria;
-import com.MotherBoard.entidade.comum.InventarioMarca;
-import com.MotherBoard.entidade.comum.Marca;
 import com.MotherBoard.entidade.comum.Role;
 import com.MotherBoard.entidade.comum.Usuario;
 
