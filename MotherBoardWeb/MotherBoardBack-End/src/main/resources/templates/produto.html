@@ -123,9 +123,9 @@
                         <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                             <th scope="col">Editar</th>
                         </th:block>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                      <!--  <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                             <th scope="col">Excluir</th>
-                        </th:block>
+                        </th:block> -->
 
                     </tr>
                 </thead>
@@ -174,7 +174,7 @@
                             </td>
                         </th:block>
                         
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                     <!--   <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                             <td>
                                 <a class="delete-link" th:href="@{'/produtos/deletar/' + ${produto.id}}"
                                     th:produtoId="${produto.id}">
@@ -182,7 +182,7 @@
                                         style="color: rgb(255, 128, 128); font-size: 24px;"></i>
                                 </a>
                             </td>
-                        </th:block>
+                        </th:block> -->
                     </tr>
                 </tbody>
             </table>
