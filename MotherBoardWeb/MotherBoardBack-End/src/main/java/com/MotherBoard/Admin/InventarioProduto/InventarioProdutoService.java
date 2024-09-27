@@ -1,5 +1,8 @@
 package com.MotherBoard.Admin.InventarioProduto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +39,21 @@ public class InventarioProdutoService {
         return repository.findAll();
     }
 
-    public Page<InventarioProduto> listByPage(int pageNum, String sortField, String sortDir, String keyword) {
+    public Page<InventarioProduto> listByPage(int pageNum, String sortField, String sortDir, String keyword, String startDate, String endDate) {
         Sort sort = Sort.by(sortField);
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         PageRequest pageable = PageRequest.of(pageNum - 1, INVENTARIO_PRODUTOS_PER_PAGE, sort);
 
-        if (keyword != null) {
+        if (keyword != null && startDate != null && endDate != null) {
+            return repository.pesquisarPorPeriodo(keyword, startDate, endDate, pageable);
+        } else if (startDate != null && endDate != null) {
+            return repository.pesquisarPorPeriodoSemKeyword(startDate, endDate, pageable);
+        } else if (keyword != null) {
             return repository.pesquisar(keyword, pageable);
         }
+
         return repository.findAll(pageable);
+
     }
+    
 }

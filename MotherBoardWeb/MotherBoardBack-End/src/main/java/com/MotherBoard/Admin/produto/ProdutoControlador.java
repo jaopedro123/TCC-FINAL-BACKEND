@@ -139,16 +139,12 @@ public class ProdutoControlador {
 
 	    boolean isNovo = (produto.getId() == null);
 
-	    // Captura o estoque anterior antes de salvar o produto
 	    String quantidadeEstoqueAnterior = isNovo ? "0" : produtoServico.get(produto.getId()).getNoStoque();
 
-	    // Salva o produto e captura o estoque atualizado
 	    Produto salvarProduto = produtoServico.save(produto);
 
-	    // Captura o estoque atualizado após salvar o produto
 	    String quantidadeEstoqueAtual = salvarProduto.getNoStoque();
 
-	    // Cria uma nova instância do InventarioProduto para esta modificação
 	    Usuario usuario = getUsuario();
 	    if (usuario == null) {
 	        ra.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
@@ -164,10 +160,8 @@ public class ProdutoControlador {
 
 	    String descricaoInventario = isNovo ? "Adição do Produto" : "Atualização do Produto";
 
-	    // Garante que estamos criando um novo registro de inventário
 	    InventarioProduto inventario = new InventarioProduto(null,usuario, salvarProduto, quantidadeEstoqueAtual, rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
 	    
-	    // Salva o novo registro de inventário
 	    inventarioProdutoService.salvaRegistroInventario(inventario);
 
 	    ra.addFlashAttribute("mensagem", "O produto foi salvo com sucesso.");

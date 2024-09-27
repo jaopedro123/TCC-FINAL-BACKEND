@@ -1,9 +1,12 @@
 package com.MotherBoard.Admin.InventarioProduto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +21,12 @@ public class InventarioProdutoControlador {
     @Autowired
     private InventarioProdutoService inventarioProdutoService;
 
+
     @GetMapping("/inventarioProdutos")
-    public String listarInventarioMarcas(Model model) {
-        return listByPage(1, model, "dataModificacao", "desc", null);
+    public String listarInventarioMarcas(Model model,
+                                         @RequestParam(value = "startDate", required = false) String startDateStr,
+                                         @RequestParam(value = "endDate", required = false) String endDateStr) {
+        return listByPage(1, model, "dataModificacao", "desc", null, startDateStr, endDateStr);
     }
 
     @GetMapping("/inventarioProdutos/page/{pageNum}")
@@ -29,13 +35,28 @@ public class InventarioProdutoControlador {
             Model model,
             @RequestParam(name = "sortField", defaultValue = "dataModificacao") String sortField,
             @RequestParam(name = "sortDir", defaultValue = "desc") String sortDir,
-            @RequestParam(name = "keyword", required = false) String keyword) {
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "startDate", required = false) String startDate,
+            @RequestParam(name = "endDate", required = false) String endDate) {
 
-        if ("null".equals(keyword)) {
+        if (keyword == null || keyword.trim().isEmpty()) {
             keyword = null;
         }
         
-        Page<InventarioProduto> page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword);
+        if (startDate == null || startDate.trim().isEmpty()) {
+        	startDate = null;
+        }
+
+        if (endDate == null || endDate.trim().isEmpty()) {
+        	endDate = null;
+        }
+        
+        System.out.println("Keyword: " + keyword);
+        System.out.println("Start Date: " + startDate);
+        System.out.println("End Date: " + endDate);
+        
+        
+        Page<InventarioProduto> page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword, startDate, endDate);
         List<InventarioProduto> listaProdutos = page.getContent();
 
         long startCount = (pageNum - 1) * InventarioProdutoService.INVENTARIO_PRODUTOS_PER_PAGE + 1;
@@ -52,8 +73,17 @@ public class InventarioProdutoControlador {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         model.addAttribute("listaProdutos", listaProdutos);
-
+        
+        System.out.println("Lista Produtos: " + listaProdutos);
+        
         return "inventarioProdutos";
+        
+        
     }
+
+
+
 }

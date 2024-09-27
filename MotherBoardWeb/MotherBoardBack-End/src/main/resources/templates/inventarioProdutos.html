@@ -56,59 +56,66 @@
     </header>
 
     <main class="container">
+		
+<form th:action="@{/inventarioProdutos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
+      style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);" onsubmit="return validateDates()">
 
-        <!-- <form th:action="@{/inventarioProdutos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-            style="background-color: #40454e;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
-
-            <div class="container">
-                <label>Filtrar por: </label>
-
-                <div class="filter-options">
-                    <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
-                        th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
-                    <label for="filterByName" class="mr-2">Nome</label>
-
-                    <input type="radio" id="filterByData" name="filterBy" value="dataModificacao"
-                        th:checked="${filterBy == 'dataModificacao'}" onclick="toggleSearchInput()">
-                    <label for="filterByData" class="mr-2">Data</label>
-
-                    <input type="radio" id="filterByHorario" name="filterBy" value="dataModificacao"
-                        th:checked="${filterBy == 'dataModificacao'}" onclick="toggleSearchInput()">
-                    <label for="filterByHorario" class="mr-2">Horario</label>
-                </div>
-
-                <span id="instructionText" class="instruction-text">Selecione um filtro para habilitar a barra de
-                    pesquisa.</span>
+    <div class="container">
+        <label>Filtrar por nome: </label>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
+                       class="form-control rounded-2">
             </div>
-            &nbsp;
-            <input type="hidden" name="sortField" th:value="${sortField}" />
-            <input type="hidden" name="sortDir" th:value="${sortDir}" />
-            &nbsp;
-            <input type="search" name="keyword" th:value="${keyword}" class="form-control" required disabled
-                id="searchInput" placeholder="Procurar..." maxlength="50" />
-            &nbsp;
-            <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
-            &nbsp;
-            <input type="button" value="Limpar" class="btn btnCadFunc" onclick="limparFiltro()" />
-        </form> -->
+        </div>
 
-        <form th:action="@{/inventarioProdutos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-            style="background-color: #40454e;box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);">
-
-            <div class="container">
-                <label>Filtrar por nome: </label>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
-                            class="form-control rounded-2" required>
-                        &nbsp;
-                        <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
-                        <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Limpar</button>
-                    </div>
-                </div>
-
+        <label for="startDate">Data de Início:</label>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="date" id="startDate" name="startDate"
+                       th:value="${startDate}" 
+                       class="form-control rounded-2">       
             </div>
-        </form>
+        </div>
+
+        <label for="endDate">Data de Fim:</label>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="date" id="endDate" name="endDate"
+                       th:value="${endDate}" 
+                       class="form-control rounded-2">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
+        <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Limpar</button>
+    </div>
+</form>
+
+<script>
+function validateDates() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    if ((startDate && !endDate) || (!startDate && endDate)) {
+        alert('Por favor, preencha ambas as datas (Data de Início e Data de Fim) ou deixe ambas em branco.');
+        return false; 
+    }
+
+    if (startDate && endDate) { 
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        if (start > end) {
+            alert('A data de início não pode ser posterior à data de fim.');
+            return false; 
+        }
+    }
+
+    return true; 
+}
+
+</script>
 
 <table class="table table-striped">
     <thead>
@@ -141,7 +148,6 @@
     </tbody>
 </table>
 
-
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
             <p>Inventário não encontrado</p>
 			<a th:href="@{/inventarioProdutos}" class="btn btnCadFunc ms-2">Voltar para o Inventario Produto</a>
@@ -149,48 +155,48 @@
 
     </main>
 
-    <div th:if="${totalPages > 0}">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <!-- Primeira Página -->
-                <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioProdutos/page/1?sortField=${sortField}&sortDir=${sortDir}${keyword != null ? '&keyword=' + keyword : ''}|}">
-                        Primeira Página
-                    </a>
-                </li>
+<div th:if="${totalPages > 0}">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioProdutos/page/1?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + #dates.format(startDate, 'yyyy-MM-dd') : ''}${endDate != null ? '&endDate=' + #dates.format(endDate, 'yyyy-MM-dd') : ''}|}">
+                   Primeira Página
+                </a>
+            </li>
 
-                <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioProdutos/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        Anterior
-                    </a>
-                </li>
+            <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioProdutos/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + #dates.format(startDate, 'yyyy-MM-dd') : ''}${endDate != null ? '&endDate=' + #dates.format(endDate, 'yyyy-MM-dd') : ''}|}">
+                   Anterior
+                </a>
+            </li>
 
-                <li th:each="i : ${#numbers.sequence(1, totalPages)}"
-                    th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioProdutos/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        [[${i}]]
-                    </a>
-                </li>
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioProdutos/page/${i}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + #dates.format(startDate, 'yyyy-MM-dd') : ''}${endDate != null ? '&endDate=' + #dates.format(endDate, 'yyyy-MM-dd') : ''}|}">
+                    [[${i}]]
+                </a>
+            </li>
 
-                <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioProdutos/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        Próximo
-                    </a>
-                </li>
+            <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioProdutos/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + #dates.format(startDate, 'yyyy-MM-dd') : ''}${endDate != null ? '&endDate=' + #dates.format(endDate, 'yyyy-MM-dd') : ''}|}">
+                   Próximo
+                </a>
+            </li>
 
-                <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioProdutos/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        Última Página
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+            <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioProdutos/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + #dates.format(startDate, 'yyyy-MM-dd') : ''}${endDate != null ? '&endDate=' + #dates.format(endDate, 'yyyy-MM-dd') : ''}|}">
+                   Última Página
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
 
 
     <div class="d-flex justify-content-center align-items-center">
@@ -253,6 +259,13 @@
     </footer>
 
     <script>
+		function limparFiltro() {
+    document.querySelector('input[name="keyword"]').value = '';
+    document.querySelector('input[name="startDate"]').value = '';
+    document.querySelector('input[name="endDate"]').value = '';
+}
+
+		
         function limparFiltro() {
             window.location = "[[@{/inventarioProdutos}]]";
         }
