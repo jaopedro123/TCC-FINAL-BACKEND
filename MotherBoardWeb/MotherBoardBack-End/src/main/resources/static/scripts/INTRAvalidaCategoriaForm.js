@@ -7,8 +7,9 @@ $(document).ready(function () {
 
         foto = this.files[0].size;
 
-        if (foto > 102400) {
-            this.setCustomValidity("Você so pode escolher imagens abaixo de 100KB! ");
+        // 1 MB = 1048576
+        if (foto > 1048576) {
+            this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
             this.reportvalidity();
         }
         else {
@@ -28,33 +29,50 @@ function showImageThumbnail(fileInput) {
     reader.readAsDataURL(file);
 }
 
-function checkUnique(form) {
-    categId = $("#id").val();
-    categNome = $("#nome").val();
-    categAlias = $("#alias").val();
+function validateForm(form) {
+    var checks = [checkUniqueCategoria(form)];
 
-    csrfValue = $("input[name='_csrf']").val();
-
-    url = "/categorias/check_unique";
-
-    params = { id: categId, nome: categNome, alias: categAlias, _csrf: csrfValue };
-
-    $.post(url, params, function (response) {
-
-        if (response == "OK") {
-            return true;
-        } else if (response == "Nome Duplicado") {
-            showModalDialog("Erro ao criar categoria", "Nome já utilizado, por favor troque ele para prosseguir");
+    Promise.all(checks).then(function (results) {
+        if (results.every(result => result === true)) {
+            form.submit();
+        } else {
             return false;
-        } else if (response == "Alias Duplicado") {
-            showModalDialog("Erro ao criar categoria", "Alias já utilizado, por favor troque ele para prosseguir");
         }
-
-    }).fail(function () {
-        showModalDialog("Erro", "Resposta desconhecida do servidor");
-        return false;
     });
 
+    return false;
+}
+
+function checkUniqueCategoria(form) {
+    return new Promise(function (resolve, reject) {
+        let categId = $("#id").val();
+        let categNome = $("#nome").val();
+        let categAlias = $("#alias").val();
+        let csrfValue = $("input[name='_csrf']").val();
+
+        let url = "/MotherBoardAdmin/categorias/check_unique";
+
+        let params = { id: categId, nome: categNome, alias: categAlias, _csrf: csrfValue };
+
+        console.log(url + params)
+
+        $.post(url, params, function (response) {
+
+            if (response == "OK") {
+                resolve(true);
+            } else if (response == "Nome Duplicado") {
+                showModalDialog("Erro ao criar categoria", "Nome já utilizado, por favor troque ele para prosseguir");
+                resolve(false);
+            } else if (response == "Alias Duplicado") {
+                showModalDialog("Erro ao criar categoria", "Alias já utilizado, por favor troque ele para prosseguir");
+                resolve(false);
+            }
+
+        }).fail(function () {
+            showModalDialog("Erro", "Resposta desconhecida do servidor");
+            reject(false); 
+        });
+    });
 }
 
 function showModalDialog(title, message) {

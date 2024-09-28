@@ -161,7 +161,7 @@ public class CategoriaServico {
 		repo.deleteById(id);
 	}
 
-	public String checkUnico(Integer id, String nome, String alias) {
+	public String checkUniqueCategoria(Integer id, String nome, String alias) {
 		boolean isCreatingNew = (id == null || id == 0);
 
 		Categoria categoriaByName = repo.findByName(nome);

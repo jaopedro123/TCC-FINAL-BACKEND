@@ -35,7 +35,7 @@ public class CategoriaServiceTests {
         Mockito.when(repo.findByName(nome)).thenReturn(categoria);
         Mockito.when(repo.findByAlias(alias)).thenReturn(null);
 
-        String resultado = servico.checkUnico(id, nome, alias);
+        String resultado = servico.checkUniqueCategoria(id, nome, alias);
 
         System.out.println(resultado);
         assertThat(resultado).isEqualTo("Nome Duplicado");
@@ -52,7 +52,7 @@ public class CategoriaServiceTests {
         Mockito.when(repo.findByName(nome)).thenReturn(null);
         Mockito.when(repo.findByAlias(alias)).thenReturn(categoria);
 
-        String resultado = servico.checkUnico(id, nome, alias);
+        String resultado = servico.checkUniqueCategoria(id, nome, alias);
 
         assertThat(resultado).isEqualTo("Alias Duplicado");
     }
@@ -66,7 +66,7 @@ public class CategoriaServiceTests {
         Mockito.when(repo.findByName(nome)).thenReturn(null);
         Mockito.when(repo.findByAlias(alias)).thenReturn(null);
 
-        String resultado = servico.checkUnico(id, nome, alias);
+        String resultado = servico.checkUniqueCategoria(id, nome, alias);
 
         assertThat(resultado).isEqualTo("OK");
     }
@@ -82,7 +82,7 @@ public class CategoriaServiceTests {
         Mockito.when(repo.findByName(nome)).thenReturn(categoria);
         Mockito.when(repo.findByAlias(alias)).thenReturn(null);
 
-        String resultado = servico.checkUnico(id, nome, alias);
+        String resultado = servico.checkUniqueCategoria(id, nome, alias);
 
         assertThat(resultado).isEqualTo("Nome Duplicado");
     }
@@ -98,7 +98,7 @@ public class CategoriaServiceTests {
         Mockito.when(repo.findByName(nome)).thenReturn(null);
         Mockito.when(repo.findByAlias(alias)).thenReturn(categoria);
 
-        String resultado = servico.checkUnico(id, nome, alias);
+        String resultado = servico.checkUniqueCategoria(id, nome, alias);
 
         System.out.println(resultado);
         assertThat(resultado).isEqualTo("Alias Duplicado");
@@ -115,7 +115,7 @@ public class CategoriaServiceTests {
         Mockito.when(repo.findByName(nome)).thenReturn(null);
         Mockito.when(repo.findByAlias(alias)).thenReturn(categoria);
 
-        String resultado = servico.checkUnico(id, nome, alias);
+        String resultado = servico.checkUniqueCategoria(id, nome, alias);
 
         assertThat(resultado).isEqualTo("OK");
     }
