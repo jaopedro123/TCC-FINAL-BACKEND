@@ -44,16 +44,21 @@ public class InventarioProdutoService {
         sort = sortDir.equals("asc") ? sort.ascending() : sort.descending();
         PageRequest pageable = PageRequest.of(pageNum - 1, INVENTARIO_PRODUTOS_PER_PAGE, sort);
 
-        if (keyword != null && startDate != null && endDate != null) {
+        boolean hasKeyword = (keyword != null && !keyword.trim().isEmpty());
+        
+        boolean hasDateRange = (startDate != null && !startDate.trim().isEmpty() && endDate != null && !endDate.trim().isEmpty());
+
+        if (hasKeyword && hasDateRange) {
             return repository.pesquisarPorPeriodo(keyword, startDate, endDate, pageable);
-        } else if (startDate != null && endDate != null) {
+        } 
+        else if (hasDateRange) {
             return repository.pesquisarPorPeriodoSemKeyword(startDate, endDate, pageable);
-        } else if (keyword != null) {
+        } 
+        else if (hasKeyword) {
             return repository.pesquisar(keyword, pageable);
         }
 
         return repository.findAll(pageable);
-
     }
-    
+
 }

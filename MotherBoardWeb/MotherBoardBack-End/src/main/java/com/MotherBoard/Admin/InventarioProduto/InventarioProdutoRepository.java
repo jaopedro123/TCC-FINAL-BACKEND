@@ -19,13 +19,14 @@ public interface InventarioProdutoRepository extends JpaRepository<InventarioPro
     @Query("DELETE FROM InventarioProduto ip WHERE ip.produto.id = :produtoId")
     void deleteByProdutoId(@Param("produtoId") Integer produtoId);
 
+    
+    
     @Query("SELECT ip FROM InventarioProduto ip ORDER BY ip.dataModificacao DESC")
     List<InventarioProduto> listarTodos();
 
     @Query("SELECT ip FROM InventarioProduto ip WHERE (ip.produto.nome LIKE %?1% OR ip.usuarioId.nomeCompleto LIKE %?1%)"
-            + " AND ip.dataModificacao BETWEEN ?2 AND ?3")
+            + " AND ip.dataModificacao >= ?2 AND ip.dataModificacao <= ?3")
     Page<InventarioProduto> pesquisarPorPeriodo(String keyword, String startDateTime, String endDateTime, Pageable pageable);
-
 
     @Query("SELECT ip FROM InventarioProduto ip WHERE ip.dataModificacao BETWEEN :startDate AND :endDate")
     Page<InventarioProduto> pesquisarPorPeriodoSemKeyword(
@@ -33,9 +34,8 @@ public interface InventarioProdutoRepository extends JpaRepository<InventarioPro
         @Param("endDate") String endDateTime, 
         Pageable pageable);
 
-
-
-    @Query("SELECT ip FROM InventarioProduto ip WHERE ip.produto.nome LIKE %?1% OR ip.usuarioId.nomeCompleto LIKE %?1%")
+    @Query("SELECT ip FROM InventarioProduto ip WHERE (ip.produto.nome LIKE %?1% OR ip.usuarioId.nomeCompleto LIKE %?1%)")
     Page<InventarioProduto> pesquisar(String keyword, Pageable pageable);
+
 }
 

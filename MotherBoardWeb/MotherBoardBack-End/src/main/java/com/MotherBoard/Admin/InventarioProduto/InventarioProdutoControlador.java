@@ -1,7 +1,9 @@
 package com.MotherBoard.Admin.InventarioProduto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,10 @@ public class InventarioProdutoControlador {
     public String listarInventarioMarcas(Model model,
                                          @RequestParam(value = "startDate", required = false) String startDateStr,
                                          @RequestParam(value = "endDate", required = false) String endDateStr) {
+        
         return listByPage(1, model, "dataModificacao", "desc", null, startDateStr, endDateStr);
     }
-
+     
     @GetMapping("/inventarioProdutos/page/{pageNum}")
     public String listByPage(
             @PathVariable(name = "pageNum") int pageNum,
@@ -43,22 +46,36 @@ public class InventarioProdutoControlador {
             keyword = null;
         }
         
-        if (startDate == null || startDate.trim().isEmpty()) {
-        	startDate = null;
+        DateTimeFormatter formatterISO = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatterBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        if (startDate != null && !startDate.trim().isEmpty()) {
+            LocalDate startLocalDate = LocalDate.parse(startDate, formatterISO);
+            startDate = startLocalDate.format(formatterBR);
         }
 
-        if (endDate == null || endDate.trim().isEmpty()) {
-        	endDate = null;
+        if (endDate != null && !endDate.trim().isEmpty()) {
+            LocalDate endLocalDate = LocalDate.parse(endDate, formatterISO);
+            endDate = endLocalDate.format(formatterBR);
         }
-        
+
         System.out.println("Keyword: " + keyword);
-        System.out.println("Start Date: " + startDate);
-        System.out.println("End Date: " + endDate);
-        
-        
-        Page<InventarioProduto> page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword, startDate, endDate);
-        List<InventarioProduto> listaProdutos = page.getContent();
+        System.out.println("Start Date (convertido): " + startDate);
+        System.out.println("End Date (convertido): " + endDate);
 
+        Page<InventarioProduto> page;
+
+        if (keyword != null && startDate != null && endDate != null) {
+            page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword, startDate, endDate);
+        } else if (startDate != null && endDate != null) {
+            page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, null, startDate, endDate);
+        } else if (keyword != null) {
+            page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword, null, null);
+        } else {
+            page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, null, null, null);
+        }
+
+        List<InventarioProduto> listaProdutos = page.getContent();
         long startCount = (pageNum - 1) * InventarioProdutoService.INVENTARIO_PRODUTOS_PER_PAGE + 1;
         long endCount = Math.min(startCount + InventarioProdutoService.INVENTARIO_PRODUTOS_PER_PAGE - 1, page.getTotalElements());
 
@@ -76,14 +93,10 @@ public class InventarioProdutoControlador {
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         model.addAttribute("listaProdutos", listaProdutos);
-        
-        System.out.println("Lista Produtos: " + listaProdutos);
-        
-        return "inventarioProdutos";
-        
-        
-    }
 
+        System.out.println("listaProdutos " + endDate);
+        return "inventarioProdutos";
+    }
 
 
 }
