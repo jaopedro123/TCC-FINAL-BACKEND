@@ -134,18 +134,13 @@ public class ProdutoControlador {
 	    setNewImagemExtraNome(imagemExtraMultiparts, produto);
 
 	    boolean isNovo = (produto.getId() == null);
-
 	    String quantidadeEstoqueAnterior = isNovo ? "0" : produtoServico.get(produto.getId()).getNoStoque();
 
 	    Produto salvarProduto = produtoServico.save(produto);
+	    saveUploadedImages(imagemPrincipalMultipart, imagemExtraMultiparts, salvarProduto);
 
 	    String quantidadeEstoqueAtual = salvarProduto.getNoStoque();
-
 	    Usuario usuario = getUsuario();
-	    if (usuario == null) {
-	        ra.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
-	        return "redirect:/login";
-	    }
 
 	    String rolesAsString = usuario.getRoles().stream()
 	        .map(Role::getNome)
@@ -153,16 +148,15 @@ public class ProdutoControlador {
 	        .orElse("Sem Papel");
 
 	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
-
 	    String descricaoInventario = isNovo ? "Adição do Produto" : "Atualização do Produto";
 
-	    InventarioProduto inventario = new InventarioProduto(null,usuario, salvarProduto, quantidadeEstoqueAtual, rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
+	    InventarioProduto inventario = new InventarioProduto(null, usuario, salvarProduto, quantidadeEstoqueAtual, rolesAsString, descricaoInventario, dataFormatada, quantidadeEstoqueAnterior);
 	    
 	    inventarioProdutoService.salvaRegistroInventario(inventario);
-
 	    ra.addFlashAttribute("mensagem", "O produto foi salvo com sucesso.");
 	    return "redirect:/produtos";
 	}
+
 
 	private void deletarImagensExtrasRemovidasDoForm(Produto produto) {
 		String imagensExtraProdutoDir = "produto-imagens/" + produto.getId() + "/extras";
