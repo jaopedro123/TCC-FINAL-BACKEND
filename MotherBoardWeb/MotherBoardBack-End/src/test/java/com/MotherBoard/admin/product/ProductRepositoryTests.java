@@ -108,16 +108,4 @@ public class ProductRepositoryTests {
 		assertThat(salvarProduto.getImagens().size()).isEqualTo(3);
 	}
 
-	@Test
-	public void testSalvarProdutoComDetalhes() {
-		Integer produtoId = 2;
-		Produto produto = repo.findById(produtoId).get();
-
-		produto.addDetalhes("Teste 1", "128GB");
-		produto.addDetalhes("Tteste 2", "MediaTek");
-		produto.addDetalhes("OS", "Android 10");
-
-		Produto salvarProduto = repo.save(produto);
-		assertThat(salvarProduto.getDetalhes()).isNotEmpty();
-	}
 }

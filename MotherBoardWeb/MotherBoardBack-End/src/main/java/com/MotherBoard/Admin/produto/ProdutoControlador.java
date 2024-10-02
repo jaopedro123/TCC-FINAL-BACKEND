@@ -125,9 +125,6 @@ public class ProdutoControlador {
 	public String saveProduto(Produto produto, RedirectAttributes ra,
 	        @RequestParam("fileImage") MultipartFile imagemPrincipalMultipart,
 	        @RequestParam("imagemExtra") MultipartFile[] imagemExtraMultiparts,
-	        @RequestParam(name = "detalhesIDs", required = false) String[] detalhesIDs,
-	        @RequestParam(name = "detalhesNomes", required = false) String[] detalhesNomes,
-	        @RequestParam(name = "detalhesValor", required = false) String[] detalhesValor,
 	        @RequestParam(name = "imagemIDs", required = false) String[] imagemIDs,
 	        @RequestParam(name = "imagemNomes", required = false) String[] imagemNomes)
 	        throws IOException, ProdutoNotFoundException {
@@ -135,7 +132,6 @@ public class ProdutoControlador {
 	    setImagemPrincipalNome(imagemPrincipalMultipart, produto);
 	    setImagensExtraNomesExistentes(imagemIDs, imagemNomes, produto);
 	    setNewImagemExtraNome(imagemExtraMultiparts, produto);
-	    setProdutoDetalhes(detalhesIDs, detalhesNomes, detalhesValor, produto);
 
 	    boolean isNovo = (produto.getId() == null);
 
@@ -168,9 +164,6 @@ public class ProdutoControlador {
 	    return "redirect:/produtos";
 	}
 
-
-
-	
 	private void deletarImagensExtrasRemovidasDoForm(Produto produto) {
 		String imagensExtraProdutoDir = "produto-imagens/" + produto.getId() + "/extras";
 		Path dirPath = Paths.get(imagensExtraProdutoDir);
@@ -208,23 +201,6 @@ public class ProdutoControlador {
 		}
 
 		produto.setImagens(imagens);
-	}
-
-	private void setProdutoDetalhes(String[] detalhesIDs, String[] detalhesNomes, String[] detalhesValor, Produto produto) {
-		if (detalhesNomes == null || detalhesNomes.length == 0)
-			return;
-
-		for (int count = 0; count < detalhesNomes.length; count++) {
-			String nome = detalhesNomes[count];
-			String valor = detalhesValor[count];
-			Integer id = Integer.parseInt(detalhesIDs[count]);
-
-			if (id != 0) {
-				produto.addDetalhes(id, nome, valor);
-			} else if (!nome.isEmpty() && !valor.isEmpty()) {
-				produto.addDetalhes(nome, valor);
-			}
-		}
 	}
 
 	private void saveUploadedImages(MultipartFile imagemPrincipalMultipart,
@@ -299,30 +275,24 @@ public class ProdutoControlador {
 	        redirectAttributes.addFlashAttribute("errorMessage", "Por favor, faça login para continuar.");
 	        return "redirect:/login";
 	    }
-
-	  
+	    
 	    String descricaoInventario = habilitado ? "Produto Ativado" : "Produto Desativado";
 
-	 
 	    String dataFormatada = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
-	  
 	    String quantidadeEstoqueAnterior = produtoServico.get(id).getNoStoque();
 
-	    
 	    String rolesAsString = usuario.getRoles().stream()
 	            .map(Role::getNome)
 	            .reduce((role1, role2) -> role1 + ", " + role2)
 	            .orElse("Sem Papel");
 
-	 
 	    InventarioProduto inventario = new InventarioProduto(null, usuario, produto, quantidadeEstoque, rolesAsString,descricaoInventario,dataFormatada,quantidadeEstoqueAnterior );
 	    
 	    inventarioProdutoService.salvaRegistroInventario(inventario);
 
 	    return "redirect:/produtos";
 	}
-
 
 	@GetMapping("/produtos/deletar/{id}")
 	public String deletarProduto(@PathVariable(name = "id") Integer id, Model model, RedirectAttributes ra)
@@ -356,14 +326,10 @@ public class ProdutoControlador {
 			model.addAttribute("tituloDaPag", "Editar produto (ID: " + id + ")");
 			model.addAttribute("numeroDeImagensExtras", numeroDeImagensExtras);
 
-			System.out.println("aqui1");
-
 			return "produto_form";
 
 		} catch (ProdutoNotFoundException e) {
 			ra.addFlashAttribute("message", e.getMessage());
-
-			System.out.println("aqui2");
 
 			return "redirect:/produtos";
 		}
