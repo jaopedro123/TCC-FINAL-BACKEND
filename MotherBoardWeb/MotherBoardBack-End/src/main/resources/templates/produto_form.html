@@ -79,14 +79,6 @@
                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Imagens" type="button"
                                 role="tab">Imagens</button>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#detalhes" type="button"
-                                role="tab">Detalhes</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#envio" type="button"
-                                role="tab">envio</button>
-                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -98,16 +90,6 @@
                         </div>
                         <div class="tab-pane" id="Imagens" role="tabpanel">
                             <div th:replace="produto_imagens :: conteudo"></div>
-                        </div>
-                        <div class="tab-pane" id="detalhes" role="tabpanel">
-                            <div th:replace="produto_detalhes :: conteudo"></div>
-                            <div>
-                                <input type="button" class="btn btn-secondary" value="Adicionar mais detalhes"
-                                    onclick="addNextDetalhesSection()" />
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="envio" role="tabpanel">
-                            <div th:replace="produto_envio :: conteudo"></div>
                         </div>
                     </div>
                     <div class="p-3 text-center">
@@ -199,7 +181,6 @@
 
     <script th:src="@{/scripts/produto_form_overview.js}"></script>
     <script th:src="@{/scripts/produto_form_imagens.js}"></script>
-    <script th:src="@{/scripts/produto_form_detalhes.js}"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

@@ -20,10 +20,6 @@
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#Imagens" type="button"
                 role="tab">Imagens</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#detalhes" type="button"
-                role="tab">Detalhes</button>
-        </li>
     </ul>
 
     <div class="tab-content">
@@ -136,28 +132,6 @@
                     </div>
                 </th:block>
 
-            </div>
-
-        </div>
-
-        <div class="tab-pane p-4" id="detalhes" role="tabpanel">
-
-            <div>
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th width="40%">Nome</th>
-                            <th>Valor</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr th:each="detalhes: ${produto.detalhes}">
-                            <td>[[${detalhes.nome}]]</td>
-                            <td>[[${detalhes.valor}]]</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
 
         </div>

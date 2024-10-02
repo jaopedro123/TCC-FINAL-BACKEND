@@ -32,7 +32,7 @@ public class Produto {
 	@Column(length = 256, nullable = false, unique = false)
 	private String alias;
 
-	@Column(length = 4096, nullable = false, name = "descricao_curta")
+	@Column(length = 12288, nullable = false, name = "descricao_curta")
 	private String descricaoCurta;
 
 	@Column(length = 12288, nullable = false, name = "descricao_completa")
@@ -56,11 +56,6 @@ public class Produto {
 	@Column(name = "des_conto")
 	private float desconto;
 
-	private float comprimento;
-	private float largura;
-	private float altura;
-	private float peso;
-
 	@Column(name = "imagem_principal", nullable = false)
 	private String imagem_principal;
 
@@ -74,9 +69,6 @@ public class Produto {
 
 	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ProdutoImagem> imagens = new HashSet<>();
-
-	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<ProdutoDetalhes> detalhes = new ArrayList<>();
 
 	public Integer getId() {
 		return id;
@@ -142,8 +134,6 @@ public class Produto {
 		this.habilitado = habilitado;
 	}
 
-
-
 	public String getNoStoque() {
 		return noStoque;
 	}
@@ -174,38 +164,6 @@ public class Produto {
 
 	public void setDesconto(float desconto) {
 		this.desconto = desconto;
-	}
-
-	public float getComprimento() {
-		return comprimento;
-	}
-
-	public void setComprimento(float comprimento) {
-		this.comprimento = comprimento;
-	}
-
-	public float getLargura() {
-		return largura;
-	}
-
-	public void setLargura(float largura) {
-		this.largura = largura;
-	}
-
-	public float getAltura() {
-		return altura;
-	}
-
-	public void setAltura(float altura) {
-		this.altura = altura;
-	}
-
-	public float getPeso() {
-		return peso;
-	}
-
-	public void setPeso(float peso) {
-		this.peso = peso;
 	}
 
 	public Categoria getCategoria() {
@@ -261,22 +219,6 @@ public class Produto {
 		if (id == null || imagem_principal == null) return "/imagens/image-thumbnail.png";
 
 		return "/produto-imagens/" + this.id + "/" + this.imagem_principal;
-	}
-
-	public List<ProdutoDetalhes> getDetalhes() {
-		return detalhes;
-	}
-
-	public void setDetalhes(List<ProdutoDetalhes> detalhes) {
-		this.detalhes = detalhes;
-	}
-
-	public void addDetalhes(String nome, String valor) {
-		this.detalhes.add(new ProdutoDetalhes(nome, valor, this));
-	}
-
-	public void addDetalhes(Integer id, String nome, String valor) {
-		this.detalhes.add(new ProdutoDetalhes(id, nome, valor, this));
 	}
 
 	public boolean contemImagemNome(String imagemNome) {
