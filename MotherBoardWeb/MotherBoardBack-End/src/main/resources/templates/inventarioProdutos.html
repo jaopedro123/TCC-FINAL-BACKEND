@@ -65,6 +65,7 @@
         <div class="col">
             <div class="input-group mb-3">
                 <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}" class="form-control rounded-2">
+                
             </div>
         </div>
 
@@ -72,6 +73,7 @@
         <div class="col">
             <div class="input-group mb-3">
                 <input type="date" id="startDate" name="startDate" th:value="${startDate}" class="form-control rounded-2">       
+            	<input th:placeholder="${startDate}" class="form-control rounded-2" style="background-color: #141517;" readonly="readonly">   
             </div>
         </div>
 
@@ -79,6 +81,7 @@
         <div class="col">
             <div class="input-group mb-3">
                 <input type="date" id="endDate" name="endDate" th:value="${endDate}" class="form-control rounded-2">
+                <input th:placeholder="${endDate}" class="form-control rounded-2" style="background-color: #141517;" readonly="readonly">   
             </div>
         </div>
 
