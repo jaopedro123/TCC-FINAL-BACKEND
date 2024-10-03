@@ -1,5 +1,8 @@
 package com.MotherBoard.Admin.InventarioCategoria;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +17,17 @@ import com.MotherBoard.entidade.comum.InventarioCategoria;
 
 @Controller
 public class InventarioCategoriaControlador {
-	
-    @Autowired
-    private InventarioCategoriaRepository categoriaRepository;
-    
+
     @Autowired
     private InventarioCategoriaService categoriaService;
 
     @GetMapping("/inventarioCategorias")
-    public String listarInventarioCategorias(Model model) {
-        return listByPage(1, model, "dataModificacao", "desc", null);
+    public String listarInventarioCategorias(Model model,
+    		@RequestParam(value = "startDate", required = false) String startDateStr,
+            @RequestParam(value = "endDate", required = false) String endDateStr) {
+    	
+    	
+        return listByPage(1, model, "dataModificacao", "desc", null, startDateStr, endDateStr);
     }
 
     @GetMapping("/inventarioCategorias/page/{pageNum}")
@@ -32,15 +36,42 @@ public class InventarioCategoriaControlador {
             Model model,
             @RequestParam(name = "sortField", defaultValue = "dataModificacao") String sortField,
             @RequestParam(name = "sortDir", defaultValue = "desc") String sortDir,
-            @RequestParam(name = "keyword", required = false) String keyword) {
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "startDate", required = false) String startDate,
+            @RequestParam(name = "endDate", required = false) String endDate) {
         
-        if ("null".equals(keyword)) {
+        if (keyword == null || keyword.trim().isEmpty()) {
             keyword = null;
         }
-    	
-        Page<InventarioCategoria> page = categoriaService.listByPage(pageNum, sortField, sortDir, keyword);
-        List<InventarioCategoria> listaCategorias = page.getContent();
+
+        DateTimeFormatter formatterISO = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter formatterBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        if (startDate != null && !startDate.trim().isEmpty()) {
+            try {
+                LocalDate startLocalDate = LocalDate.parse(startDate, formatterISO);
+                startDate = startLocalDate.format(formatterBR);
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro ao parsear a data de início: " + e.getMessage());
+            }
+        }
+
+        if (endDate != null && !endDate.trim().isEmpty()) {
+            try {
+                LocalDate endLocalDate = LocalDate.parse(endDate, formatterISO);
+                endDate = endLocalDate.format(formatterBR);
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro ao parsear a data de fim: " + e.getMessage());
+            }
+        }
         
+        System.out.println("Keyword: " + keyword);
+        System.out.println("Start Date (convertido): " + startDate);
+        System.out.println("End Date (convertido): " + endDate);
+    	
+        Page<InventarioCategoria> page = categoriaService.listByPage(pageNum, sortField, sortDir, keyword, startDate, endDate);
+        
+        List<InventarioCategoria> listaCategorias = page.getContent();
         long startCount = (pageNum - 1) * InventarioCategoriaService.INVENTARIO_CATEGORIA_PER_PAGE + 1;
         long endCount = Math.min(startCount + InventarioCategoriaService.INVENTARIO_CATEGORIA_PER_PAGE - 1, page.getTotalElements());
         
@@ -55,6 +86,8 @@ public class InventarioCategoriaControlador {
         model.addAttribute("sortDir", sortDir);
         model.addAttribute("reverseSortDir", reverseSortDir);
         model.addAttribute("keyword", keyword);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         model.addAttribute("listaCategorias", listaCategorias);
         
         return "inventarioCategorias";

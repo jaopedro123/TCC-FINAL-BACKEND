@@ -20,9 +20,20 @@ public interface InventarioCategoriaRepository extends JpaRepository<InventarioC
 	@Query("SELECT i FROM InventarioCategoria i ORDER BY i.dataModificacao DESC")
 	List<InventarioCategoria> listarTodos();
 
-	@Query("SELECT i FROM InventarioCategoria i WHERE i.categoria.nome LIKE %?1%"
-			+ "OR i.usuarioId.nomeCompleto LIKE %?1%"
-			+ "OR i.dataModificacao LIKE %?1%")
-	Page<InventarioCategoria> pesquisar(String keyword, Pageable pageable);
+	@Query("SELECT i FROM InventarioCategoria i WHERE (i.categoria.nome LIKE %?1% OR i.usuarioId.nomeCompleto LIKE %?1%)"
+            + " AND concat(SUBSTRING(i.dataModificacao, 7, 4), SUBSTRING(i.dataModificacao, 4, 2), SUBSTRING(i.dataModificacao, 1, 2)) "
+            + "BETWEEN ?2 AND ?3")
+    Page<InventarioCategoria> pesquisarPorPeriodo(String keyword, String startDateTime, String endDateTime, Pageable pageable);
+
+    @Query("SELECT i FROM InventarioCategoria i " +
+           "WHERE concat(SUBSTRING(i.dataModificacao, 7, 4), SUBSTRING(i.dataModificacao, 4, 2), SUBSTRING(i.dataModificacao, 1, 2)) " +
+           "BETWEEN :startDate AND :endDate")
+    Page<InventarioCategoria> pesquisarPorPeriodoSemKeyword(
+        @Param("startDate") String startDateTime,
+        @Param("endDate") String endDateTime,
+        Pageable pageable);
+
+    @Query("SELECT i FROM InventarioCategoria i WHERE (i.categoria.nome LIKE %?1% OR i.usuarioId.nomeCompleto LIKE %?1%)")
+    Page<InventarioCategoria> pesquisar(String keyword, Pageable pageable);
 
 }
