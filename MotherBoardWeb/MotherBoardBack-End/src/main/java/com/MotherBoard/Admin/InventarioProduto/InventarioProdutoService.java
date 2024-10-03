@@ -3,6 +3,7 @@ package com.MotherBoard.Admin.InventarioProduto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,20 +46,32 @@ public class InventarioProdutoService {
         PageRequest pageable = PageRequest.of(pageNum - 1, INVENTARIO_PRODUTOS_PER_PAGE, sort);
 
         boolean hasKeyword = (keyword != null && !keyword.trim().isEmpty());
-        
         boolean hasDateRange = (startDate != null && !startDate.trim().isEmpty() && endDate != null && !endDate.trim().isEmpty());
+        DateTimeFormatter formatterBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter formatterISO = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+        if (hasDateRange) {
+            try {
+                LocalDate startLocalDate = LocalDate.parse(startDate, formatterBR);
+                LocalDate endLocalDate = LocalDate.parse(endDate, formatterBR);
+                startDate = startLocalDate.format(formatterISO);
+                endDate = endLocalDate.format(formatterISO);
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro ao formatar datas: " + e.getMessage());
+            }
+        }
 
         if (hasKeyword && hasDateRange) {
             return repository.pesquisarPorPeriodo(keyword, startDate, endDate, pageable);
-        } 
-        else if (hasDateRange) {
+        } else if (hasDateRange) {
             return repository.pesquisarPorPeriodoSemKeyword(startDate, endDate, pageable);
-        } 
-        else if (hasKeyword) {
+        } else if (hasKeyword) {
             return repository.pesquisar(keyword, pageable);
         }
 
         return repository.findAll(pageable);
     }
+
+
 
 }

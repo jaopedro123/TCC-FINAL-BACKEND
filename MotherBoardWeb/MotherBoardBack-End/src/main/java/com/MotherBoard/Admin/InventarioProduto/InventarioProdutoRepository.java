@@ -25,14 +25,18 @@ public interface InventarioProdutoRepository extends JpaRepository<InventarioPro
     List<InventarioProduto> listarTodos();
 
     @Query("SELECT ip FROM InventarioProduto ip WHERE (ip.produto.nome LIKE %?1% OR ip.usuarioId.nomeCompleto LIKE %?1%)"
-            + " AND ip.dataModificacao >= ?2 AND ip.dataModificacao <= ?3")
+            + " AND concat(SUBSTRING(ip.dataModificacao, 7, 4), SUBSTRING(ip.dataModificacao, 4, 2), SUBSTRING(ip.dataModificacao, 1, 2)) "
+            + "BETWEEN ?2 AND ?3")
     Page<InventarioProduto> pesquisarPorPeriodo(String keyword, String startDateTime, String endDateTime, Pageable pageable);
 
-    @Query("SELECT ip FROM InventarioProduto ip WHERE ip.dataModificacao BETWEEN :startDate AND :endDate")
-    Page<InventarioProduto> pesquisarPorPeriodoSemKeyword(
-        @Param("startDate") String startDateTime,
-        @Param("endDate") String endDateTime, 
-        Pageable pageable);
+    @Query("SELECT ip FROM InventarioProduto ip " +
+    	       "WHERE concat(SUBSTRING(ip.dataModificacao, 7, 4), SUBSTRING(ip.dataModificacao, 4, 2), SUBSTRING(ip.dataModificacao, 1, 2)) " +
+    	       "BETWEEN :startDate AND :endDate")
+    	Page<InventarioProduto> pesquisarPorPeriodoSemKeyword(
+    	    @Param("startDate") String startDateTime,
+    	    @Param("endDate") String endDateTime,
+    	    Pageable pageable);
+
 
     @Query("SELECT ip FROM InventarioProduto ip WHERE (ip.produto.nome LIKE %?1% OR ip.usuarioId.nomeCompleto LIKE %?1%)")
     Page<InventarioProduto> pesquisar(String keyword, Pageable pageable);

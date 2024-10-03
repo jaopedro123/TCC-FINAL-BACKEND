@@ -57,7 +57,7 @@
 
     <main class="container">
 		
-<form th:action="@{/inventarioProdutos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
+<form th:action="@{/inventarioProdutos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3" 
       style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);" onsubmit="return validateDates()">
 
     <div class="container">
@@ -87,30 +87,49 @@
     </div>
 </form>
 
+<div class="modal fade text-center" id="modalDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Cuidado</h4>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-function formatarData(dataISO) {
-    if (!dataISO) return "";
-    const partes = dataISO.split("-");
-    return partes[2] + "/" + partes[1] + "/" + partes[0]; // Formato dd/MM/yyyy
+function showModal(message) {
+    document.getElementById('modalBody').innerText = message;
+    var modal = new bootstrap.Modal(document.getElementById('modalDialog'));
+    modal.show();
 }
 
 function validateDates() {
-    var startDate = document.getElementById('startDate').value;
-    var endDate = document.getElementById('endDate').value;
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    
+    if ((startDate && !endDate) || (!startDate && endDate)) {
+        showModal('Por favor, preencha ambas as datas (Data de Início e Data de Fim) ou deixe ambas em branco.');
+        return false;
+    }
 
-    if (!startDate) {
-        alert("Por favor, selecione uma Data de Início.");
-        return false; // Prevenir envio do formulário
+    if (startDate && endDate) { 
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start > end) {
+            showModal('A data de início não pode ser posterior à data de fim.');
+            return false;
+        }
     }
     
-    if (!endDate) {
-        alert("Por favor, selecione uma Data de Fim.");
-        return false; // Prevenir envio do formulário
-    }
-
-    return true; // Se ambas as datas estiverem preenchidas, permitir envio
+    return true; 
 }
-
 
 function limparFiltro() {
     document.querySelector('input[name="keyword"]').value = '';
@@ -118,6 +137,7 @@ function limparFiltro() {
     document.querySelector('input[name="endDate"]').value = '';
 }
 </script>
+
 
 
 

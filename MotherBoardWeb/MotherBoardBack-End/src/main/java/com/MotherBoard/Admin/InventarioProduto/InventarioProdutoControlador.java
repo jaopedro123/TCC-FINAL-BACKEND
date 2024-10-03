@@ -50,20 +50,30 @@ public class InventarioProdutoControlador {
         DateTimeFormatter formatterBR = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         if (startDate != null && !startDate.trim().isEmpty()) {
-            LocalDate startLocalDate = LocalDate.parse(startDate, formatterISO);
-            startDate = startLocalDate.format(formatterBR);
+            try {
+                LocalDate startLocalDate = LocalDate.parse(startDate, formatterISO);
+                startDate = startLocalDate.format(formatterBR);
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro ao parsear a data de início: " + e.getMessage());
+            }
         }
 
         if (endDate != null && !endDate.trim().isEmpty()) {
-            LocalDate endLocalDate = LocalDate.parse(endDate, formatterISO);
-            endDate = endLocalDate.format(formatterBR);
+            try {
+                LocalDate endLocalDate = LocalDate.parse(endDate, formatterISO);
+                endDate = endLocalDate.format(formatterBR);
+            } catch (DateTimeParseException e) {
+                System.out.println("Erro ao parsear a data de fim: " + e.getMessage());
+            }
         }
+
 
         System.out.println("Keyword: " + keyword);
         System.out.println("Start Date (convertido): " + startDate);
         System.out.println("End Date (convertido): " + endDate);
 
-        Page<InventarioProduto> page;
+        Page<InventarioProduto> page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword, startDate, endDate);
+        
 
         if (keyword != null && startDate != null && endDate != null) {
             page = inventarioProdutoService.listByPage(pageNum, sortField, sortDir, keyword, startDate, endDate);
@@ -94,7 +104,7 @@ public class InventarioProdutoControlador {
         model.addAttribute("endDate", endDate);
         model.addAttribute("listaProdutos", listaProdutos);
 
-        System.out.println("listaProdutos " + endDate);
+        System.out.println("listaProdutos " + listaProdutos);
         return "inventarioProdutos";
     }
 
