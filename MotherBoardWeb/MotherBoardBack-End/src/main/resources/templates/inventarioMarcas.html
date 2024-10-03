@@ -54,34 +54,89 @@
 
     <main class="container">
 
-        <form th:action="@{/inventarioMarcas/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-            style="background-color: #40454e;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+<form th:action="@{/inventarioMarcas/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3" 
+      style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);" onsubmit="return validateDates()">
 
-<div class="container">
-    <label>Filtrar por: </label>
+    <div class="container">
+        <label>Filtrar por nome: </label>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}" class="form-control rounded-2">
+                
+            </div>
+        </div>
 
-    <div class="filter-options">
-        <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
-            th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
-        <label for="filterByName" class="mr-2">Nome</label>
+        <label for="startDate">Data de Início:</label>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="date" id="startDate" name="startDate" th:value="${startDate}" class="form-control rounded-2">       
+            	<input th:placeholder="${startDate}" class="form-control rounded-2" style="background-color: #141517;" readonly="readonly">   
+            </div>
+        </div>
 
-        <input type="radio" id="filterByData" name="filterBy" value="dataModificacao"
-            th:checked="${filterBy == 'dataModificacao'}" onclick="toggleSearchInput()">
-        <label for="filterByData" class="mr-2">Data</label>
+        <label for="endDate">Data de Fim:</label>
+        <div class="col">
+            <div class="input-group mb-3">
+                <input type="date" id="endDate" name="endDate" th:value="${endDate}" class="form-control rounded-2">
+                <input th:placeholder="${endDate}" class="form-control rounded-2" style="background-color: #141517;" readonly="readonly">   
+            </div>
+        </div>
+
+        <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
+        <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Limpar</button>
     </div>
+</form>
 
-    <span id="instructionText" class="instruction-text">Selecione um filtro para habilitar a barra de pesquisa.</span>
+<div class="modal fade text-center" id="modalDialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Cuidado</h4>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-&nbsp;
-<input type="hidden" name="sortField" th:value="${sortField}" />
-<input type="hidden" name="sortDir" th:value="${sortDir}" />
-&nbsp;
-<input type="search" name="keyword" th:value="${keyword}" class="form-control" required disabled id="searchInput" placeholder="Procurar..." maxlength="50" />
-&nbsp;
-<button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
-&nbsp;
-<input type="button" value="Limpar" class="btn btnCadFunc" onclick="limparFiltro()" />
-        </form>
+
+<script>
+function showModal(message) {
+    document.getElementById('modalBody').innerText = message;
+    var modal = new bootstrap.Modal(document.getElementById('modalDialog'));
+    modal.show();
+}
+
+function validateDates() {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    
+    if ((startDate && !endDate) || (!startDate && endDate)) {
+        showModal('Por favor, preencha ambas as datas (Data de Início e Data de Fim) ou deixe ambas em branco.');
+        return false;
+    }
+
+    if (startDate && endDate) { 
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+
+        if (start > end) {
+            showModal('A data de início não pode ser posterior à data de fim.');
+            return false;
+        }
+    }
+    
+    return true; 
+}
+
+function limparFiltro() {
+    document.querySelector('input[name="keyword"]').value = '';
+    document.querySelector('input[name="startDate"]').value = '';
+    document.querySelector('input[name="endDate"]').value = '';
+}
+</script>
         
         <table class="table table-striped">
             <thead>
@@ -124,48 +179,47 @@
 
     </main>
 
-    <div th:if="${totalPages > 0}">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <!-- Primeira Página -->
-                <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioMarcas/page/1?sortField=${sortField}&sortDir=${sortDir}${keyword != null ? '&keyword=' + keyword : ''}|}">
-                        Primeira Página
-                    </a>
-                </li>
+<div th:if="${totalPages > 0}">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioMarcas/page/1?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                   Primeira Página
+                </a>
+            </li>
 
-                <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioMarcas/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        Anterior
-                    </a>
-                </li>
+            <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioMarcas/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                   Anterior
+                </a>
+            </li>
 
-                <li th:each="i : ${#numbers.sequence(1, totalPages)}"
-                    th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioMarcas/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        [[${i}]]
-                    </a>
-                </li>
+            <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioMarcas/page/${i}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                    [[${i}]]
+                </a>
+            </li>
 
-                <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioMarcas/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        Próximo
-                    </a>
-                </li>
+            <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioMarcas/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                   Próximo
+                </a>
+            </li>
 
-                <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                    <a class="page-link"
-                        th:href="@{|/inventarioMarcas/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword}|}">
-                        Última Página
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+            <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                <a class="page-link"
+                   th:href="@{|/inventarioMarcas/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                   Última Página
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
 
 
 
@@ -258,25 +312,24 @@
     }
 
 function maskDateInput(e) {
-    let value = this.value.replace(/\D/g, '');  // Remove tudo que não for número
+    let value = this.value.replace(/\D/g, '');  
 
-    // Limitar comprimento máximo a 12 caracteres (ddMMyyyyHHmm)
     if (value.length > 12) value = value.slice(0, 12);
 
-    // Dividindo os componentes da data e hora
+ 
     let day = value.substring(0, 2);
     let month = value.substring(2, 4);
     let year = value.substring(4, 8);
     let hour = value.substring(8, 10);
     let minute = value.substring(10, 12);
 
-    // Validar dias, meses, horas e minutos
+
     if (parseInt(day) > 31) day = '31';
     if (parseInt(month) > 12) month = '12';
     if (hour && parseInt(hour) > 23) hour = '23';
     if (minute && parseInt(minute) > 59) minute = '59';
 
-    // Monta a string formatada
+
     let formattedValue = '';
     if (day) formattedValue = day;
     if (month) formattedValue += '/' + month;
@@ -284,7 +337,7 @@ function maskDateInput(e) {
     if (hour) formattedValue += ' ' + hour;
     if (minute) formattedValue += ':' + minute;
 
-    this.value = formattedValue;  // Atualiza o campo com a nova formatação
+    this.value = formattedValue;  
 }
 
 
