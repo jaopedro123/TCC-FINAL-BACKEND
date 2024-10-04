@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,9 +22,9 @@ import com.MotherBoard.entidade.comum.Usuario;
 @Controller
 public class ContaController {
 
-	
 	@Autowired
 	private UsuarioServico service;
+	
 	
 	@GetMapping("/conta")
 	public String verDetalhes(@AuthenticationPrincipal MotherBoarduserDetails usuarioLogado, Model model) {
@@ -36,30 +38,44 @@ public class ContaController {
 	}
 	
 	@PostMapping("/conta/update")
-	public String salvaUsuariodetalhes(Usuario usuario, RedirectAttributes redirectAttributes, @AuthenticationPrincipal MotherBoarduserDetails UsuarioLogado, @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
-	    
+	public String salvaUsuariodetalhes(Usuario usuario, RedirectAttributes redirectAttributes, 
+	                                   @AuthenticationPrincipal MotherBoarduserDetails usuarioLogado, 
+	                                   @RequestParam("imagem") MultipartFile multipartFile) throws IOException {
+
+	    boolean senhaAlterada = false;
+
+	    if (usuario.getSenha() != null && !usuario.getSenha().isEmpty()) {
+	        senhaAlterada = true;
+	    } 
+
 	    if (!multipartFile.isEmpty()) {
 	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	        usuario.setFotos(fileName); 
-	        Usuario saveUsuario = service.updateConta(usuario); 
 	        
-	        String uploadDir = "fotos-usuario/" + saveUsuario.getId();
-	        	        
+	        Usuario savedUsuario = service.updateConta(usuario);
+
+	        String uploadDir = "fotos-usuario/" + savedUsuario.getId();
+
 	        FileUploadUtil.cleanDir(uploadDir);
 	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-	    } 
-	    else {
-	    	if (usuario.getFotos().isEmpty()) usuario.setFotos(null);
+	    } else {
+	        if (usuario.getFotos().isEmpty()) {
+	            usuario.setFotos(null);
+	        }
 	        service.updateConta(usuario);
 	    }
-	    
-	    UsuarioLogado.setNomeCompleto(usuario.getNomeCompleto());
-	    
-	        redirectAttributes.addFlashAttribute("message", "Os seus dados foram alterados com sucesso!");
-	  
-	    
+
+	    usuarioLogado.setNomeCompleto(usuario.getNomeCompleto());
+	    redirectAttributes.addFlashAttribute("message", "Os seus dados foram alterados com sucesso!");
+
+	    if (senhaAlterada) {
+	        SecurityContextHolder.clearContext(); 
+	        return "redirect:/login"; 
+	    }
+
 	    return "redirect:/conta";
 	}
-	
+
+
+
 	
 }
