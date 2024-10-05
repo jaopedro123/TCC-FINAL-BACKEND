@@ -64,43 +64,59 @@
         </div>
 
         <div>
-            <form th:action="@{/Usuarios/pag/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-                style="background-color: #40454e;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+            <form th:action="@{/Usuarios/pag/1}" class="form-inline m-3 p-1 rounded-3"
+                style="background-color: #40454e; box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+                <div class="container-fluid">
+                    <div class="row p-2">
+                        <div class="col-12 col-md-4 mb-3">
+                            <label class="form-label text-white">Filtrar por: </label>
+                            <div class="d-flex">
+                                <div class="form-check me-2">
+                                    <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
+                                        th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()"
+                                        class="form-check-input">
+                                    <label for="filterByName" class="form-check-label text-white">Nome</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="filterByCpf" name="filterBy" value="cpf"
+                                        th:checked="${filterBy == 'cpf'}" onclick="toggleSearchInput()"
+                                        class="form-check-input">
+                                    <label for="filterByCpf" class="form-check-label text-white">CPF</label>
+                                </div>
+                            </div>
+                            <small id="instructionText" class="instruction-text text-white">Selecione um filtro para
+                                habilitar a barra de pesquisa.</small>
+                        </div>
 
-                <div class="container">
-                    <label>Filtrar por: </label>
+                        <div class="col-12 col-md-6 d-flex flex-md-row justify-content-center align-items-center">
+                            <div class="w-100 mb-md-0">
+                                <input type="search" name="keyword" th:value="${keyword}"
+                                    class="form-control mb-md-0 w-100" required disabled id="searchInput"
+                                    placeholder="Procurar..." maxlength="50" />
+                            </div>
+                            <input type="hidden" name="sortField" th:value="${sortField}" />
+                            <input type="hidden" name="sortDir" th:value="${sortDir}" />
 
-                    <div class="filter-options">
-                        <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
-                            th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
-                        <label for="filterByName" class="mr-2">Nome</label>
+                            <div class="d-flex justify-content-center ms-2">
+                                <button type="submit" class="btn btnCadFunc me-2">
+                                    <i class="bi bi-search p-1"></i>
+                                </button>
+                                <button type="button" class="btn btnCadFunc" onclick="limparFiltro()">
+                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                </button>
+                            </div>
+                        </div>
 
-                        <input type="radio" id="filterByCpf" name="filterBy" value="cpf"
-                            th:checked="${filterBy == 'cpf'}" onclick="toggleSearchInput()">
-                        <label for="filterByCpf" class="mr-2">CPF</label>
                     </div>
-
-                    <span id="instructionText" class="instruction-text">Selecione um filtro para habilitar a barra de
-                        pesquisa.</span>
                 </div>
-
-                &nbsp;
-                <input type="hidden" name="sortField" th:value="${sortField}" />
-                <input type="hidden" name="sortDir" th:value="${sortDir}" />
-                &nbsp;
-                <input type="search" name="keyword" th:value="${keyword}" class="form-control"
-                    required disabled id="searchInput" placeholder="Procurar..." maxlength="50" />
-                &nbsp;
-                <input type="submit" value="Procurar" class="btn btnCadFunc mr-2" />
-                &nbsp;
-                <input type="button" value="Limpar" class="btn btnCadFunc" onclick="limparFiltro()" />
             </form>
         </div>
 
 
-        <div class="rounded-3 mt-5" style="background: #694a8f;">
-            <h3 class="text-center p-2">Tabela de Funcionário<i class="bi bi-person-fill-gear"></i></h3>
-            <table class="table table-dark table-striped" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+        <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela de Funcionário <i
+            class="bi bi-person-fill-gear"></i></h3>
+    <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+        <table class="table table-dark table-striped">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -109,13 +125,13 @@
                         <th scope="col">
                             <a th:if="${sortField != 'nomeCompleto'}"
                                 th:href="@{'/Usuarios/pag/' + ${PaginaAtual} + '?sortField=nomeCompleto&sortDir=' + ${sortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">
+                                style="text-decoration: none;color: white;">
                                 Nome Completo
                             </a>
 
                             <a th:if="${sortField == 'nomeCompleto'}"
                                 th:href="@{'/Usuarios/pag/' + ${PaginaAtual} + '?sortField=nomeCompleto&sortDir=' + ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">
+                                style="text-decoration: none;color: white;">
                                 Nome Completo
                             </a>
 
@@ -131,7 +147,7 @@
                         <th scope="col">Roles</th>
                         <th scope="col">Permitido</th>
                         <th scope="col">Editar</th>
-                       <!--- <th scope="col">Excluir</th> -->
+                       <th scope="col">Excluir</th> 
                     </tr>
                 </thead>
                 <tbody>
@@ -139,9 +155,9 @@
                         <td>[[${Usuario.id}]]</td>
                         <td>
                             <img th:if="${Usuario.fotos == null}" th:src="@{/imagens/perfilConta.png}"
-                                style="width: 150px; height: 150px;" />
+                                style="width: 150px; height: 150px;border-radius: 10px;" />
                             <img th:if="${Usuario.fotos != null}" id="thumbnail" alt="Preview das fotos"
-                                th:src="@{${Usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
+                                th:src="@{${Usuario.photosImagePath}}" style="width: 150px; height: 150px;border-radius: 10px;" />
                         </td>
 
                         <td>[[${Usuario.nomeCompleto}]]</td>
@@ -168,36 +184,36 @@
 
                         </td>
 
-                      <!--  <td>
+                        <td>
 
                             <a class="delete-link" th:href="@{'/usuarios/deletar/' + ${Usuario.id}}"
                                 th:userId="${Usuario.id}">
                                 <i class="bi bi-trash3-fill link-danger fs-4 m-2" title="Deletar esse usuario"></i>
                             </a>
-                        </td> -->
+                        </td> 
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="d-flex justify-content-center align-items-center">
-            <a th:href="@{/Usuarios/new}" class="btn btnCadFunc mr-2"> Novo Funcionário </a>
-            &nbsp;
-            <a th:href="@{/Usuarios/export/excel}" class="btn btnCadFunc mr-2"> Exportar funcionários para o EXCEL</a>
-            &nbsp;
-            <a th:href="@{/Usuarios/export/pdf}" class="btn btnCadFunc me-1"> Exportar funcionários para o PDF</a>
-
-            <a th:href="@{/}" class="btn btnCadFunc mr-2"> Voltar para Intranet</a>
-
+        <div class="d-flex justify-content-center align-items-center mt-5 flex-wrap">
+            <a th:href="@{/Usuarios/new}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Novo Funcionário <i
+                    class="bi bi-person-fill"></i></a>
+            <a th:href="@{/Usuarios/export/excel}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
+                o EXCEL <i class="bi bi-file-earmark-spreadsheet-fill"></i></a>
+            <a th:href="@{/Usuarios/export/pdf}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
+                PDF <i class="bi bi-file-earmark-pdf-fill"></i></a>
+            <a th:href="@{/}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Voltar para Intranet <i
+                    class="bi bi-globe2"></i></a>
         </div>
 
         <br />
         <div class="text-center	m-1" th:if="${TotalDePaginas > 0}">
-            <p> Mostrando funcionário [[${comecaAConta}]] A [[${terminaDeConta}]] DE [[${TotalDePaginas}]]</p>
+            <p> Mostrando Funcionário [[${comecaAConta}]] A [[${terminaDeConta}]] DE [[${TotalDePaginas}]]</p>
         </div>
 
         <div class="text-center	m-1" th:unless="${TotalDePaginas > 0}">
-            <P> Funcionarios nao encontrados</P>
+            <P> Funcionarios não Encontrados</P>
         </div>
 
 
@@ -205,20 +221,25 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
 
+                    <!-- Primeira Página -->
                     <li th:classappend="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Primeira Página
+                            <span class="d-lg-none">&laquo;</span>
+                            <span class="d-none d-lg-inline">Primeira Página</span>
                         </a>
                     </li>
 
+                    <!-- Anterior -->
                     <li th:classappend="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/${PaginaAtual - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Anterior
+                            <span class="d-lg-none">&lsaquo;</span>
+                            <span class="d-none d-lg-inline">Anterior</span>
                         </a>
                     </li>
 
+                    <!-- Números de página -->
                     <li th:each="i : ${#numbers.sequence(1, TotalDePaginas)}"
                         th:classappend="${PaginaAtual != i ? 'page-item' : 'page-item active'}">
                         <a class="page-link colorPagelink"
@@ -227,19 +248,24 @@
                         </a>
                     </li>
 
+                    <!-- Próximo -->
                     <li th:classappend="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/${PaginaAtual + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Próximo
+                            <span class="d-lg-none">&rsaquo;</span>
+                            <span class="d-none d-lg-inline">Próximo</span>
                         </a>
                     </li>
 
+                    <!-- Última Página -->
                     <li th:classappend="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/${TotalDePaginas}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Última
+                            <span class="d-lg-none">&raquo;</span>
+                            <span class="d-none d-lg-inline">Última</span>
                         </a>
                     </li>
+
                 </ul>
             </nav>
         </div>

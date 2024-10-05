@@ -3,13 +3,13 @@
     data-bs-theme="dark">
     <body>
         <div th:fragment="conteudo" th:remove="tag">
-           <div>
-            <label>Descrição do produto</label>
+          <div class="p-3">
+            <label class="form-label">Descrição Curta:</label>
              <textarea class="form-control bg-dark" th:field="*{descricaoCurta}" rows="5" required></textarea>
              <br/>
            </div>
-           <div>
-            <label>Informações técnicas</label>
+           <div class="p-3">
+            <label class="form-label">Informações Técnicas:</label>
              <textarea class="form-control bg-dark" th:field="*{descricaoCompleta}" rows="10" required></textarea>
            </div>
         </div>

@@ -30,27 +30,27 @@
                 </a>
 
 
-                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <div class="btn-group dropstart">
-                                <button type="button" class="btn btn-conta-form-back-end nav-link"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle iconeheader"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <a class="nav-link" th:href="@{/conta}">
-                                        <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-                                    </a>
-                                    <a class="nav-link btn text-center" href="#" id="logoutLink"
-                                        onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <div class="btn-group dropstart">
+                            <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-person-circle iconeheader"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link" th:href="@{/conta}">
+                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                                </a>
+                                <a class="nav-link btn text-center" href="#" id="logoutLink"
+                                    onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
 
-                                </ul>
-                            </div>
-                       
+                            </ul>
+                        </div>
 
-                    </ul>
-                </div>
-            
+
+                </ul>
+            </div>
+
         </nav>
     </header>
 
@@ -67,23 +67,20 @@
             style="background-color: #40454e;box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);">
 
             <div class="container">
-                <label>Filtrar por nome: </label>
-                <div class="col">
-                    <div class="input-group mb-3">
-                        <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
-                            class="form-control rounded-2" required>
-                        &nbsp;
-                        <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
-                        <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Limpar</button>
-                    </div>
+                <label for="searchInput" class="form-label">Filtrar por nome:</label>
+                <div class="input-group mb-3">
+                    <input type="search" id="searchInput" name="keyword" placeholder="Procurar..." th:value="${keyword}"
+                        class="form-control rounded-3" required> &nbsp;
+                    <button type="submit" class="btn btnCadFunc rounded-3 me-2"><i class="bi bi-search"></i></button>
+                    <button type="button" class="btn btnCadFunc rounded-3" onclick="limparFiltro()"><i
+                            class="bi bi-arrow-counterclockwise"></i></button>
                 </div>
-
             </div>
         </form>
-        
-        <div class="rounded-3 mt-5" style="background: #694a8f;">
-            <h3 class="text-center p-2">Tabela de Marcas <i class="bi bi-clipboard-check-fill"></i></h3>
-            <table class="table table-dark table-striped" style="box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);">
+
+        <h3 class="text-center p-2 rounded-2 mb-0 mt-5"  style="background: #694a8f;">Tabela de Marcas <i class="bi bi-clipboard-check-fill"></i></h3>
+        <div class="table-responsive mb-5" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+            <table class="table table-dark table-striped">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -100,7 +97,7 @@
                         <th scope="col">Categorias</th>
                         <th scope="col">Ativo</th>
                         <th scope="col">Editar</th>
-                      <!--  <th scope="col">Excluir</th> -->
+                        <!--  <th scope="col">Excluir</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -108,7 +105,7 @@
                         <td>[[${Marca.id}]]</td>
 
                         <td>
-                            <img th:src="@{${Marca.LogoPath}}" style="width: 100px" class="img-fluid" />
+                            <img th:src="@{${Marca.LogoPath}}" style="width: 150px; height: 150px;border-radius: 10px;" class="img-fluid" />
                         </td>
 
 
@@ -120,21 +117,21 @@
                                 <span class="badge text-bg-light" th:text="${cat.nome}"></span>
                         </td>
 
-<td>
-	
-	<a th:if="${Marca.habilitado == true}"
-       th:href="@{'/marcas/' + ${Marca.id} + '/habilitado/false'}">
-       <i class="bi bi-power link-success fs-3 m-2" title="Habilitar Marca"></i>
-    </a>
-    
-    <a th:if="${Marca.habilitado == null || Marca.habilitado == false}"
-       th:href="@{'/marcas/' + ${Marca.id} + '/habilitado/true'}">
-        
-        <i class="bi bi-power link-danger fs-3 m-2" title="Desabilitar Marca"></i>
-    </a>
+                        <td>
+
+                            <a th:if="${Marca.habilitado == true}"
+                                th:href="@{'/marcas/' + ${Marca.id} + '/habilitado/false'}">
+                                <i class="bi bi-power link-success fs-3 m-2" title="Habilitar Marca"></i>
+                            </a>
+
+                            <a th:if="${Marca.habilitado == null || Marca.habilitado == false}"
+                                th:href="@{'/marcas/' + ${Marca.id} + '/habilitado/true'}">
+
+                                <i class="bi bi-power link-danger fs-3 m-2" title="Desabilitar Marca"></i>
+                            </a>
 
 
-</td>
+                        </td>
 
 
 
@@ -149,7 +146,7 @@
                         </td>
 
 
-                       <!-- <td>
+                        <!-- <td>
                             <a class="delete-link" th:href="@{'/marcas/deletar/' + ${Marca.id}}"
                                 th:attr="marcaId=${Marca.id}">
                                 <i class="bi bi-trash3-fill link-danger fs-4 m-3" title="Deletar esta marca"></i>
@@ -162,35 +159,42 @@
         </div>
 
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
-            <P> Marcas não encontradas</P>
+            <P> Marcas não Encontradas</P>
         </div>
 
         <div class="d-flex justify-content-center align-items-center">
-            <a th:href="@{/marcas/novo}" class="btn btnCadFunc">Registrar nova marca</a>
-            <a th:href="@{/}" class="btn btnCadFunc ms-2">Voltar para Intranet</a>
+            <a th:href="@{/marcas/novo}" class="btn btnCadFunc">Registrar Marca <i class="bi bi-clipboard-check-fill"></i></a>
+            <a th:href="@{/}" class="btn btnCadFunc ms-2">Voltar para Intranet <i class="bi bi-globe2"></i></a>
         </div>
 
         <div class="text-center m-1" th:if="${totalPages > 0}">
-            <p>Mostrando marcas [[${startCount}]] a [[${endCount}]] de [[${totalItems}]]</p>
+            <p>Mostrando Marcas [[${startCount}]] a [[${endCount}]] de [[${totalItems}]]</p>
         </div>
 
         <div th:if="${totalPages > 0}">
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
+                    <!-- Primeira Página -->
                     <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/marcas/page/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            Primeira Página
+                            <!-- Ícone para telas pequenas -->
+                            <span class="d-lg-none">&laquo;</span>
+                            <!-- Texto completo para telas maiores -->
+                            <span class="d-none d-lg-inline">Primeira Página</span>
                         </a>
                     </li>
 
+                    <!-- Anterior -->
                     <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/marcas/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            Anterior
+                            <span class="d-lg-none">&lsaquo;</span>
+                            <span class="d-none d-lg-inline">Anterior</span>
                         </a>
                     </li>
 
+                    <!-- Números de página -->
                     <li th:each="i : ${#numbers.sequence(1, totalPages)}"
                         th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
                         <a class="page-link colorPagelink"
@@ -199,22 +203,25 @@
                         </a>
                     </li>
 
+                    <!-- Próximo -->
                     <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/marcas/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            Próximo
+                            <span class="d-lg-none">&rsaquo;</span>
+                            <span class="d-none d-lg-inline">Próximo</span>
                         </a>
                     </li>
 
+                    <!-- Última Página -->
                     <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/marcas/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            Última Página
+                            <span class="d-lg-none">&raquo;</span>
+                            <span class="d-none d-lg-inline">Última Página</span>
                         </a>
                     </li>
                 </ul>
             </nav>
-
         </div>
     </main>
 
@@ -261,61 +268,61 @@
         }
     </script>
 
-	<footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
-	    <div class="container text-center text-md-left">
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
+        <div class="container text-center text-md-left">
 
-	        <div class="row text-center text-md-left">
+            <div class="row text-center text-md-left">
 
-	            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-					
-					<a th:href="@{/}" class="navbar-brand">
-					    <img class="imgMother" th:src="@{/imagens/image-light.png}">
-					</a>
-					<br /><br /><br />
-					
-	                <section class="mb-4">
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-	                            class="bi bi-facebook"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-	                        href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-	                        href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-	                            class="bi bi-instagram"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-	                        href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-	                            class="bi bi-youtube"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-	                        href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-	                </section>
-	            </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
 
+                    <a th:href="@{/}" class="navbar-brand">
+                        <img class="imgMother" th:src="@{/imagens/image-light.png}">
+                    </a>
+                    <br /><br /><br />
 
-	            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-	                <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-	                <p>
-	                    <a href="SobreNos.html" class=" links2"> Sobre nós</a>
-
-	                </p>
-					<p>
-					    <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
-					</p>
-	                <p>
-	                    <a href="Politica.html" class=" links2"> Política de Privacidade</a>
-
-	                </p>
-	            </div>
-
-	            <hr class="mb-4">
-	            <div>
-	                <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-	            </div>
-
-	        </div>
-
-	    </div>
+                    <section class="mb-4">
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
+                </div>
 
 
-	</footer>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+                    <p>
+                        <a href="SobreNos.html" class=" links2"> Sobre nós</a>
+
+                    </p>
+                    <p>
+                        <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
+                    </p>
+                    <p>
+                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+                <div>
+                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
