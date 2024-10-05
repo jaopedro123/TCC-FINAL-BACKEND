@@ -148,7 +148,7 @@
                             <a class="detalhes-link" th:href="@{'/produtos/detalhes/' + ${produto.id}}">
                                 <i class="bi bi-clipboard-fill link-light fs-4 m-4"></i></a>
                         </td>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                             <td>
                                 <a th:if="${produto.habilitado == true}"
                                     th:href="@{'/produtos/' + ${produto.id} + '/habilitado/false'}">
@@ -163,7 +163,7 @@
                         </th:block>
 
                         
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                             <td>
                                 <a th:href="@{'/produtos/editar/' + ${produto.id}}">
                                     <i class="bi bi-pen-fill link-light fs-4 m-2" title="Editar esse produto"></i>
