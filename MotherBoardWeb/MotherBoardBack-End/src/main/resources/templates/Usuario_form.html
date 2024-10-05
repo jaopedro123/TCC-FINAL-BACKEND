@@ -177,31 +177,71 @@
         const cpfInput = document.getElementById('cpf');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('senha');
+        const checkboxRoles = document.querySelectorAll('.validaCargos'); // Seleciona todas as checkboxes de funções
 
         const fullNameError = document.getElementById('fullNameError');
         const cpfError = document.getElementById('cpfError');
         const emailError = document.getElementById('emailError');
         const passwordError = document.getElementById('passwordError');
-        const checkboxError = document.getElementById('checkboxError'); // Adicionado
+        const checkboxError = document.getElementById('checkboxError');
+        const checkboxCargosError = document.getElementById('checkboxCargosError'); // Mensagem de erro de funções
 
-        // Seleção dos elementos
-        const checkboxInput = document.querySelector('.permitido'); // Corrigido
+        const checkboxInput = document.querySelector('.permitido'); // Checkbox 'Permitido'
 
-        // Função de validação do checkbox
+        // Função para validar o checkbox 'Permitido'
         function validateCheckbox() {
             if (!checkboxInput.checked) {
-                checkboxError.textContent = "Você deve preencher esta opção."; // Mensagem de erro
-                checkboxError.style.display = "block"; // Mostra o feedback
-                checkboxInput.classList.add('is-invalid'); // Adiciona classe de erro
+                checkboxError.textContent = "Você deve preencher esta opção.";
+                checkboxError.style.display = "block";
+                checkboxInput.classList.add('is-invalid');
             } else {
-                checkboxError.style.display = "none"; // Esconde a mensagem
-                checkboxInput.classList.remove('is-invalid'); // Remove classe de erro
-                checkboxInput.classList.add('is-valid'); // Adiciona classe de sucesso
+                checkboxError.style.display = "none";
+                checkboxInput.classList.remove('is-invalid');
+                checkboxInput.classList.add('is-valid');
             }
+        }
+
+        // Função de validação dos checkboxes de 'Funções'
+        function validateCheckboxRoles() {
+            let isChecked = false;
+            let checkedCount = 0;
+
+            // Verifica se pelo menos uma checkbox está marcada e conta o total
+            checkboxRoles.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    isChecked = true;
+                    checkedCount++;
+                }
+            });
+
+            // Validação de no máximo 2 funções selecionadas
+            if (checkedCount > 2) {
+                checkboxCargosError.textContent = "Selecione no máximo 2 funções.";
+                checkboxCargosError.style.display = "block";
+                checkboxRoles.forEach((checkbox) => checkbox.classList.add('is-invalid'));
+            } else if (!isChecked) {
+                checkboxCargosError.textContent = "Selecione pelo menos uma função.";
+                checkboxCargosError.style.display = "block";
+                checkboxRoles.forEach((checkbox) => checkbox.classList.add('is-invalid'));
+            } else {
+                checkboxCargosError.style.display = "none";
+                checkboxRoles.forEach((checkbox) => checkbox.classList.remove('is-invalid'));
+                checkboxRoles.forEach((checkbox) => checkbox.classList.add('is-valid'));
+            }
+
+            // Desabilitar as caixas não marcadas se já houver 2 selecionadas
+            checkboxRoles.forEach(function (checkbox) {
+                if (checkedCount >= 2 && !checkbox.checked) {
+                    checkbox.disabled = true;
+                } else {
+                    checkbox.disabled = false;
+                }
+            });
         }
 
         // Eventos de mudança
         checkboxInput.addEventListener('change', validateCheckbox);
+        checkboxRoles.forEach(checkbox => checkbox.addEventListener('change', validateCheckboxRoles));
 
         // Funções de validação dos campos (local)
         function validateFullName() {
@@ -340,15 +380,17 @@
             validateCPF();
             validateEmail();
             validatePassword();
-            validateCheckbox(); // Adicionado para validar o checkbox
+            validateCheckbox();
+            validateCheckboxRoles(); // Validação para as funções
 
             const isFullNameValid = !fullNameInput.classList.contains('is-invalid');
             const isCPFValid = !cpfInput.classList.contains('is-invalid');
             const isEmailValid = !emailInput.classList.contains('is-invalid');
             const isPasswordValid = !passwordInput.classList.contains('is-invalid');
-            const isCheckboxValid = !checkboxInput.classList.contains('is-invalid'); // Adicionado
+            const isCheckboxValid = !checkboxInput.classList.contains('is-invalid');
+            const isRolesValid = checkboxCargosError.style.display === 'none'; // Corrigido para verificar a ausência de erros
 
-            if (isFullNameValid && isCPFValid && isEmailValid && isPasswordValid && isCheckboxValid) {
+            if (isFullNameValid && isCPFValid && isEmailValid && isPasswordValid && isCheckboxValid && isRolesValid) {
                 validateForm(this); // Chama a validação de unicidade no back-end
             }
         });
