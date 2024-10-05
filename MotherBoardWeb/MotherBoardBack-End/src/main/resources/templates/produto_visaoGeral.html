@@ -25,9 +25,6 @@
             <div class="mb-3">
                 <label for="categoria" class="form-label">Categoria:</label>
                 <select class="form-control" th:field="*{categoria}" required>
-					  <th:block th:each="categoria : ${listarCategorias}">
-                        <option th:value="${categoria.id}">[[${categoria.nome}]]</option>
-                    </th:block>
                 </select>
             </div>
             <div class="mb-3 d-flex">

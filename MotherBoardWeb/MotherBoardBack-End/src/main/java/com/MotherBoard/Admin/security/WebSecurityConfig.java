@@ -38,9 +38,9 @@ public class WebSecurityConfig {
         http.csrf().disable() 
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/Usuarios/**").hasAuthority("Admin")
-                .requestMatchers("/categorias/**", "/marcas/**").hasAnyAuthority("Admin", "Editor")
-                .requestMatchers("/produtos/editar/**", "/produtos/salvar/**", "/produtos/deletar/**", "/produtos/new", "/produtos/check_uniquePorduto").hasAnyAuthority("Admin", "Editor", "Assistente")
-                .requestMatchers("/produtos/detalhes/**").hasAnyAuthority("Admin", "Editor", "Assistente")
+                .requestMatchers("/categorias/**").hasAnyAuthority("Admin", "Editor")
+                .requestMatchers("/marcas/**").hasAnyAuthority("Admin", "Editor", "Assistente")
+                .requestMatchers("/produtos/editar/**", "/produtos/salvar/**", "/produtos/deletar/**", "/produtos/new", "/produtos/check_uniquePorduto", "/produtos/detalhes/**").hasAnyAuthority("Admin", "Editor", "Assistente")
                 .requestMatchers("/inventarioMarcas/**", "/inventarioCategorias/**").hasAnyAuthority("Admin", "Editor")
                 .anyRequest().authenticated() 
             )

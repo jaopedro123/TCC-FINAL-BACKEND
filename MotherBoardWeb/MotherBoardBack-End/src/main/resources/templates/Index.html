@@ -79,7 +79,7 @@
                     </a>
                 </th:block>
 
-                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                     <a class="nav-link squaredoADM" th:href="@{/marcas}">
                         <i class="bi bi-tag-fill fs-1"></i>
                         <h5><b>Marcas</b></h5>
