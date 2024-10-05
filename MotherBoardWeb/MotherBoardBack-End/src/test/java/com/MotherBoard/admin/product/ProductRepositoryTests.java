@@ -44,8 +44,8 @@ public class ProductRepositoryTests {
 		produto.setCategoria(categoria);
 		produto.setMarca(marca);
 
-		produto.setPreco(333);
-		produto.setCusto(662);
+		//produto.setPreco(333);
+		//produto.setCusto(662);
 		produto.setHabilitado(true);
 		//produto.setNoStoque(true);
 		produto.setTempoDaCriacao(new Date());
@@ -76,7 +76,7 @@ public class ProductRepositoryTests {
 	public void testUpdateProduct() {
 		Integer id = 1;
 		Produto produto = repo.findById(id).get();
-		produto.setPreco(555);
+		//produto.setPreco(555);
 
 		repo.save(produto);
 		Produto updateProduto = entityManager.find(Produto.class, id);
