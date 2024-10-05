@@ -52,180 +52,205 @@
         </nav>
     </header>
 
-    <main class="container">
+    <main class="container rounded-4 py-4 px-5 mt-5" style="background-color: #2c3036;">
 
-<form th:action="@{/inventarioMarcas/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3" 
-      style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);" onsubmit="return validateDates()">
+        <form th:action="@{/inventarioMarcas/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
+            style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);"
+            onsubmit="return validateDates()">
 
-    <div class="container">
-        <label>Filtrar por nome: </label>
-        <div class="col">
-            <div class="input-group mb-3">
-                <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}" class="form-control rounded-2">
-                
+            <div class="container">
+                <label>Filtrar por nome: </label>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
+                            class="form-control rounded-2">
+
+                    </div>
+                </div>
+
+                <label for="startDate">Data de Início:</label>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input type="date" id="startDate" name="startDate" th:value="${startDate}"
+                            class="form-control rounded-2">
+                        <input th:placeholder="${startDate}" class="form-control rounded-2"
+                            style="background-color: #141517;" readonly="readonly">
+                    </div>
+                </div>
+
+                <label for="endDate">Data de Fim:</label>
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input type="date" id="endDate" name="endDate" th:value="${endDate}"
+                            class="form-control rounded-2">
+                        <input th:placeholder="${endDate}" class="form-control rounded-2"
+                            style="background-color: #141517;" readonly="readonly">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar <i class="bi bi-search"></i></button>
+                    <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Resetar <i class="bi bi-arrow-counterclockwise"></i></button>
+                </div>
+            </div>
+        </form>
+
+        <div class="modal fade text-center" id="modalDialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalTitle">Cuidado</h4>
+                    </div>
+                    <div class="modal-body">
+                        <span id="modalBody"></span>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
             </div>
         </div>
 
-        <label for="startDate">Data de Início:</label>
-        <div class="col">
-            <div class="input-group mb-3">
-                <input type="date" id="startDate" name="startDate" th:value="${startDate}" class="form-control rounded-2">       
-            	<input th:placeholder="${startDate}" class="form-control rounded-2" style="background-color: #141517;" readonly="readonly">   
-            </div>
+        <script>
+            function showModal(message) {
+                document.getElementById('modalBody').innerText = message;
+                var modal = new bootstrap.Modal(document.getElementById('modalDialog'));
+                modal.show();
+            }
+
+            function validateDates() {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+
+                if ((startDate && !endDate) || (!startDate && endDate)) {
+                    showModal('Por favor, preencha ambas as datas (Data de Início e Data de Fim) ou deixe ambas em branco.');
+                    return false;
+                }
+
+                if (startDate && endDate) {
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+
+                    if (start > end) {
+                        showModal('A data de início não pode ser posterior à data de fim.');
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            function limparFiltro() {
+                document.querySelector('input[name="keyword"]').value = '';
+                document.querySelector('input[name="startDate"]').value = '';
+                document.querySelector('input[name="endDate"]').value = '';
+            }
+        </script>
+
+        <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela Inventário Marcas <i
+                class="bi bi-tag-fill"></i></h3>
+        <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Funcionario</th>
+                        <th>ID do Funcionario</th>
+                        <th>Função</th>
+                        <th>Marca</th>
+                        <th>ID da Marca</th>
+
+                        <th>Ação</th>
+                        <th>Data de Modificação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="marca : ${listaMarcas}">
+                        <td th:text="${marca.id}"></td>
+
+                        <td th:text="${marca.usuarioId.nomeCompleto}"></td>
+                        <td th:text="${marca.usuarioId.id}"></td>
+
+                        <td th:text="${marca.roleUsuario}"></td>
+
+                        <td th:text="${marca.marca.nome}"></td>
+                        <td th:text="${marca.marca.id}"></td>
+
+
+                        <td th:text="${marca.acao}"></td>
+
+                        <td th:text="${marca.dataModificacao}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <label for="endDate">Data de Fim:</label>
-        <div class="col">
-            <div class="input-group mb-3">
-                <input type="date" id="endDate" name="endDate" th:value="${endDate}" class="form-control rounded-2">
-                <input th:placeholder="${endDate}" class="form-control rounded-2" style="background-color: #141517;" readonly="readonly">   
-            </div>
-        </div>
-
-        <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar</button>
-        <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Limpar</button>
-    </div>
-</form>
-
-<div class="modal fade text-center" id="modalDialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modalTitle">Cuidado</h4>
-            </div>
-            <div class="modal-body">
-                <span id="modalBody"></span>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-function showModal(message) {
-    document.getElementById('modalBody').innerText = message;
-    var modal = new bootstrap.Modal(document.getElementById('modalDialog'));
-    modal.show();
-}
-
-function validateDates() {
-    const startDate = document.getElementById('startDate').value;
-    const endDate = document.getElementById('endDate').value;
-    
-    if ((startDate && !endDate) || (!startDate && endDate)) {
-        showModal('Por favor, preencha ambas as datas (Data de Início e Data de Fim) ou deixe ambas em branco.');
-        return false;
-    }
-
-    if (startDate && endDate) { 
-        const start = new Date(startDate);
-        const end = new Date(endDate);
-
-        if (start > end) {
-            showModal('A data de início não pode ser posterior à data de fim.');
-            return false;
-        }
-    }
-    
-    return true; 
-}
-
-function limparFiltro() {
-    document.querySelector('input[name="keyword"]').value = '';
-    document.querySelector('input[name="startDate"]').value = '';
-    document.querySelector('input[name="endDate"]').value = '';
-}
-</script>
-        
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Funcionario</th>
-                    <th>ID do Funcionario</th>
-                    <th>Função</th>
-                    <th>Marca</th>
-                    <th>ID da Marca</th>
-
-                    <th>Ação</th>
-                    <th>Data de Modificação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="marca : ${listaMarcas}">
-                    <td th:text="${marca.id}"></td>
-
-                    <td th:text="${marca.usuarioId.nomeCompleto}"></td>
-                    <td th:text="${marca.usuarioId.id}"></td>
-
-                    <td th:text="${marca.roleUsuario}"></td>
-
-                    <td th:text="${marca.marca.nome}"></td>
-                    <td th:text="${marca.marca.id}"></td>
-
-
-                    <td th:text="${marca.acao}"></td>
-
-                    <td th:text="${marca.dataModificacao}"></td>
-                </tr>
-            </tbody>
-        </table>
 
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
             <P> Inventario não encontrado</P>
             <a th:href="@{/inventarioMarcas}" class="btn btnCadFunc ms-2">Voltar para o Inventario Marca</a>
         </div>
 
+
+        <div th:if="${totalPages > 0}">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center flex-wrap">
+                    <!-- Primeira Página -->
+                    <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a class="page-link colorPagelink"
+                           th:href="@{|/inventarioMarcas/page/1?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                           <span class="d-none d-md-inline">Primeira Página</span>
+                           <span class="d-inline d-md-none">&laquo;</span>
+                        </a>
+                    </li>
+        
+                    <!-- Anterior -->
+                    <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                        <a class="page-link colorPagelink"
+                           th:href="@{|/inventarioMarcas/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                           <span class="d-none d-md-inline">Anterior</span>
+                           <span class="d-inline d-md-none">&lsaquo;</span>
+                        </a>
+                    </li>
+        
+                    <!-- Números de página -->
+                    <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
+                        <a class="page-link colorPagelink"
+                           th:href="@{|/inventarioMarcas/page/${i}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                            [[${i}]]
+                        </a>
+                    </li>
+        
+                    <!-- Próximo -->
+                    <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a class="page-link colorPagelink"
+                           th:href="@{|/inventarioMarcas/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                           <span class="d-none d-md-inline">Próximo</span>
+                           <span class="d-inline d-md-none">&rsaquo;</span>
+                        </a>
+                    </li>
+        
+                    <!-- Última Página -->
+                    <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                        <a class="page-link colorPagelink"
+                           th:href="@{|/inventarioMarcas/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
+                           <span class="d-none d-md-inline">Última Página</span>
+                           <span class="d-inline d-md-none">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+
+
+
+        <div class="d-flex justify-content-center align-items-center p-2">
+            <a th:href="@{/inventario}" class="btn btnCadFunc ms-2">Voltar para o Inventário <i
+                    class="bi bi-box-fill"></i></a>
+        </div>
+
     </main>
 
-<div th:if="${totalPages > 0}">
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                <a class="page-link"
-                   th:href="@{|/inventarioMarcas/page/1?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
-                   Primeira Página
-                </a>
-            </li>
-
-            <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                <a class="page-link"
-                   th:href="@{|/inventarioMarcas/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
-                   Anterior
-                </a>
-            </li>
-
-            <li th:each="i : ${#numbers.sequence(1, totalPages)}"
-                th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
-                <a class="page-link"
-                   th:href="@{|/inventarioMarcas/page/${i}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
-                    [[${i}]]
-                </a>
-            </li>
-
-            <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                <a class="page-link"
-                   th:href="@{|/inventarioMarcas/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
-                   Próximo
-                </a>
-            </li>
-
-            <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                <a class="page-link"
-                   th:href="@{|/inventarioMarcas/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}${#strings.isEmpty(keyword) ? '' : '&keyword=' + keyword}${startDate != null ? '&startDate=' + startDate : ''}${endDate != null ? '&endDate=' + endDate : ''}|}">
-                   Última Página
-                </a>
-            </li>
-        </ul>
-    </nav>
-</div>
-
-
-
-    <div class="d-flex justify-content-center align-items-center">
-        <a th:href="@{/inventario}" class="btn btnCadFunc ms-2">Voltar para o Inventario</a>
-    </div>
     <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
         <div class="container text-center text-md-left">
 
@@ -282,67 +307,67 @@ function limparFiltro() {
 
     </footer>
 
-<script>
-    function limparFiltro() {
-        window.location = "[[@{/inventarioMarcas}]]";
-    }
-
-    function toggleSearchInput() {
-        var searchInput = document.getElementById("searchInput");
-        var instructionText = document.getElementById("instructionText");
-        searchInput.value = '';
-        searchInput.disabled = false;
-        instructionText.style.display = 'none';
-        searchInput.addEventListener("input", validateInput);
-
-        if (document.getElementById("filterByData").checked) {
-            searchInput.addEventListener("input", maskDateInput);
-        } else {
-            searchInput.removeEventListener("input", maskDateInput);
+    <script>
+        function limparFiltro() {
+            window.location = "[[@{/inventarioMarcas}]]";
         }
-    }
 
-    function validateInput() {
-        var searchInput = document.getElementById("searchInput");
-        var filterByName = document.getElementById("filterByName");
+        function toggleSearchInput() {
+            var searchInput = document.getElementById("searchInput");
+            var instructionText = document.getElementById("instructionText");
+            searchInput.value = '';
+            searchInput.disabled = false;
+            instructionText.style.display = 'none';
+            searchInput.addEventListener("input", validateInput);
 
-        if (filterByName.checked) {
-            searchInput.value = searchInput.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+            if (document.getElementById("filterByData").checked) {
+                searchInput.addEventListener("input", maskDateInput);
+            } else {
+                searchInput.removeEventListener("input", maskDateInput);
+            }
         }
-    }
 
-function maskDateInput(e) {
-    let value = this.value.replace(/\D/g, '');  
+        function validateInput() {
+            var searchInput = document.getElementById("searchInput");
+            var filterByName = document.getElementById("filterByName");
 
-    if (value.length > 12) value = value.slice(0, 12);
+            if (filterByName.checked) {
+                searchInput.value = searchInput.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
+            }
+        }
 
- 
-    let day = value.substring(0, 2);
-    let month = value.substring(2, 4);
-    let year = value.substring(4, 8);
-    let hour = value.substring(8, 10);
-    let minute = value.substring(10, 12);
+        function maskDateInput(e) {
+            let value = this.value.replace(/\D/g, '');
 
-
-    if (parseInt(day) > 31) day = '31';
-    if (parseInt(month) > 12) month = '12';
-    if (hour && parseInt(hour) > 23) hour = '23';
-    if (minute && parseInt(minute) > 59) minute = '59';
+            if (value.length > 12) value = value.slice(0, 12);
 
 
-    let formattedValue = '';
-    if (day) formattedValue = day;
-    if (month) formattedValue += '/' + month;
-    if (year) formattedValue += '/' + year;
-    if (hour) formattedValue += ' ' + hour;
-    if (minute) formattedValue += ':' + minute;
-
-    this.value = formattedValue;  
-}
+            let day = value.substring(0, 2);
+            let month = value.substring(2, 4);
+            let year = value.substring(4, 8);
+            let hour = value.substring(8, 10);
+            let minute = value.substring(10, 12);
 
 
+            if (parseInt(day) > 31) day = '31';
+            if (parseInt(month) > 12) month = '12';
+            if (hour && parseInt(hour) > 23) hour = '23';
+            if (minute && parseInt(minute) > 59) minute = '59';
 
-</script>
+
+            let formattedValue = '';
+            if (day) formattedValue = day;
+            if (month) formattedValue += '/' + month;
+            if (year) formattedValue += '/' + year;
+            if (hour) formattedValue += ' ' + hour;
+            if (minute) formattedValue += ':' + minute;
+
+            this.value = formattedValue;
+        }
+
+
+
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -357,4 +382,5 @@ function maskDateInput(e) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
+
 </html>

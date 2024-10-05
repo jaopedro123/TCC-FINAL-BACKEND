@@ -1,5 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
-    data-bs-theme="dark">
+<html xmlns:th="http://www.thymeleaf.org" data-bs-theme="dark">
 
 <head>
     <title>MotherBoard - Usuário Formulário</title>
@@ -24,56 +23,9 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
             <div class="container-fluid">
 
-
                 <a th:href="@{/}" class="navbar-brand">
                     <img class="imgMother" th:src="@{/imagens/image-light.png}">
                 </a>
-                <div class="dropdown">
-                    <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-display="static"
-                        aria-expanded="false">
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-motherboard me-2"></i>Hardware</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-pc-display me-2"></i>Computadores</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-mouse me-2"></i>Perifericos</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-controller me-2"></i>Eletronicos</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-display me-2"></i>Monitores</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                    class="bi bi-joystick me-2"></i>Espaço gamer</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="Configuracao.html"><i
-                                    class="bi bi-gear me-2"></i>Configurações</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                    </ul>
-                </div>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
@@ -85,19 +37,6 @@
 
                     <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link " href="Favoritos.html">
-                                <i class="bi bi-bookmark iconeheader"></i>
-
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link " href="Carrinho.html">
-                                <i class="bi bi-cart iconeheader"></i>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
                             <div class="btn-group dropstart">
                                 <button type="button" class="btn btn-conta-form-back-end nav-link"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -107,95 +46,112 @@
                                     <a class="nav-link" th:href="@{/conta}">
                                         <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
                                     </a>
-                                    <a class="nav-link btn text-center" href="#" id="logoutLink"
-                                        onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+                                    <a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
+                                        onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                                        <i class="bi bi-box-arrow-right"></i></a>
 
                                 </ul>
                             </div>
-                       
+
 
                     </ul>
                 </div>
-            
+
         </nav>
     </header>
 
 
+
     <main class="border rounded-4 mt-5 m-auto px-3 pt-3 text-white INTRAcontaForm">
-        <form th:action="@{/usuarios/salvar}" method="post" enctype="multipart/form-data" th:object="${usuario}" onsubmit="return validateForm(this);">
-            
+        <form th:action="@{/usuarios/salvar}" method="post" id="registrationFormUsuario" enctype="multipart/form-data"
+            th:object="${usuario}" novalidate>
+
             <div class="rounded-4 pt-3 px-4 mb-2 ms-auto me-auto" style="background-color: #33373f;">
                 <div class="align-items-center d-flex justify-content-end">
-                <input type="button" value="Voltar" class="btn btn-outline-secondary w-25 fw-bold" id="buttonCancel">
-            </div>
+                    <button type="button" value="Voltar" class="btn btn-outline-light fw-bold" id="buttonCancel">Voltar
+                        <i class="bi bi-box-arrow-right"></i></button>
+                </div>
 
-                <h2 class="p-3" style="text-align: center;">
-                    [[${tituloDaPag}]]
-                </h2>
+                <h2 class="p-3 text-center">[[${tituloDaPag}]]</h2>
 
                 <input type="hidden" th:field="*{id}" id="id" />
 
-            <div class="text-center">
-                <input type="hidden" th:field="*{fotos}" />
-                <img th:src="@{${usuario.photosImagePath}}" id="thumbnail" class="INTRAimgConta">
-                <input type="file" id="foto" name="imagem" style="display: none;">
-                <i class="bi bi-pencil-square fs-4 INTRAiconeImg"></i>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="form-label">Email*</label>
-                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="contato@gmail.com"
-                    required minlength="8" maxlength="128">
-            </div>
-            <div class="mb-3">
-                <label for="nomeCompleto" class="form-label">Nome Completo*</label>
-                <input type="text" th:field="*{nomeCompleto}" class="form-control" id="nomeCompleto"
-                    placeholder="Digite seu nome completo" required minlength="3" maxlength="45">
-            </div>
-            <div class="mb-3">
-                <label for="cpf" class="form-label">CPF*</label>
-                <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="000.000.000-00" required
-                    minlength="14" maxlength="14">
-            </div>
-
-
-            <div class="mb-3">
-                <label for="senha" class="form-label">Senha*</label>
-
-                <input type="password" th:if="${usuario != null and usuario.id == null}" th:field="*{senha}"
-                    class="form-control" id="senha" placeholder="Digite sua senha" required minlength="8"
-                    maxlength="20">
-
-                <input type="password" th:if="${usuario != null and usuario.id != null}" th:field="*{senha}"
-                    class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20">
-            </div>
-
-
-            <div class="mb-3">
-                <label class="form-label">Funções*</label>
-                <div class="form-check">
-                    <th:block th:each="role : ${listRoles}">
-                        <input type="checkbox" th:field="*{roles}" th:text="${role.nome}" th:value="${role.id}"
-                            class="form-check-input">
-                        - <small class="form-text">[[${role.Descricao}]]</small>
-                        <br>
-                    </th:block>
+                <div class="text-center">
+                    <input type="hidden" th:field="*{fotos}" />
+                    <img th:src="@{${usuario.photosImagePath}}" id="thumbnail" class="INTRAimgConta">
+                    <input type="file" id="foto" name="imagem" style="display: none;">
+                    <i class="bi bi-pencil-square fs-4 INTRAiconeImg"></i>
                 </div>
-            </div>
 
-            <div class="mb-3 d-flex">
-                <label class="form-label">Permitido:</label>
-                <div class="form-check ms-2">
-                    <input type="checkbox" th:field="*{permitido}" class="form-check-input">
+                <div class="mb-3">
+                    <label for="nomeCompleto" class="form-label">Nome Completo*</label>
+                    <input type="text" th:field="*{nomeCompleto}" class="form-control" id="nomeCompleto"
+                        placeholder="Digite seu nome completo" required minlength="3" maxlength="45">
+                    <div id="fullNameError" class="error-message" style="display: none;"></div>
                 </div>
-            </div>
 
-            <div class="text-center">
-                <input type="submit" value="Criar Conta" class="w-100 p-2 rounded-3 SubmitFunc">
-            </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email*</label>
+                    <input type="email" th:field="*{email}" class="form-control" id="email"
+                        placeholder="contato@gmail.com" required minlength="8" maxlength="50">
+                    <div id="emailError" class="error-message" style="display: none;"></div>
+                </div>
 
-            <br>
-        </div>
+                <div class="mb-3">
+                    <label for="cpf" class="form-label">CPF*</label>
+                    <input type="text" th:field="*{cpf}" class="form-control" id="cpf" placeholder="000.000.000-00"
+                        required minlength="14" maxlength="14">
+                    <div id="cpfError" class="error-message" style="display: none;"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="senha" class="form-label">Senha*</label>
+                    <div class="input-group">
+                        <input type="password" th:if="${usuario != null and usuario.id == null}" th:field="*{senha}"
+                            class="form-control" id="senha" placeholder="Digite sua senha" required minlength="8"
+                            maxlength="20">
+
+                        <input type="password" th:if="${usuario != null and usuario.id != null}" th:field="*{senha}"
+                            class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20">
+
+                        <button type="button" id="togglePassword" class="btn btn-outline-secondary">
+                            <i class="bi bi-eye-fill"></i>
+                        </button>
+                    </div>
+                    <div id="passwordError" class="error-message" style="display: none;"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Função:</label>
+                    <div class="form-check">
+                        <th:block th:each="role : ${listRoles}">
+                            <input type="checkbox" th:field="*{roles}" th:text="${role.nome}" th:value="${role.id}"
+                                class="form-check-input validaCargos">
+                            - <small class="form-text">[[${role.Descricao}]]</small>
+                            <br>
+                        </th:block>
+                        <div id="checkboxCargosError" class="error-message" style="display: none;">
+                            Você deve preencher antes de enviar.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 d-flex">
+                    <label class="form-label">Permitido:</label>
+                    <div class="form-check ms-2">
+                        <input type="checkbox" th:field="*{permitido}" class="form-check-input permitido">
+                        <div id="checkboxError" class="error-message" style="display: none;">
+                            Você deve preencher antes de enviar.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="w-100 p-2 rounded-3 SubmitFunc">Cadastrar Dados <i
+                            class="bi bi-arrow-down-circle"></i></button>
+                </div>
+                <br>
+            </div>
 
         </form>
 
@@ -210,12 +166,204 @@
                 <div class="modal-body">
                     <span id="modalBody"></span>
                 </div>
-                <div class="modal-footer">
-
-                </div>
+                <div class="modal-footer"></div>
             </div>
         </div>
     </div>
+
+    <script>
+        // Seleção dos elementos
+        const fullNameInput = document.getElementById('nomeCompleto');
+        const cpfInput = document.getElementById('cpf');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('senha');
+
+        const fullNameError = document.getElementById('fullNameError');
+        const cpfError = document.getElementById('cpfError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const checkboxError = document.getElementById('checkboxError'); // Adicionado
+
+        // Seleção dos elementos
+        const checkboxInput = document.querySelector('.permitido'); // Corrigido
+
+        // Função de validação do checkbox
+        function validateCheckbox() {
+            if (!checkboxInput.checked) {
+                checkboxError.textContent = "Você deve preencher esta opção."; // Mensagem de erro
+                checkboxError.style.display = "block"; // Mostra o feedback
+                checkboxInput.classList.add('is-invalid'); // Adiciona classe de erro
+            } else {
+                checkboxError.style.display = "none"; // Esconde a mensagem
+                checkboxInput.classList.remove('is-invalid'); // Remove classe de erro
+                checkboxInput.classList.add('is-valid'); // Adiciona classe de sucesso
+            }
+        }
+
+        // Eventos de mudança
+        checkboxInput.addEventListener('change', validateCheckbox);
+
+        // Funções de validação dos campos (local)
+        function validateFullName() {
+            const namePattern = /^[a-zA-ZÀ-ÿ\s]+$/;
+            if (fullNameInput.value.trim() === "") {
+                fullNameError.textContent = "Preencha este campo.";
+                fullNameError.style.display = "block";
+                fullNameInput.classList.add('is-invalid');
+            } else if (fullNameInput.value.trim().length < 3) {
+                fullNameError.textContent = "O nome deve conter pelo menos 3 caracteres.";
+                fullNameError.style.display = "block";
+                fullNameInput.classList.add('is-invalid');
+            } else {
+                fullNameError.style.display = "none";
+                fullNameInput.classList.remove('is-invalid');
+                fullNameInput.classList.add('is-valid');
+            }
+        }
+
+        function validateEmail() {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailInput.value.trim() === "") {
+                emailError.textContent = "Preencha este campo.";
+                emailError.style.display = "block";
+                emailInput.classList.add('is-invalid');
+            } else if (!emailPattern.test(emailInput.value)) {
+                emailError.textContent = "E-mail inválido.";
+                emailError.style.display = "block";
+                emailInput.classList.add('is-invalid');
+            } else {
+                emailError.style.display = "none";
+                emailInput.classList.remove('is-invalid');
+                emailInput.classList.add('is-valid');
+            }
+        }
+
+        function formatCPF() {
+            let cpfValue = cpfInput.value.replace(/\D/g, '');
+            if (cpfValue.length > 0) {
+                cpfValue = cpfValue.replace(/(\d{3})(\d)/, "$1.$2");
+                cpfValue = cpfValue.replace(/(\d{3})(\d)/, "$1.$2");
+                cpfValue = cpfValue.replace(/(\d{3})(\d{2})$/, "$1-$2");
+            }
+            cpfInput.value = cpfValue;
+        }
+
+        function isCpf(cpf) {
+            cpf = cpf.replace(/\D/g, '');
+            if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) return false;
+            let result = true;
+            [9, 10].forEach(function (j) {
+                let soma = 0, r;
+                cpf.split(/(?=)/).splice(0, j).forEach(function (e, i) {
+                    soma += parseInt(e) * ((j + 2) - (i + 1));
+                });
+                r = soma % 11;
+                r = (r < 2) ? 0 : 11 - r;
+                if (r !== parseInt(cpf.substring(j, j + 1))) result = false;
+            });
+            return result;
+        }
+
+        function validateCPF() {
+            if (cpfInput.value.trim() === "") {
+                cpfError.textContent = "Preencha este campo.";
+                cpfError.style.display = "block";
+                cpfInput.classList.add('is-invalid');
+            } else if (!isCpf(cpfInput.value)) {
+                cpfError.textContent = "CPF inválido.";
+                cpfError.style.display = "block";
+                cpfInput.classList.add('is-invalid');
+            } else {
+                cpfError.style.display = "none";
+                cpfInput.classList.remove('is-invalid');
+                cpfInput.classList.add('is-valid');
+            }
+        }
+
+        function validatePassword() {
+            const password = passwordInput.value;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumber = /\d/.test(password);
+            const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+            if (password === "") {
+                passwordError.textContent = "Preencha este campo.";
+                passwordError.style.display = "block";
+                passwordInput.classList.add('is-invalid');
+            } else if (password.length < 8) {
+                passwordError.textContent = "A senha deve conter pelo menos 8 caracteres.";
+                passwordError.style.display = "block";
+                passwordInput.classList.add('is-invalid');
+            } else if (!hasUpperCase || !hasLowerCase || !hasNumber) {
+                passwordError.textContent = "A senha deve conter letra maiúscula, minúscula e um número.";
+                passwordError.style.display = "block";
+                passwordInput.classList.add('is-invalid');
+            } else if (!hasSpecialChar) {
+                passwordError.textContent = "A senha deve conter pelo menos um caractere especial.";
+                passwordError.style.display = "block";
+                passwordInput.classList.add('is-invalid');
+            } else {
+                passwordError.style.display = "none";
+                passwordInput.classList.remove('is-invalid');
+                passwordInput.classList.add('is-valid');
+            }
+        }
+
+        function togglePasswordVisibility(inputId, icon) {
+            const input = document.getElementById(inputId);
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
+            icon.classList.toggle("bi-eye-slash-fill", isPassword);
+            icon.classList.toggle("bi-eye-fill", !isPassword);
+        }
+
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            togglePasswordVisibility('senha', this.firstElementChild);
+        });
+
+        // Eventos de input
+        fullNameInput.addEventListener('input', validateFullName);
+        cpfInput.addEventListener('input', () => {
+            formatCPF();
+            validateCPF();
+        });
+        emailInput.addEventListener('input', validateEmail);
+        passwordInput.addEventListener('input', validatePassword);
+
+        // Submissão combinada do formulário
+        document.getElementById('registrationFormUsuario').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Executa as validações locais primeiro
+            validateFullName();
+            validateCPF();
+            validateEmail();
+            validatePassword();
+            validateCheckbox(); // Adicionado para validar o checkbox
+
+            const isFullNameValid = !fullNameInput.classList.contains('is-invalid');
+            const isCPFValid = !cpfInput.classList.contains('is-invalid');
+            const isEmailValid = !emailInput.classList.contains('is-invalid');
+            const isPasswordValid = !passwordInput.classList.contains('is-invalid');
+            const isCheckboxValid = !checkboxInput.classList.contains('is-invalid'); // Adicionado
+
+            if (isFullNameValid && isCPFValid && isEmailValid && isPasswordValid && isCheckboxValid) {
+                validateForm(this); // Chama a validação de unicidade no back-end
+            }
+        });
+
+        // Validação de unicidade (back-end)
+        function validateForm(form) {
+            var checks = [checkEmailUnico(form), checkCpfUnico(form)];
+
+            Promise.all(checks).then(function (results) {
+                if (results.every(result => result === true)) {
+                    form.submit(); // Envia o formulário se todas as validações passarem
+                }
+            });
+        }
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -228,20 +376,17 @@
             });
 
             $("#foto").change(function () {
+                const foto = this.files[0].size;
 
-                foto = this.files[0].size;
-
-                // 1 MB = 1048576
+                // 1 MB = 1048576 bytes
                 if (foto > 1048576) {
-                    this.setCustomValidity("Voce so pode escolher imagens abaixo de 1 MB! ");
-                    this.reportvalidity();
-                }
-                else {
+                    this.setCustomValidity("Você só pode escolher imagens abaixo de 1 MB!");
+                    this.reportValidity();
+                } else {
                     this.setCustomValidity("");
                     showImageThumbnail(this);
                 }
             });
-
         });
 
         function showImageThumbnail(fileInput) {
@@ -251,18 +396,6 @@
                 $("#thumbnail").attr("src", e.target.result);
             };
             reader.readAsDataURL(file);
-        }
-
-        function validateForm(form) {
-            var checks = [checkEmailUnico(form), checkCpfUnico(form)];
-
-            Promise.all(checks).then(function (results) {
-                if (results.every(result => result === true)) {
-                    form.submit();
-                }
-            });
-
-            return false;
         }
 
         function checkEmailUnico(form) {
@@ -311,91 +444,68 @@
             $("#modalDialog").modal('show');
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const cpfInput = document.getElementById("cpf");
-
-            cpfInput.addEventListener("input", function (e) {
-
-                let value = this.value.replace(/\D/g, '');
-
-                if (value.length > 11) value = value.slice(0, 11);
-                if (value.length > 9) {
-                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                    value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
-                } else if (value.length > 6) {
-                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                    value = value.replace(/(\d{3})(\d{2})$/, '$1-$2');
-                } else if (value.length > 3) {
-                    value = value.replace(/(\d{3})(\d)/, '$1.$2');
-                }
-
-                this.value = value;
-            });
-        });
-
         document.getElementById('thumbnail').addEventListener('click', function () {
-        document.getElementById('foto').click();
-    });
+            document.getElementById('foto').click();
+        });
     </script>
 
 
-	<footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
-	    <div class="container text-center text-md-left">
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
+        <div class="container text-center text-md-left">
 
-	        <div class="row text-center text-md-left">
+            <div class="row text-center text-md-left">
 
-	            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-					
-					<a th:href="@{/}" class="navbar-brand">
-					    <img class="imgMother" th:src="@{/imagens/image-light.png}">
-					</a>
-					<br /><br /><br />
-					
-	                <section class="mb-4">
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-	                            class="bi bi-facebook"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-	                        href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-	                        href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-	                            class="bi bi-instagram"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-	                        href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-	                            class="bi bi-youtube"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-	                        href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-	                </section>
-	            </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
 
+                    <a th:href="@{/}" class="navbar-brand">
+                        <img class="imgMother" th:src="@{/imagens/image-light.png}">
+                    </a>
+                    <br /><br /><br />
 
-	            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-	                <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-	                <p>
-	                    <a href="SobreNos.html" class=" links2"> Sobre nós</a>
-
-	                </p>
-					<p>
-					    <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
-					</p>
-	                <p>
-	                    <a href="Politica.html" class=" links2"> Política de Privacidade</a>
-
-	                </p>
-	            </div>
-
-	            <hr class="mb-4">
-	            <div>
-	                <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-	            </div>
-
-	        </div>
-
-	    </div>
+                    <section class="mb-4">
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
+                </div>
 
 
-	</footer>
-	
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+                    <p>
+                        <a href="SobreNos.html" class=" links2"> Sobre nós</a>
+
+                    </p>
+                    <p>
+                        <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
+                    </p>
+                    <p>
+                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+                <div>
+                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </footer>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>

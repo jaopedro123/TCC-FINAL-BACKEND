@@ -2,7 +2,7 @@
     data-bs-theme="dark">
 <div class="modal-header">
     <h4 class="modal-title">Detalhes do Produto</h4>
-    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">&times;</button>
+    <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">X</button>
 </div>
 
 <div>
@@ -94,11 +94,11 @@
         <div class="tab-pane p-4" id="descricao" role="tabpanel">
 
             <div>
-                <label>Descricao curta</label>
+                <label>Descricao Curta:</label>
                 <div th:utext="${produto.descricaoCurta}" class="border p-2 m-2"></div>
             </div>
             <div>
-                <label>Descricao completa</label>
+                <label>Descricao Completa:</label>
                 <div th:utext="${produto.descricaoCompleta}" class="border p-2 m-2"></div>
             </div>
 

@@ -330,7 +330,7 @@ footer {
 
 /* carrinho */
 .form-check-input:checked {
-	background-color: #b07fec;
+	background-color: #b07fec !important;
 	border-color: #b07fec;
 }
 /* cepButton carrinho */
@@ -788,7 +788,7 @@ footer {
     border-color: #ff0017;
 }
 .error-message {
-	color: red;
+	color: #ff2c3e;
 	font-size: 0.875em;
 	margin-top: 0.25em;
 	display: none;
@@ -2253,6 +2253,8 @@ display: none;
 
 /* fim - Conta */
 /* Dashboard ADM - FIM */
+
+/* Adições CSS */
 .SubmitFunc{
 	background: #694a8f;
 	border: none;
@@ -2260,10 +2262,105 @@ display: none;
 .SubmitFunc:hover{
 	background: #7a44bc;
 }
-
+.SubmitFunc:first-child:active{
+	background: #7a44bc;
+	border: none;
+}
 .INTRACategoriaimg{
 	cursor: pointer;
 	border-radius: 12px;
 	width: 130px;
 	height: 130px;
 }
+
+.thumbnail, .extraThumbnail {
+	height: 130px;
+}
+
+.MensagemPopup {
+	margin-bottom: 20px;
+    animation: bounceIn 0.8s ease;
+}
+
+@keyframes bounceIn {
+    0%, 100% {
+        transform: scale(1); /* Tamanho original */
+    }
+    50% {
+        transform: scale(1.3); /* Aumenta o tamanho */
+    }
+}
+
+.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+.dropdown-menu{
+	width: 220px;
+	padding: 15px;
+}
+
+#buttonCancel, #butaocancela{
+	width: 130px;
+}
+
+.colorPagelink:focus{
+	color: #b07fec;
+	background-color: var(--bs-pagination-hover-bg);
+	box-shadow: #b07fec var(--bs-pagination-focus-box-shadow);
+}
+
+.invalid-feedback{
+	color: #ff2c3e;
+	font-size: 15px;
+}
+
+.was-validated .form-check-input:invalid {
+    border-color: #ff1b2e;
+}
+.was-validated .form-check-input:valid:checked{
+	background-color: #b07fec;
+    border-color: #b07fec;
+}
+
+.richText .richText-editor {
+	background-color: #212529 !important;
+	color: white;
+	font-size: 20px;
+	border-left: none !important;
+	overflow-y: auto !important;
+}
+
+.richText{
+	border: none !important;
+}
+
+.richText .richText-initial{
+	background-color: #212529 !important;
+	color: #00a67d !important;
+}
+
+.richText .richText-toolbar ul li a{
+	background-color: #1b1a1d !important;
+	border: none !important;
+}
+
+.richText .richText-toolbar{
+	background-color: #1b1a1d !important;
+	border-bottom:solid 1px #373c42 !important;
+	border-top:solid 1px #373c42 !important;
+}
+
+.richText .richText-toolbar ul li a svg{
+	color: #9973c8;
+}
+
+.richText-help{
+	color: #9973c8;
+}
+
+.svg-inline--fa{
+	color: #9973c8;
+}
+
+/* CSS */

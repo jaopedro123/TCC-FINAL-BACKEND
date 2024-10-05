@@ -56,7 +56,7 @@
 
         <div class="col-12 d-flex justify-content-center flex-wrap container py-3 mt-5">  
             
-            <div class="row justify-content-center align-items-center cargo w-50 mb-5 rounded-5 mt-3 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+            <div class="row justify-content-center align-items-center cargo mb-5 rounded-5 mt-3 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 700px;">
                 <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INTRANET</b></h3>
 				
                 <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
@@ -81,7 +81,7 @@
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
                     <a class="nav-link squaredoADM" th:href="@{/marcas}">
-                        <i class="fas fa-comments fs-1"></i>
+                        <i class="bi bi-tag-fill fs-1"></i>
                         <h5><b>Marcas</b></h5>
                     </a>
                 </th:block>

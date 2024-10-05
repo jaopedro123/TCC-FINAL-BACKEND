@@ -59,23 +59,35 @@ function removerImagemExtra(index) {
 
 function addNextExtraImageSection(index) {
     htmlImagemExtra = `
-            <div class="col-5 mt-2 p-2" id="divImagemExtra${index}">
-                <div id="imagemExtraHeader${index}"><label>Imagem Extra #${index + 1}:</label></div>
-                <div class="col-sm-8">
-                    <input type="hidden" th:field="*{imagem_principal}" />
-                    <div class="my-1">
-                        <img src="${defaultImageThumbnailSrc}" id="extraThumbnail${index}"
-                        style="width: 130px; height: 130px;">
-                    </div>
-                    <input type="file" name="imagemExtra" 
-                        onchange="showExtraImageThumbnail(this, ${index})"
-                        accept="image/png, image/jpeg" />
-                </div>
-            </div>
+    <div class="col-md-6 col-sm-12 mt-2 p-2" id="divImagemExtra${index}">
+    <!-- Cabeçalho da Imagem Extra -->
+    <div id="imagemExtraHeader${index}">
+        <label>Imagem Extra #${index + 1}:</label>
+    </div>
+
+    <!-- Contêiner da imagem e input -->
+    <div class="file-input-container">
+        <!-- Imagem Preview (clicável) -->
+        <div class="my-1">
+            <img src="${defaultImageThumbnailSrc}" id="extraThumbnail${index}" alt="Preview da imagem extra"
+                 class="img-fluid rounded-3 clickable-image" style="width: 150px; height: 150px; cursor: pointer;"
+                 onclick="document.getElementById('fileInput${index}').click();" />
+        </div>
+
+        <!-- Campo de input para upload da imagem extra -->
+        <input type="file" name="imagemExtra" class="form-control" id="fileInput${index}"
+               onchange="showExtraImageThumbnail(this, ${index})"
+               accept="image/png, image/jpeg" />
+    </div>
+
+    <!-- Campo oculto para ID da imagem -->
+    <input type="hidden" th:field="*{imagem_principal}" />
+</div>
     `;
 
     htmlLinkRemove = `
-            <a href="javascript:removerImagemExtra(${index - 1})" title="Remover essa imagem">Remover</a>
+        <button type="button" class="btn btn-danger d-flex align-items-center" 
+        onclick="removerImagemExtra(${index - 1})" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></button>
     `;
 
     $("#divImagensProduto").append(htmlImagemExtra);
@@ -107,3 +119,14 @@ function showModalDialog(title, message) {
     $("#modalBody").text(message);
     $("#modalDialog").modal('show');
 }
+
+// Adiciona um event listener para cada imagem com a classe 'clickable-image'
+document.querySelectorAll('.clickable-image').forEach((img) => {
+    img.addEventListener('click', function () {
+        // Procura o próximo input 'file' associado à imagem clicada e ativa o clique
+        const fileInput = this.parentElement.nextElementSibling;
+        if (fileInput && fileInput.type === 'file') {
+            fileInput.click();
+        }
+    });
+});

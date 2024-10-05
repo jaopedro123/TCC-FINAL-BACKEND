@@ -49,12 +49,12 @@ public class Produto {
 	@Column(name = "no_stoque")
 	private String noStoque;
 
-	private float custo;
+	private String custo;
 
-	private float preco;
+	private String preco;
 
 	@Column(name = "des_conto")
-	private float desconto;
+	private String desconto;
 
 	@Column(name = "imagem_principal", nullable = false)
 	private String imagem_principal;
@@ -142,27 +142,27 @@ public class Produto {
 		this.noStoque = noStoque;
 	}
 
-	public float getCusto() {
+	public String getCusto() {
 		return custo;
 	}
 
-	public void setCusto(float custo) {
+	public void setCusto(String custo) {
 		this.custo = custo;
 	}
 
-	public float getPreco() {
+	public String getPreco() {
 		return preco;
 	}
 
-	public void setPreco(float preco) {
+	public void setPreco(String preco) {
 		this.preco = preco;
 	}
 
-	public float getDesconto() {
+	public String getDesconto() {
 		return desconto;
 	}
 
-	public void setDesconto(float desconto) {
+	public void setDesconto(String desconto) {
 		this.desconto = desconto;
 	}
 
