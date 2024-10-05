@@ -79,23 +79,23 @@ public class UsuarioServico {
        return usuarioRepo.save(usuario);
     }
     
-    public Usuario updateConta(Usuario usuarioform) {
-    	Usuario usuarioNoBD = usuarioRepo.findById(usuarioform.getId()).get();
-    	
-    	if (!usuarioform.getSenha().isEmpty()) {
-    		usuarioNoBD.setSenha(null);
-    	    encodePassword(usuarioNoBD);
-    	}
+    public Usuario updateConta(Usuario usuarioAtualizado) {
+        Usuario usuarioExistente = usuarioRepo.findById(usuarioAtualizado.getId())
+                                             .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-    	if (usuarioform.getFotos() != null) {
-    		usuarioNoBD.setFotos(usuarioform.getFotos());
-    	}
+        if (usuarioAtualizado.getSenha() != null && !usuarioAtualizado.getSenha().isEmpty()) {
+            if (!passwordEncoder.matches(usuarioAtualizado.getSenha(), usuarioExistente.getSenha())) {
+                String encodedPassword = passwordEncoder.encode(usuarioAtualizado.getSenha());
+                usuarioExistente.setSenha(encodedPassword);
+            }
+        } 
 
-    	usuarioNoBD.setNomeCompleto(usuarioform.getNomeCompleto());
+        usuarioExistente.setNomeCompleto(usuarioAtualizado.getNomeCompleto());
+        usuarioExistente.setFotos(usuarioAtualizado.getFotos());
 
-    	return usuarioRepo.save(usuarioNoBD);
-
+        return usuarioRepo.save(usuarioExistente);
     }
+
     
     
     

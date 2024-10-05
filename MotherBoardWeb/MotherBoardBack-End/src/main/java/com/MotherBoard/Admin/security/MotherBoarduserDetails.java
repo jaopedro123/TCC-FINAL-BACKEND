@@ -19,6 +19,7 @@ public class MotherBoarduserDetails implements UserDetails{
 
 
 	private static final long serialVersionUID = 1L;
+	
 	private Usuario usuario;
 
 	public MotherBoarduserDetails(Usuario usuario) {
