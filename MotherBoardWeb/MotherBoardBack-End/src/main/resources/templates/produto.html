@@ -118,10 +118,10 @@
                                 style="text-decoration: none; color: rgb(128, 128, 128);">Categoria -</a>
                         </th>
                         <th scope="col">detalhes</th>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                             <th scope="col">Ativo</th>
                         </th:block>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                             <th scope="col">Editar</th>
                         </th:block>
                       <!--  <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
