@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="Imagens/logorapa.png">
+    <link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -14,105 +14,52 @@
     <title>Motherboard - Sobre Nós</title>
 </head>
 
+<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+    <input type="submit" />
+</form>
+
 <header class="mb-3">
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <a href="index.html" class="navbar-brand">
-                <img class="imgMother" src="Imagens/image-light.png">
+
+            <a th:href="@{/}" class="navbar-brand">
+                <img class="imgMother" th:src="@{/imagens/image-light.png}">
             </a>
-            <div class="dropdown">
-                <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" data-bs-display="static"
-                    aria-expanded="false">
-                    <i class="bi bi-chevron-down"></i>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                class="bi bi-motherboard me-2"></i>Hardware</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                class="bi bi-pc-display me-2"></i>Computadores</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                class="bi bi-mouse me-2"></i>Perifericos</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                class="bi bi-controller me-2"></i>Eletronicos</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                class="bi bi-display me-2"></i>Monitores</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Categoria-Hardware.html"><i
-                                class="bi bi-joystick me-2"></i>Espaço gamer</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="Configuracao.html"><i
-                                class="bi bi-gear me-2"></i>Configurações</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                </ul>
-            </div>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
-                    <input class="form-control me-2 custom-search barradepesquisa" type="search" placeholder="Search"
-                        aria-label="Search">
-                    <button class="btn btn-outline-success" id="corcaraio" type="submit"><i
-                            class="bi bi-search"></i></button>
-                </form>
 
                 <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link " href="Favoritos.html">
-                            <i class="bi bi-bookmark iconeheader"></i>
-
-                        </a>
-                    </li>
 
                     <li class="nav-item">
-                        <a class="nav-link " href="Carrinho.html">
-                            <i class="bi bi-cart iconeheader"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Conta.html">
-                            <i class="bi bi-person-circle iconeheader"></i>
-                        </a>
-                    </li>
+                        <div class="btn-group dropstart">
+                            <button type="button" class="btn btn-conta-form-back-end nav-link"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle iconeheader"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link" th:href="@{/conta}">
+                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                                </a>
+                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                                    <i class="bi bi-box-arrow-right"></i></a>
+
+                            </ul>
+                        </div>
+                   
+
                 </ul>
             </div>
-        </div>
+        
     </nav>
 </header>
 
 <body class="bg-dark text-light">
-    <div class="container rounded-5 p-3" style="background-color: #2c3036;">
+    <div class="container rounded-5 p-3 mt-5" style="background-color: #2c3036;">
         <div class="rounded-5 p-3 justifyText" style="background-color: #33373f;">
             <h1 class="text-center mt-4">Quem nós Somos</h1>
             <h6 class="text-center mb-4 descRoxo">BEM-VINDO A MOTHERBOARD TECNOLOGIC</h6>
             <p>Projeto iniciando no ano de 2023, a Motherboard foi criada com o intuito de atuar principalmente no setor
-                de informática e como um e-commerce digital realizando a
-                comercialização de aparelhos eletrônicos. Atualmente em 2024 ainda somos um grupo de estudantes do
+                de informática. Atualmente em 2024 ainda somos um grupo de estudantes do
                 terceiro ano do ensino médio que se interessam por tecnologia e
                 inovação. Acreditamos que, apesar da nossa idade, podemos fazer a diferença no mercado de trabalho,
                 especialmente na área de informática, onde vemos uma oportunidade de
@@ -145,7 +92,7 @@
                             <h4>Missão</h4>
                         </div>
                         <p>Proporcionar aos nossos futuros clientes melhores qualidades de produto e serviços do
-                            Motherboard, transmitindo qualidade e confiança aos nossos clientes e fornecedores.</p>
+                            Motherboard, transmitindo qualidade e confiança.</p>
                     </div>
 
                     <div class="col-md-4 p-3 bg-secondary">
@@ -153,8 +100,8 @@
                             <i class="fas fa-eye fa-2x mb-3"></i>
                             <h4>Visão</h4>
                         </div>
-                        <p>Pretendemos ser referência no segmento de informática na região do Jd. Belval em Barueri
-                            (SP-Brasil). Manter a credibilidade junto aos fornecedores, clientes e colaboradores.</p>
+                        <p>Nós pretendemos ser referência no segmento de informática na região do Jd. Belval em Barueri
+                            (SP-Brasil).</p>
                     </div>
 
                     <div class="col-md-4 p-3 text-center">
@@ -220,10 +167,8 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p>Responsável pela administração geral do projeto e pela organização das equipes. Felipe também
-                                    contribuiu na criação de diversas páginas web (HTML, CSS, Bootstrap e JavaScript), incluindo a
-                                    página inicial e a tela de pagamento do produto. Além disso, foi o encarregado da programação do
-                                    aplicativo, utilizando as tecnologias Bootstrap e PWA.</p>
+                                <p>Responsável pela administração geral do projeto e pela organização das equipes. Além disso, foi o encarregado da programação do
+                                    aplicativo, utilizando PWA.</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -238,9 +183,8 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p>Responsável pelo desenvolvimento do back-end e pela criação do banco de dados do projeto. João
-                                    desenvolveu sistemas de cadastro de produtos, usuários, funcionários e administradores. Além
-                                    disso, contribuiu para a modelagem do banco de dados e para a criação do diagrama de classes.</p>
+                                <p>Responsável geral pelo desenvolvimento do back-end e pela criação do banco de dados do projeto. João
+                                    desenvolveu sistemas de cadastro de funcionários e conta onde armazena os dados do funcionário.</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -255,10 +199,8 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p c>Lucas foi responsável pela criação de várias páginas web (HTML, CSS, Bootstrap e JavaScript),
-                                    incluindo as páginas de "Atendimento ao Cliente" e "Categoria Hardware", onde os usuários podem
-                                    filtrar produtos. Ele também contribuiu para a documentação do projeto e foi encarregado da
-                                    programação do aplicativo utilizando Bootstrap.</p>
+                                <p>Responsável geral pelo desenvolvimento do back-end. Lucas
+                                    desenvolveu sistemas de cadastro de produtos e categorias.</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -273,8 +215,7 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p>Melquisedec contribuiu para a estilização de diversos projetos web (HTML e CSS), incluindo as
-                                    páginas de “Política de Privacidade”, "Termos de Uso" e "Atendimento ao Cliente".</p>
+                                <p>Contribuiu para o projetos web (HTML e CSS), página de “Política de Privacidade”</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -289,10 +230,8 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p>Murilo foi responsável na criação de diversas páginas web (HTML, CSS, Bootstrap e
-                                    JavaScript), como "Cadastro e Login" e a página "Conta", que armazena os dados do usuário após o
-                                    cadastro. Além disso, desenvolveu um chatbot para auxiliar os usuários e foi encarregado da
-                                    programação do aplicativo utilizando Bootstrap.</p>
+                                <p>Responsável geral pelo desenvolvimento do back-end e
+                                    desenvolveu e auxiliou no sistemas de cadastro de produtos e categorias.</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -307,11 +246,7 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p>Nicolas contribuiu para o desenvolvimento de diversas páginas web (HTML, CSS, Bootstrap e
-                                    JavaScript), como a página “Carrinho”, onde os usuários podem visualizar os produtos antes de
-                                    efetuar o pagamento. Ele também participou da estilização do formulário de “Fale Conosco” e da
-                                    página "Esqueci a Senha". Além disso, foi encarregado da programação do aplicativo utilizando
-                                    Bootstrap.</p>
+                                <p>Nicolas contribuiu para a documentação do projeto.</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -326,10 +261,7 @@
                                 <button class="message-button" onclick="flipCard(this)">Descrição</button>
                             </div>
                             <div class="card-back">
-                                <p>Stanley foi responsável pela criação de diversas páginas web (HTML, CSS, Bootstrap e
-                                    JavaScript), como "Sobre Nós" e "Favoritos". Ele também implementou a validação em JavaScript
-                                    dos formulários de Login e Cadastro (Pessoa Física e Jurídica). Além disso, foi encarregado da
-                                    programação do aplicativo utilizando Bootstrap.</p>
+                                <p>Responsável pela estilização e validação do projeto com JavaScript, e criou a pagina "Sobre Nós".</p>
                                 <button class="back-button" onclick="flipCard(this)">Voltar</button>
                             </div>
                         </div>
@@ -351,14 +283,15 @@
 
     </div>
 
-    <footer class="bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
         <div class="container text-center text-md-left">
 
             <div class="row text-center text-md-left">
 
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <a href="#" class="navbar-brand">
-                        <img class="imgMother mb-4" src="Imagens/image-light.png">
+                    <a class="navbar-brand">
+
+                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
                     </a>
                     <section class="mb-4">
                         <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
@@ -376,35 +309,6 @@
                     </section>
                 </div>
 
-
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Dúvidas:</h6>
-                    <p>
-                        <a href="Politica.html" class="links2"> Reembolso</a>
-
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Prazos e Entregas</a>
-                    </p>
-                    <p>
-
-                        <a href="atendimento.html" class="links2"> Formas de pagamento</a>
-                    </p>
-                </div>
-
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Cliente:</h6>
-                    <p>
-                        <a href="Conta.html" class="links2"> Minha Conta</a>
-                    </p>
-                    <p>
-                        <a href="Conta.html" class="links2"> Meus pedidos</a>
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Atendimento ao Cliente</a>
-                    </p>
-                </div>
-
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
                     <p>
@@ -412,7 +316,7 @@
 
                     </p>
                     <p>
-                        <a href="FaleConosco.html" class=" links2"> Fale Conosco</a>
+                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Cliente</a>
                     </p>
                     <p>
                         <a href="Politica.html" class=" links2"> Política de Privacidade</a>

@@ -2363,4 +2363,95 @@ display: none;
 	color: #9973c8;
 }
 
-/* CSS */
+
+/* Política CSS*/
+.fundoPoli{
+	background-color: #3a4047;
+	border-radius: 20px;
+	width: 70%;
+}
+.justifyText{
+	text-align: justify;
+}
+.icon-large2 {
+	font-size: 4rem; /* Ajuste o valor conforme necessário para aumentar o tamanho */
+	color: white; /* Cor branca para os ícones */
+}
+.mini{
+	transition: 0.6s ease;
+color: white;
+}
+.mini:hover{
+	transform: scale(1.1);
+color: #643c96;
+}
+
+
+@media screen and (max-width: 1190px){
+	.iconsfigures{
+		display: none;
+	}
+}
+
+@media screen and (min-width: 992px) {
+    .mediah1 {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 1190px) {
+    .mediah1 {
+        display: block; 
+    }
+}
+
+.fundoPoli{
+	background-color: #3a4047;
+	border-radius: 20px;
+	width: 70%;
+}
+.justifyText{
+	text-align: justify;
+}
+.icon-large2 {
+	font-size: 4rem; /* Ajuste o valor conforme necessário para aumentar o tamanho */
+	color: white; /* Cor branca para os ícones */
+}
+.mini{
+	transition: 0.6s ease;
+color: white;
+}
+.mini:hover{
+	transform: scale(1.1);
+color: #643c96;
+}
+
+
+@media screen and (max-width: 1190px){
+	.iconsfigures{
+		display: none;
+	}
+}
+
+.tam-log{
+    max-width: 600px;
+    height: 700px;
+}
+.ico-log{
+    max-width: 140px;
+    height: 85px;
+}
+.marg-ico{
+    width: 140px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.input-group-text {
+	cursor: pointer;
+}
+.cargo{
+	color: #a886d1;
+}
+/* politica fim/*

@@ -6,7 +6,7 @@
 	<title>MotherBoard</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<link rel="shortcut icon" href="icones/logorapa.png">
+	<link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -41,8 +41,8 @@
 								<a class="nav-link" th:href="@{/conta}">
 									<p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
 								</a>
-								<a class="nav-link btn text-center" href="#" id="logoutLink"
-									onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
+								<a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+									<i class="bi bi-box-arrow-right"></i></a>
 
 							</ul>
 						</div>
@@ -148,8 +148,7 @@
 			}
 		</script>
 
-		<h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela Inventário Categorias <i
-				class="bi bi-list"></i></h3>
+		<h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela Inventário Categorias <i class="bi bi-grid-3x3-gap-fill"></i></h3>
 		<div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
 			<table class="table table-dark table-striped">
 				<thead>
