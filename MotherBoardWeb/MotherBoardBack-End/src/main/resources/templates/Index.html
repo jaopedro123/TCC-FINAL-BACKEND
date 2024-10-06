@@ -54,20 +54,20 @@
 
     <div class="containerdoADM py-5 mb-5">
 
-        <div class="col-12 d-flex justify-content-center flex-wrap container py-3 mt-5">  
+        <div class="col-12 d-flex justify-content-center flex-wrap container py-3">  
             
-            <div class="row justify-content-center align-items-center mb-5 rounded-5 mt-3 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 700px;">
+            <div class="row justify-content-center align-items-center rounded-5 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 700px;">
                 <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INTRANET <i
                     class="bi bi-globe2"></i></a></b></h3>
 				
-                <a class="nav-link squaredoADM" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
+                <a class="nav-link squaredoADM iconsfigures" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
                     <i class="bi bi-person-badge fs-1"></i>
                     <h5><b>Funcionários</b></h5>
                 </a>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 
-                    <a class="nav-link squaredoADM" th:href="@{/categorias}">
+                    <a class="nav-link iconsfigures squaredoADM" th:href="@{/categorias}">
                         <i class="bi bi-grid-3x3-gap-fill fs-1"></i>
                         <h5><b>Categorias</b></h5>
                     </a>
@@ -81,7 +81,7 @@
                 </th:block>
 
                 <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                    <a class="nav-link squaredoADM" th:href="@{/marcas}">
+                    <a class="nav-link iconsfigures squaredoADM" th:href="@{/marcas}">
                         <i class="bi bi-tag-fill fs-1"></i>
                         <h5><b>Marcas</b></h5>
                     </a>
