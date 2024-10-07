@@ -432,8 +432,7 @@
 
                 // 1 MB = 1048576 bytes
                 if (foto > 1048576) {
-                    this.setCustomValidity("Você só pode escolher imagens abaixo de 1 MB!");
-                    this.reportValidity();
+                    alert("nao pode mais de 1MB!");
                 } else {
                     this.setCustomValidity("");
                     showImageThumbnail(this);
