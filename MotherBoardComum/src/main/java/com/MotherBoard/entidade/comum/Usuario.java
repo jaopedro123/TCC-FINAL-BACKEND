@@ -141,5 +141,9 @@ public class Usuario{
 	    return "/fotos-usuario/" + this.id + "/" + this.fotos;
 	}
 
+	public void setPhotosImagePath(String string) {
+		// NAO MECHE MAN AQUI TA SENDO USADO
+	}
+
 	
 }
