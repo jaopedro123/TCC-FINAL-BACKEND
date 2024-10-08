@@ -135,23 +135,21 @@ $(document).ready(function () {
         this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
     });
 
-    $("#foto").change(function () {
+$("#foto").change(function () {
+    var file = this.files[0].size;
 
-        foto = this.files[0].size;
+    // Limitar o tamanho da imagem a 1 MB
+    if (file > 1048576) {
+        alert("nao pode mais de 1MB!");
+    } else {
+        this.setCustomValidity("");
+        showImageThumbnail(this);
+    }
+});
 
-        // 1 MB = 1048576
-        if (foto > 1048576) {
-            this.setCustomValidity("Você só pode escolher imagens abaixo de 1 MB! ");
-            this.reportvalidity();
-        }
-        else {
-            this.setCustomValidity("");
-            showImageThumbnail(this);
-        }
-    });
 
     document.getElementById('thumbnail').addEventListener('click', function () {
-        document.getElementById('foto').click(); // Simula o clique no input de arquivo
+        document.getElementById('foto').click();
     });
 
 });
@@ -164,6 +162,7 @@ function showImageThumbnail(fileInput) {
     };
     reader.readAsDataURL(file);
 }
+
 
 
 // Mostrar/Ocultar Senha

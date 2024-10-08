@@ -47,17 +47,19 @@ public class ContaController {
 	    if (usuario.getSenha() != null && !usuario.getSenha().isEmpty()) {
 	        senhaAlterada = true;
 	    } 
-
+	    
 	    if (!multipartFile.isEmpty()) {
 	        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-	        
-	        Usuario savedUsuario = service.updateConta(usuario);
-
-	        String uploadDir = "fotos-usuario/" + savedUsuario.getId();
-
+	        usuario.setFotos(fileName);  
+	        usuario.setPhotosImagePath("/fotos-usuario/" + usuario.getId() + "/" + fileName); 
+	        service.updateConta(usuario); 
+	        String uploadDir = "fotos-usuario/" + usuario.getId();
 	        FileUploadUtil.cleanDir(uploadDir);
 	        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-	    } else {
+	    }
+
+
+	    	else {
 	        if (usuario.getFotos().isEmpty()) {
 	            usuario.setFotos(null);
 	        }
