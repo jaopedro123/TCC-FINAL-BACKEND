@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <!-- Link para o Bootstrap 5.3.2 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-
 <body>
     <div class="container">
         <div th:fragment="conteudo" th:remove="tag">
@@ -35,7 +30,7 @@
                 <th:block th:each="produtoImagem, status : ${produto.imagens}">
                     <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${status.index}">
                         <label>Imagem Extra #[[${status.index + 1}]]: [[${produtoImagem.nome}]]</label>
-                        <a name="linkRemoverImagemExtra" class="link-remover" title="Remover essa imagem">Remover</a>
+                        <a name="linkRemoverImagemExtra" class="btn btn-danger link-remover d-flex align-items-center" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></a>
 
                         <div class="file-input-container">
                             <div class="my-1">
@@ -71,8 +66,6 @@
         </div>
     </div>
 
-    <!-- Link para o Bootstrap JS (opcional, se necessário) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

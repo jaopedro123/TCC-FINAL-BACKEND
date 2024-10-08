@@ -112,7 +112,7 @@
                             maxlength="20">
 
                         <input type="password" th:if="${usuario != null and usuario.id != null}" th:field="*{senha}"
-                            class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20" readonly>
+                            class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20" >
 
                         <button type="button" id="togglePassword" class="btn btn-outline-secondary">
                             <i class="bi bi-eye-fill"></i>
@@ -190,15 +190,6 @@
         
         function validatePassword() {
             const password = passwordInput.value;
-    
-            // Ignora a validação se estiver editando e a senha já está salva
-            if (document.getElementById('senha').hasAttribute('readonly')) {
-                passwordError.style.display = "none";
-                passwordInput.classList.remove('is-invalid');
-                passwordInput.classList.add('is-valid');
-                return;
-            }
-    
             const hasUpperCase = /[A-Z]/.test(password);
             const hasLowerCase = /[a-z]/.test(password);
             const hasNumber = /\d/.test(password);
