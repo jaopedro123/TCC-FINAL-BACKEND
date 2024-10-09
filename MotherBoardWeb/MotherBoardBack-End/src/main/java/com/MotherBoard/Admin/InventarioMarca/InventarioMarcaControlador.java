@@ -1,8 +1,10 @@
 package com.MotherBoard.Admin.InventarioMarca;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.MotherBoard.Admin.export.InventarioMarcaExcelExporter;
+import com.MotherBoard.Admin.export.InventarioMarcaPdfExporter;
+import com.MotherBoard.Admin.export.InventarioProdExcelExporter;
+import com.MotherBoard.Admin.export.InventarioProdPdfExporter;
 import com.MotherBoard.entidade.comum.InventarioMarca;
+import com.MotherBoard.entidade.comum.InventarioProduto;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class InventarioMarcaControlador {
@@ -90,4 +99,31 @@ public class InventarioMarcaControlador {
 
         return "inventarioMarcas";
     }
+    
+	@GetMapping("/inventarioMarcas/export/excel")
+	public void exportToExcel(HttpServletResponse response) throws IOException {
+	    List<InventarioMarca> listInventarioMarca = inventarioMarcaService.listAll();
+	    
+	    if (listInventarioMarca == null) {
+	    	listInventarioMarca = new ArrayList<>();
+	     
+	    }
+
+	    InventarioMarcaExcelExporter exporter = new InventarioMarcaExcelExporter();
+	    exporter.export(listInventarioMarca, response);
+	}
+	
+	@GetMapping("/inventarioMarcas/export/pdf")
+	public void exportToPdf(HttpServletResponse response) throws IOException {
+	    List<InventarioMarca> listInventarioMarca = inventarioMarcaService.listAll();
+	    
+	    if (listInventarioMarca == null) {
+	    	listInventarioMarca = new ArrayList<>();
+	     
+	    }
+
+	    InventarioMarcaPdfExporter exporter = new InventarioMarcaPdfExporter();
+	    exporter.export(listInventarioMarca, response);
+	}
+    
 }

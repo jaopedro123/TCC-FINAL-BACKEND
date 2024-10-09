@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.InventarioCategoria;
+import com.MotherBoard.entidade.comum.InventarioProduto;
 
 @Service
 public class InventarioCategoriaService {
@@ -68,5 +69,11 @@ public class InventarioCategoriaService {
 
         return repository.findAll(pageable);
     }
+
+	
+    public List<InventarioCategoria> listAll() {
+        return (List<InventarioCategoria>) repository.findAll();
+    }
+    
 }
     

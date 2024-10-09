@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.InventarioMarca;
+import com.MotherBoard.entidade.comum.InventarioProduto;
 
 @Service
 public class InventarioMarcaService {
@@ -69,6 +70,10 @@ public class InventarioMarcaService {
         return repository.findAll(pageable);
     }
 
+    
+    public List<InventarioMarca> listAll() {
+        return (List<InventarioMarca>) repository.findAll();
+    }
 
 }
     

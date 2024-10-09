@@ -1,9 +1,11 @@
 package com.MotherBoard.Admin.InventarioProduto;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.MotherBoard.Admin.export.InventarioProdExcelExporter;
+import com.MotherBoard.Admin.export.InventarioProdPdfExporter;
+import com.MotherBoard.Admin.export.UserExcelExporter;
+import com.MotherBoard.Admin.export.UserPdfExporter;
 import com.MotherBoard.entidade.comum.InventarioProduto;
+import com.MotherBoard.entidade.comum.Usuario;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class InventarioProdutoControlador {
@@ -107,6 +116,33 @@ public class InventarioProdutoControlador {
         System.out.println("listaProdutos " + listaProdutos);
         return "inventarioProdutos";
     }
+    
+    
+	@GetMapping("/inventarioProdutos/export/excel")
+	public void exportToExcel(HttpServletResponse response) throws IOException {
+	    List<InventarioProduto> listInventarioProduto = inventarioProdutoService.listAll();
+	    
+	    if (listInventarioProduto == null) {
+	    	listInventarioProduto = new ArrayList<>();
+	     
+	    }
+
+	    InventarioProdExcelExporter exporter = new InventarioProdExcelExporter();
+	    exporter.export(listInventarioProduto, response);
+	}
+	
+	@GetMapping("/inventarioProdutos/export/pdf")
+	public void exportToPdf(HttpServletResponse response) throws IOException {
+	    List<InventarioProduto> listInventarioProduto = inventarioProdutoService.listAll();
+	    
+	    if (listInventarioProduto == null) {
+	    	listInventarioProduto = new ArrayList<>();
+	     
+	    }
+
+	    InventarioProdPdfExporter exporter = new InventarioProdPdfExporter();
+	    exporter.export(listInventarioProduto, response);
+	}
 
 
 }

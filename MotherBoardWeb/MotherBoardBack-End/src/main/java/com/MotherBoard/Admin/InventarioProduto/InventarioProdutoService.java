@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.InventarioProduto;
+import com.MotherBoard.entidade.comum.Usuario;
 
 import jakarta.transaction.Transactional;
 
@@ -70,6 +71,10 @@ public class InventarioProdutoService {
         }
 
         return repository.findAll(pageable);
+    }
+
+    public List<InventarioProduto> listAll() {
+        return (List<InventarioProduto>) repository.findAll();
     }
 
 

@@ -185,10 +185,19 @@
                 </tbody>
             </table>
         </div>
+        
+         <a th:href="@{/inventarioProdutos/export/excel}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
+                o EXCEL <i class="bi bi-file-earmark-spreadsheet-fill"></i></a>
+
+        <a th:href="@{/inventarioProdutos/export/pdf}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
+                PDF <i class="bi bi-file-earmark-pdf-fill"></i></a>
+
 
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
             <p>Inventário não encontrado</p>
             <a th:href="@{/inventarioProdutos}" class="btn btnCadFunc ms-2">Voltar para o Inventário Produto</a>
+            
+                       
         </div>
 
 
