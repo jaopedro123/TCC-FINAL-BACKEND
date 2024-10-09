@@ -21,39 +21,39 @@
         <input type="submit" />
     </form>
 
-    <header class="mb-3">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-            <div class="container-fluid">
+	<header class="mb-3">
+	    <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
+	        <div class="container-fluid">
 
 
-                <a th:href="@{/}" class="navbar-brand">
-                    <img class="imgMother" th:src="@{/imagens/image-light.png}">
-                </a>
+	            <a th:href="@{/}" class="navbar-brand">
+	                <img class="imgMother" th:src="@{/imagens/image-light.png}">
+	            </a>
 
 
-                <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <div class="btn-group dropstart">
-                            <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="bi bi-person-circle iconeheader"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <a class="nav-link" th:href="@{/conta}">
-                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-                                </a>
-                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
-                                    <i class="bi bi-box-arrow-right"></i></a>
+	                   
+	                        <div class="btn-group dropstart">
+	                            <button type="button" class="btn btn-conta-form-back-end nav-link"
+	                                data-bs-toggle="dropdown" aria-expanded="false">
+	                                <i class="bi bi-person-circle fs-1"></i>
+	                            </button>
+	                            <ul class="dropdown-menu">
+	                                <a class="nav-link" th:href="@{/conta}">
+	                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+	                                </a>
+	                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+	                                    <i class="bi bi-box-arrow-right"></i></a>
 
-                            </ul>
-                        </div>
+	                            </ul>
+	                        </div>
+	                   
 
+	                </ul>
+	            </div>
+	        
+	    </nav>
+	</header>
 
-                </ul>
-            </div>
-
-        </nav>
-    </header>
 
     <main class="container rounded-4 py-4 px-5 mt-5" style="background-color: #2c3036;">
 
@@ -259,63 +259,92 @@
         </div>
 
     </main>
+	<br/><br/><br/><br/><br/>
+	<footer class="bg-body-tertiary fixarRodape">
+		      <br />
+		      <div class="container-fluid">
+		          <div class="row">
+		              <div class="col">
+		                  <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
+		                      
+							  <a  th:href="@{/}">
+							  						  			       <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
+																	 
+							  						  			    </a>
+		                  </div>
+		              </div>
+		              <div class="col">
+		                  <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
+		                      
+							  <a  th:href="@{/conta}">
+							  			        <i class="bi bi-person-square"  style="font-size: 2rem; color: white;"></i>
 
-    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
-        <div class="container text-center text-md-left">
+							  			    </a>
+		                  </div>
+		              </div>
+		              <div class="col">
+		                  <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
+		                     
+							  <a  th:href="@{/SobreNos}">
+								<i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
 
-            <div class="row text-center text-md-left">
+							  						  			    </a>
+		                  </div>
+		              </div>
+		          </div>
+		      </div>
+		  </footer>
 
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+		    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+		        <div class="container text-center text-md-left">
 
-                    <a th:href="@{/}" class="navbar-brand">
-                        <img class="imgMother" th:src="@{/imagens/image-light.png}">
-                    </a>
-                    <br /><br /><br />
+		            <div class="row text-center text-md-left">
 
-                    <section class="mb-4">
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-                                class="bi bi-facebook"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-                                class="bi bi-instagram"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-                                class="bi bi-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-                    </section>
-                </div>
+		                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+		                    <a class="navbar-brand">
 
+		                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+		                    </a>
+		                    <section class="mb-4">
+		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+		                                class="bi bi-facebook"></i></a>
+		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+		                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+		                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+		                                class="bi bi-instagram"></i></a>
+		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+		                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+		                                class="bi bi-youtube"></i></a>
+		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+		                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+		                    </section>
+		                </div>
 
-                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-                    <p>
-                        <a href="SobreNos.html" class=" links2"> Sobre nós</a>
+		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+		                    <p>
+		                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
 
-                    </p>
-                    <p>
-                        <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
-                    </p>
-                    <p>
-                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+		                    </p>
+		                    <p>
+		                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
+		                    </p>
+		                    <p>
+		                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
 
-                    </p>
-                </div>
+		                    </p>
+		                </div>
 
-                <hr class="mb-4">
-                <div>
-                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-                </div>
+		                <hr class="mb-4">
+		                <div>
+		                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+		                </div>
 
-            </div>
+		            </div>
 
-        </div>
-
-
-    </footer>
-
+		        </div>
+		    </footer>
     <script>
         function limparFiltro() {
             document.querySelector('input[name="keyword"]').value = '';

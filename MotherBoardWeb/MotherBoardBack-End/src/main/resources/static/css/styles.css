@@ -51,7 +51,13 @@
 	background-color: #643c96;
 	
 }
-footer {
+
+
+
+
+
+
+.footerdoweb {
 	padding: 86px;
 	position: absolute bottom;
 	bottom: 0;
@@ -60,6 +66,47 @@ footer {
 	padding: 10px;
 	text-align: center;
 }
+@media (max-width: 767px) {
+	
+		.footerdoweb{
+			display: none;
+		}	}
+		@media (min-width: 767px) {
+			
+				.fixarRodape{
+					display: none;
+				}	}
+				.fixarRodape {
+				    bottom: -1px; /* Ajusta a posição para remover a brecha */
+				    position: fixed;
+				    width: 100%;
+				    z-index: 9; /* Faz com que o footer se sobressaia */
+				    text-align: center;
+				}
+				.quadradodofooter {
+				    transition: 500ms linear;
+				}
+
+				.quadradodofooter:hover {
+				    background-color: #333; /* Muda o fundo */
+				    transform: scale(1.2); /* Aumenta o tamanho do ícone */
+				    transition: transform 0s; /* Aplicação instantânea do scale */
+				}
+
+				.quadradodofooter:hover i {
+				    color: #fff; /* Muda a cor do ícone para branco */
+				}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 .single-content {
 	text-align: center;
 	padding: 115px 0;
@@ -145,7 +192,7 @@ footer {
 }
 .imgMother {
     height: 40px;
-    width:  185px;
+    width:  220px;
 }
 .imgMotherkk {
     height: 50px;
