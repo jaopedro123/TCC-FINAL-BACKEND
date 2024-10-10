@@ -150,41 +150,59 @@
         </script>
 
 
-
-        <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela Inventário Produtos <i
-                class="bi bi-box-seam-fill"></i></h3>
-        <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
-            <table class="table table-dark table-striped">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Funcionário</th>
-                        <th>ID do Funcionário</th>
-                        <th>Função</th>
-                        <th>Produto</th>
-                        <th>ID do Produto</th>
-                        <th>Quantidade no Estoque</th>
-                        <th>Quantidade Anterior</th>
-                        <th>Ação</th>
-                        <th>Data de Modificação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="produto : ${listaProdutos}">
-                        <td th:text="${produto.id}"></td>
-                        <td th:text="${produto.usuarioId.nomeCompleto}"></td>
-                        <td th:text="${produto.usuarioId.id}"></td>
-                        <td th:text="${produto.roleUsuario}"></td>
-                        <td th:text="${produto.Produto.nome}"></td>
-                        <td th:text="${produto.Produto.id}"></td>
-                        <td th:text="${produto.estoque}"></td>
-                        <td th:text="${produto.quantidadeEstoqueAnterior}"></td>
-                        <td th:text="${produto.acao}"></td>
-                        <td th:text="${produto.dataModificacao}"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="d-none d-md-block">
+            <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela Inventário Produtos <i
+                    class="bi bi-box-seam-fill"></i></h3>
+            <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+                <table class="table table-dark table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Funcionário</th>
+                            <th>ID do Funcionário</th>
+                            <th>Função</th>
+                            <th>Produto</th>
+                            <th>ID do Produto</th>
+                            <th>Quantidade no Estoque</th>
+                            <th>Quantidade Anterior</th>
+                            <th>Ação</th>
+                            <th>Data de Modificação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="produto : ${listaProdutos}">
+                            <td th:text="${produto.id}"></td>
+                            <td th:text="${produto.usuarioId.nomeCompleto}"></td>
+                            <td th:text="${produto.usuarioId.id}"></td>
+                            <td th:text="${produto.roleUsuario}"></td>
+                            <td th:text="${produto.Produto.nome}"></td>
+                            <td th:text="${produto.Produto.id}"></td>
+                            <td th:text="${produto.estoque}"></td>
+                            <td th:text="${produto.quantidadeEstoqueAnterior}"></td>
+                            <td th:text="${produto.acao}"></td>
+                            <td th:text="${produto.dataModificacao}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div class="d-block d-sm-none">
+            <h3 class="text-center p-2 rounded-2 mb-3 mt-5" style="background: #694a8f;">Inventário Produtos <i class="bi bi-bag-fill"></i></h3>
+
+            <div th:each="produto : ${listaProdutos}" class="card mb-3" style="width: 18rem;">
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">[[${produto.usuarioId.id}]] - [[${produto.usuarioId.nomeCompleto}]] - [[${produto.roleUsuario}]]</li>
+                    <li class="list-group-item">[[${produto.Produto.id}]] - [[${produto.Produto.nomeCurto}]]</li>
+                    <li class="list-group-item">[[${produto.acao}]]</li>
+                    <li class="list-group-item">Estoque atual: [[${produto.estoque}]]</li>
+                    <li class="list-group-item">Quantidade anterior: [[${produto.quantidadeEstoqueAnterior}]]</li>
+                    <li class="list-group-item"><small th:text="${produto.dataModificacao}" class="text-muted"></small></li>
+                </ul>
+            </div>
+        </div>
+
         
          <a th:href="@{/inventarioProdutos/export/excel}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
                 o EXCEL <i class="bi bi-file-earmark-spreadsheet-fill"></i></a>
@@ -259,6 +277,7 @@
         </div>
 
     </main>
+
 	<br/><br/><br/><br/><br/>
 	<footer class="bg-body-tertiary fixarRodape">
 		      <br />

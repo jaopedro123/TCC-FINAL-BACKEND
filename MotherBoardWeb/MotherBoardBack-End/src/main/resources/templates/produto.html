@@ -20,245 +20,277 @@
         <input type="submit" />
     </form>
 
-	<header class="mb-3">
-	    <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
-	        <div class="container-fluid">
+    <header class="mb-3">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
+            <div class="container-fluid">
 
 
-	            <a th:href="@{/}" class="navbar-brand">
-	                <img class="imgMother" th:src="@{/imagens/image-light.png}">
-	            </a>
+                <a th:href="@{/}" class="navbar-brand">
+                    <img class="imgMother" th:src="@{/imagens/image-light.png}">
+                </a>
 
 
-	                   
-	                        <div class="btn-group dropstart">
-	                            <button type="button" class="btn btn-conta-form-back-end nav-link"
-	                                data-bs-toggle="dropdown" aria-expanded="false">
-	                                <i class="bi bi-person-circle fs-1"></i>
-	                            </button>
-	                            <ul class="dropdown-menu">
-	                                <a class="nav-link" th:href="@{/conta}">
-	                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-	                                </a>
-	                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
-	                                    <i class="bi bi-box-arrow-right"></i></a>
 
-	                            </ul>
-	                        </div>
-	                   
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person-circle fs-1"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <a class="nav-link" th:href="@{/conta}">
+                            <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                        </a>
+                        <a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
+                            onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                            <i class="bi bi-box-arrow-right"></i></a>
 
-	                </ul>
-	            </div>
-	        
-	    </nav>
-	</header>
+                    </ul>
+                </div>
+
+
+                </ul>
+            </div>
+
+        </nav>
+    </header>
 
 
     <main class="container rounded-4 py-4 px-5 mt-5" style="background-color: #2c3036;">
         <div th:if="${mensagem != null}" class="alert alert-success alert-dismissible fade show text-center mt-5"
-            role="alert">
-            <i class="bi bi-check-circle-fill"></i>
-            [[${mensagem}]]
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        <form th:action="@{/produtos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-            style="background-color: #40454e" id="filtrarForm">
-
-            <div class="container">
-                <input type="hidden" name="sortField" th:value="${sortField}" />
-                <input type="hidden" name="sortDir" th:value="${sortDir}" />
-
-                <div class="mb-2">
-                    <label for="dropdownCategorias" class="form-label">Categoria</label>
-                    <div class="col-12 col-sm-6 col-md-2">
-                        <select class="form-select" name="categoriaId" id="dropdownCategorias">
-                            <option value="0">Todas as Categorias</option>
-                            <th:block th:each="cat : ${listCategorias}">
-                                <option th:value="${cat.id}" th:selected="(${categoriaId} == ${cat.id})">[[${cat.nome}]]
-                                </option>
-                            </th:block>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col">
-                    <label class="mr-2">Filtrar: </label>
-                    <div class="input-group mb-3">
-                        <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
-                            class="form-control rounded-3" required>
-                        &nbsp;
-                        <button type="submit" class="btn btnCadFunc me-2 rounded-3"><i
-                                class="bi bi-search"></i></button>
-                        <button type="button" class="btn btnCadFunc rounded-3" onclick="limparFiltro()"><i
-                                class="bi bi-arrow-counterclockwise"></i></button>
-                    </div>
+    role="alert">
+    <i class="bi bi-check-circle-fill"></i>
+    [[${mensagem}]]
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+    <form th:action="@{/produtos/page/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
+        style="background-color: #40454e" id="filtrarForm">
+    
+        <div class="container">
+            <input type="hidden" name="sortField" th:value="${sortField}" />
+            <input type="hidden" name="sortDir" th:value="${sortDir}" />
+    
+            <div class="mb-2">
+                <label for="dropdownCategorias" class="form-label">Categoria</label>
+                <div class="col-12 col-sm-6 col-md-2">
+                    <select class="form-select" name="categoriaId" id="dropdownCategorias">
+                        <option value="0">Todas as Categorias</option>
+                        <th:block th:each="cat : ${listCategorias}">
+                            <option th:value="${cat.id}" th:selected="(${categoriaId} == ${cat.id})">[[${cat.nome}]]
+                            </option>
+                        </th:block>
+                    </select>
                 </div>
             </div>
-        </form>
-        <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela de Produto <i
-            class="bi bi-bag-fill"></i></h3>
-        <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
-            <table class="table table-dark table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Imagem do Produto</th>
-                        <th scope="col">
-                            <a class="text-white"
-                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=nome&sortDir='+ ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">Nome do Produto -</a>
-                        </th>
-                        <th scope="col">
-                            <a class="text-white"
-                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=marca&sortDir='+ ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">Marca -</a>
-                        </th>
-                        <th scope="col">
-                            <a class="text-white"
-                                th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=categoria&sortDir='+ ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">Categoria -</a>
-                        </th>
-                        <th scope="col">Detalhes</th>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                            <th scope="col">Ativo</th>
-                        </th:block>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                            <th scope="col">Editar</th>
-                        </th:block>
-                      <!--  <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-                            <th scope="col">Excluir</th>
-                        </th:block> -->
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="produto : ${listProdutos}">
-                        <td>[[${[produto].id}]]</td>
+    
+            <div class="col">
+                <label class="mr-2">Filtrar: </label>
+                <div class="input-group mb-3">
+                    <input type="search" name="keyword" placeholder="Procurar..." th:value="${keyword}"
+                        class="form-control rounded-3" required>
+                    &nbsp;
+                    <button type="submit" class="btn btnCadFunc me-2 rounded-3"><i
+                            class="bi bi-search"></i></button>
+                    <button type="button" class="btn btnCadFunc rounded-3" onclick="limparFiltro()"><i
+                            class="bi bi-arrow-counterclockwise"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+    
+    
+    
+<div class="d-none d-md-block">
+    
+    <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela de Produto <i
+        class="bi bi-bag-fill"></i></h3>
+    <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Imagem do Produto</th>
+                    <th scope="col">
+                        <a class="text-white"
+                            th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=nome&sortDir='+ ${reverseSortDir}}"
+                            style="text-decoration: none; color: rgb(128, 128, 128);">Nome do Produto -</a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white"
+                            th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=marca&sortDir='+ ${reverseSortDir}}"
+                            style="text-decoration: none; color: rgb(128, 128, 128);">Marca -</a>
+                    </th>
+                    <th scope="col">
+                        <a class="text-white"
+                            th:href="@{'/produtos/page/' + ${currentPage} + '?sortField=categoria&sortDir='+ ${reverseSortDir}}"
+                            style="text-decoration: none; color: rgb(128, 128, 128);">Categoria -</a>
+                    </th>
+                    <th scope="col">Detalhes</th>
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+                        <th scope="col">Ativo</th>
+                    </th:block>
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+                        <th scope="col">Editar</th>
+                    </th:block>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="produto : ${listProdutos}">
+                    <td>[[${[produto].id}]]</td>
+                    <td>
+                        <img th:if="${produto.imagem_principal == null}" th:src="@{/imagens/image-thumbnail.png}"
+                            style="width: 150px; height: 150px;border-radius: 10px;" />
+                        <img th:if="${produto.imagem_principal != null}" th:src="@{${produto.imagemPrincipalPath}}"
+                            alt="Imagem de um produto" id="thumbnail" style="width: 150px; height: 150px;border-radius: 10px;" />
+                    </td>
+                    <td>
+                        [[${produto.nomeCurto}]]
+                    </td>
+                    <td>[[${produto.marca.nome}]]</td>
+                    <td>[[${produto.categoria.nome}]]</td>
+                    <td>
+                        <a class="detalhes-link" th:href="@{'/produtos/detalhes/' + ${produto.id}}">
+                            <i class="bi bi-clipboard-fill link-light fs-4 m-4"></i></a>
+                    </td>
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                         <td>
-                            <img th:if="${produto.imagem_principal == null}" th:src="@{/imagens/image-thumbnail.png}"
-                                style="width: 150px; height: 150px;border-radius: 10px;" />
-                            <img th:if="${produto.imagem_principal != null}" th:src="@{${produto.imagemPrincipalPath}}"
-                                alt="Imagem de um produto" id="thumbnail" style="width: 150px; height: 150px;border-radius: 10px;" />
+                            <a th:if="${produto.habilitado == true}"
+                                th:href="@{'/produtos/' + ${produto.id} + '/habilitado/false'}">
+                                <i class="bi bi-power link-success fs-3 m-1" title="Desabilitar Produto"></i>
+                            </a>
+    
+                            <a th:if="${produto.habilitado == false}"
+                                th:href="@{'/produtos/' + ${produto.id} + '/habilitado/true'}">
+                                <i class="bi bi-power link-danger fs-3 m-1" title="Habilitar Produto"></i>
+                            </a>
                         </td>
+                    </th:block>
+    
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
                         <td>
-                            [[${produto.nomeCurto}]]
+                            <a th:href="@{'/produtos/editar/' + ${produto.id}}">
+                                <i class="bi bi-pen-fill link-light fs-4 m-2" title="Editar esse produto"></i>
+                            </a>
                         </td>
-                        <td>[[${produto.marca.nome}]]</td>
-                        <td>[[${produto.categoria.nome}]]</td>
-                        <td>
-                            <a class="detalhes-link" th:href="@{'/produtos/detalhes/' + ${produto.id}}">
-                                <i class="bi bi-clipboard-fill link-light fs-4 m-4"></i></a>
-                        </td>
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                            <td>
-                                <a th:if="${produto.habilitado == true}"
-                                    th:href="@{'/produtos/' + ${produto.id} + '/habilitado/false'}">
-                                    <i class="bi bi-power link-success fs-3 m-1" title="Desabilitar Produto"></i>
-                                </a>
+                    </th:block>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                                <a th:if="${produto.habilitado == false}"
-                                    th:href="@{'/produtos/' + ${produto.id} + '/habilitado/true'}">
-                                    <i class="bi bi-power link-danger fs-3 m-1" title="Habilitar Produto"></i>
-                                </a>
-                            </td>
-                        </th:block>
+    <div class="d-block d-sm-none">
+    <h3 class="text-center p-2 rounded-2 mb-3 mt-5" style="background: #694a8f;">Produtos <i class="bi bi-bag-fill"></i></h3>
 
-                        
-                        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                            <td>
-                                <a th:href="@{'/produtos/editar/' + ${produto.id}}">
-                                    <i class="bi bi-pen-fill link-light fs-4 m-2" title="Editar esse produto"></i>
-                                </a>
-                            </td>
-                        </th:block>
-                        
-                     <!--   <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-                            <td>
-                                <a class="delete-link" th:href="@{'/produtos/deletar/' + ${produto.id}}"
-                                    th:produtoId="${produto.id}">
-                                    <i class="bi bi-trash" title="Deletar esse produto"
-                                        style="color: rgb(255, 128, 128); font-size: 24px;"></i>
-                                </a>
-                            </td>
-                        </th:block> -->
-                    </tr>
-                </tbody>
-            </table>
+    <div th:each="produto : ${listProdutos}" class="d-flex mb-2">
+        
+        <div class="card" style="max-width: 260px;">
+            <div class="mx-auto">
+                <img th:if="${produto.imagem_principal == null}" th:src="@{/imagens/image-thumbnail.png}"
+                            alt="Imagem de um produto" class="card-img-top" style="max-width: 250px;" />
+                <img th:if="${produto.imagem_principal != null}" th:src="@{${produto.imagemPrincipalPath}}"
+                    alt="Imagem de um produto" id="thumbnail" class="card-img-top" style="max-width: 250px;" />
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title">[[${produto.nomeCurto}]]</h5>
+                <p class="card-text">Detalhes do produto que sumiria com.........</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Produto com id: [[${produto.id}]]</li>
+                <li class="list-group-item">Marca: [[${produto.marca.nome}]]</li>
+                <li class="list-group-item">Categoria: [[${produto.categoria.nome}]]</li>
+            </ul>
         </div>
 
-        <div class="text-center	mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
-            <P> Produtos não encontrados</P>
+
+        <div class="card ms-1" style="width: 75px;">
+            <div class="border d-flex mx-auto mt-3" style="border-radius: 10%; width: 55px; height: 150px;">
+                <a class="bi bi-clipboard-fill my-auto mx-auto detalhes-link" th:href="@{'/produtos/detalhes/' + ${produto.id}}"></a>
+            </div>
+            <div class="border d-flex mx-auto my-auto" style="border-radius: 10%; width: 55px; height: 150px;">
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+                    <a th:if="${produto.habilitado == true}"
+                        class="bi bi-power link-success my-auto mx-auto fs-4" th:href="@{'/produtos/' + ${produto.id} + '/habilitado/false'}">
+                    </a>
+                    <a th:if="${produto.habilitado == false}"
+                        th:href="@{'/produtos/' + ${produto.id} + '/habilitado/true'}">
+                        <i class="bi bi-power link-danger my-auto mx-auto fs-4" title="Habilitar Produto"></i>
+                    </a>
+                </th:block>
+            </div>
+            <div class="border d-flex mx-auto mb-3" style="border-radius: 10%; width: 55px; height: 150px;">
+                <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+                    <a class="bi bi-pen-fill my-auto mx-auto" th:href="@{'/produtos/editar/' + ${produto.id}}"></a>
+                </th:block>
+            </div>
         </div>
+    </div>
 
-        <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
-            <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                <a th:href="@{/produtos/new}" class="btn btnCadFunc">Cadastrar Produto <i
-                        class="bi bi-bag-fill"></i></a>
-            </th:block>
-            &nbsp;
-            <a th:href="@{/}" class="btn btnCadFunc">Voltar para Intranet <i class="bi bi-globe2"></i></a>
-        </div>
+        
+    </div>
 
-        <div class="text-center m-1" th:if="${totalPages > 0}">
-            <p>Mostrando produtos [[${startCount}]] a [[${endCount}]] de [[${totalItems}]]</p>
-        </div>
+    <div class="text-center	mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
+        <P> Produtos não encontrados</P>
+    </div>
 
-        <div th:if="${totalPages > 0}">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
+    <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
+        <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+            <a th:href="@{/produtos/new}" class="btn btnCadFunc">Cadastrar Produto <i
+                    class="bi bi-bag-fill"></i></a>
+        </th:block>
+        &nbsp;
+        <a th:href="@{/}" class="btn btnCadFunc">Voltar para Intranet <i class="bi bi-globe2"></i></a>
+    </div>
 
-                    <!-- Primeira Página -->
-                    <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''} + ${categoriaId != null ? '&categoriaId=' + categoriaId : ''}|}">
-                            <!-- Ícone para telas pequenas -->
-                            <span class="d-lg-none">&laquo;</span>
-                            <!-- Texto para telas grandes -->
-                            <span class="d-none d-lg-inline">Primeira Página</span>
-                        </a>
-                    </li>
+    <div class="text-center m-1" th:if="${totalPages > 0}">
+        <p>Mostrando produtos [[${startCount}]] a [[${endCount}]] de [[${totalItems}]]</p>
+    </div>
 
-                    <!-- Anterior -->
-                    <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            <span class="d-lg-none">&lsaquo;</span>
-                            <span class="d-none d-lg-inline">Anterior</span>
-                        </a>
-                    </li>
+    <div th:if="${totalPages > 0}">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
 
-                    <!-- Números de página -->
-                    <li th:each="i : ${#numbers.sequence(1, totalPages)}"
-                        th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
-                        <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            [[${i}]]
-                        </a>
-                    </li>
+                <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link colorPagelink"
+                        th:href="@{|/produtos/page/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''} + ${categoriaId != null ? '&categoriaId=' + categoriaId : ''}|}">
+                        <span class="d-lg-none">&laquo;</span>
+                        <span class="d-none d-lg-inline">Primeira Página</span>
+                    </a>
+                </li>
+                <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link colorPagelink"
+                        th:href="@{|/produtos/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                        <span class="d-lg-none">&lsaquo;</span>
+                        <span class="d-none d-lg-inline">Anterior</span>
+                    </a>
+                </li>
+                <li th:each="i : ${#numbers.sequence(1, totalPages)}"
+                    th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
+                    <a class="page-link colorPagelink"
+                        th:href="@{|/produtos/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                        [[${i}]]
+                    </a>
+                </li>
+                <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link colorPagelink"
+                        th:href="@{|/produtos/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                        <span class="d-lg-none">&rsaquo;</span>
+                        <span class="d-none d-lg-inline">Próximo</span>
+                    </a>
+                </li>
+                <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
+                    <a class="page-link colorPagelink"
+                        th:href="@{|/produtos/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                        <span class="d-lg-none">&raquo;</span>
+                        <span class="d-none d-lg-inline">Última Página</span>
+                    </a>
+                </li>
 
-                    <!-- Próximo -->
-                    <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            <span class="d-lg-none">&rsaquo;</span>
-                            <span class="d-none d-lg-inline">Próximo</span>
-                        </a>
-                    </li>
-
-                    <!-- Última Página -->
-                    <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
-                            <span class="d-lg-none">&raquo;</span>
-                            <span class="d-none d-lg-inline">Última Página</span>
-                        </a>
-                    </li>
-
-                </ul>
-            </nav>
-        </div>
-
-    </main>
+            </ul>
+        </nav>
+    </div>
+</main>
 
     <div class="modal fade text-center" id="confirmModal">
         <div class="modal-dialog">
@@ -308,7 +340,7 @@
                 $("#detalhesModal").modal('show').find(".modal-content").load(detalhesURL);
             })
 
-            $("#dropdownCategorias").on("change", function() {
+            $("#dropdownCategorias").on("change", function () {
                 $("#filtrarForm").submit();
             })
 
@@ -318,92 +350,92 @@
             window.location = "[[@{/produtos}]]";
         }
     </script>
-	<br/><br/><br/><br/><br/>
-	<footer class="bg-body-tertiary fixarRodape">
-		      <br />
-		      <div class="container-fluid">
-		          <div class="row">
-		              <div class="col">
-		                  <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
-		                      
-							  <a  th:href="@{/}">
-							  						  			       <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
-																	 
-							  						  			    </a>
-		                  </div>
-		              </div>
-		              <div class="col">
-		                  <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
-		                      
-							  <a  th:href="@{/conta}">
-							  			        <i class="bi bi-person-square"  style="font-size: 2rem; color: white;"></i>
+    <br /><br /><br /><br /><br />
+    <footer class="bg-body-tertiary fixarRodape">
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
 
-							  			    </a>
-		                  </div>
-		              </div>
-		              <div class="col">
-		                  <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
-		                     
-							  <a  th:href="@{/SobreNos}">
-								<i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
+                        <a th:href="@{/}">
+                            <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
 
-							  						  			    </a>
-		                  </div>
-		              </div>
-		          </div>
-		      </div>
-		  </footer>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
 
-		    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
-		        <div class="container text-center text-md-left">
+                        <a th:href="@{/conta}">
+                            <i class="bi bi-person-square" style="font-size: 2rem; color: white;"></i>
 
-		            <div class="row text-center text-md-left">
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
 
-		                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-		                    <a class="navbar-brand">
+                        <a th:href="@{/SobreNos}">
+                            <i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
 
-		                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
-		                    </a>
-		                    <section class="mb-4">
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-		                                class="bi bi-facebook"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-		                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-		                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-		                                class="bi bi-instagram"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-		                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-		                                class="bi bi-youtube"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-		                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-		                    </section>
-		                </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-		                    <p>
-		                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+        <div class="container text-center text-md-left">
 
-		                    </p>
-		                    <p>
-		                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
-		                    </p>
-		                    <p>
-		                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+            <div class="row text-center text-md-left">
 
-		                    </p>
-		                </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <a class="navbar-brand">
 
-		                <hr class="mb-4">
-		                <div>
-		                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-		                </div>
+                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+                    </a>
+                    <section class="mb-4">
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
+                </div>
 
-		            </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+                    <p>
+                        <a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
 
-		        </div>
-		    </footer>
+                    </p>
+                    <p>
+                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
+                    </p>
+                    <p>
+                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+                <div>
+                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
