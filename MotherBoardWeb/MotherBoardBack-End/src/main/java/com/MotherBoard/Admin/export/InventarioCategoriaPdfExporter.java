@@ -7,8 +7,6 @@ import java.util.List;
 import com.MotherBoard.Admin.usuario.AbstractExporter;
 import com.MotherBoard.entidade.comum.Categoria;
 import com.MotherBoard.entidade.comum.InventarioCategoria;
-import com.MotherBoard.entidade.comum.InventarioProduto;
-import com.MotherBoard.entidade.comum.Produto;
 import com.MotherBoard.entidade.comum.Usuario;
 import com.lowagie.text.Document;
 import com.lowagie.text.Font;

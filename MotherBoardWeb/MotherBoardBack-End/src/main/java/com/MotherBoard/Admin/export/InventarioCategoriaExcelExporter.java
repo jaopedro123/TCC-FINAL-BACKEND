@@ -17,10 +17,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.MotherBoard.Admin.usuario.AbstractExporter;
 import com.MotherBoard.entidade.comum.Categoria;
 import com.MotherBoard.entidade.comum.InventarioCategoria;
-import com.MotherBoard.entidade.comum.InventarioMarca;
-import com.MotherBoard.entidade.comum.InventarioProduto;
-import com.MotherBoard.entidade.comum.Marca;
-import com.MotherBoard.entidade.comum.Produto;
 import com.MotherBoard.entidade.comum.Usuario;
 
 import jakarta.servlet.ServletOutputStream;

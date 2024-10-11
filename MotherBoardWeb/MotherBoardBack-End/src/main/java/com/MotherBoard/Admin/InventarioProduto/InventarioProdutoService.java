@@ -1,7 +1,6 @@
 package com.MotherBoard.Admin.InventarioProduto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.InventarioProduto;
-import com.MotherBoard.entidade.comum.Usuario;
 
 import jakarta.transaction.Transactional;
 

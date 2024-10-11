@@ -1,10 +1,8 @@
 package com.MotherBoard.entidade.comum;
 
 import java.beans.Transient;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
 
@@ -239,7 +237,7 @@ public class Produto {
 	@Transient
 	public String getNomeCurto() {
 		if (nome.length() > 50) {
-			return nome.substring(0, 50).concat("..");
+			return nome.substring(0, 50).concat("...");
 		}
 		return nome;
 	}

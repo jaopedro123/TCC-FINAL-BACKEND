@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.MotherBoard.entidade.comum.InventarioMarca;
-import com.MotherBoard.entidade.comum.InventarioProduto;
 
 @Service
 public class InventarioMarcaService {

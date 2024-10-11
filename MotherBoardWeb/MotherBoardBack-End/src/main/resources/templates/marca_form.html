@@ -24,39 +24,25 @@
 	<header class="mb-3">
 	    <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
 	        <div class="container-fluid">
-
-
 	            <a th:href="@{/}" class="navbar-brand">
 	                <img class="imgMother" th:src="@{/imagens/image-light.png}">
 	            </a>
-
-
-	                   
-	                        <div class="btn-group dropstart">
-	                            <button type="button" class="btn btn-conta-form-back-end nav-link"
-	                                data-bs-toggle="dropdown" aria-expanded="false">
-	                                <i class="bi bi-person-circle fs-1"></i>
-	                            </button>
-	                            <ul class="dropdown-menu">
-	                                <a class="nav-link" th:href="@{/conta}">
-	                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-	                                </a>
-	                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
-	                                    <i class="bi bi-box-arrow-right"></i></a>
-
-	                            </ul>
-	                        </div>
-	                   
-
-	                </ul>
-	            </div>
-	        
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn btn-conta-form-back-end nav-link"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle fs-1"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <a class="nav-link" th:href="@{/conta}">
+                            <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                        </a>
+                        <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                            <i class="bi bi-box-arrow-right"></i></a>
+                    </ul>
+                </div>
+	        </div>
 	    </nav>
 	</header>
-
-
-
-
 
     <main class="border rounded-4 mt-5 m-auto px-3 pt-3 pb-1 text-white INTRAcontaForm">
         <form id="marcaForm" th:action="@{/marcas/salvar}" method="post" enctype="multipart/form-data"
@@ -98,8 +84,6 @@
                     <div class="invalid-feedback">Preencha este campo.</div>
                 </div>
 
-
-
                 <div class="form-group row">
                     <label class="form-label">Selecione uma ou mais categorias:</label>
                     <div>
@@ -119,7 +103,6 @@
                         <div class="badge badge-secondary" id="chosenCategories"></div>
                     </div>
                 </div>
-
 
                 <div class="mb-3 d-flex">
                     <label class="form-label">Ativo:</label>
@@ -142,8 +125,6 @@
             </div>
         </form>
     </main>
-
-
 
     <div class="modal fade text-center" id="modalDialog">
         <div class="modal-dialog">
@@ -234,7 +215,7 @@
 
                 // 1 MB = 1048576 bytes
                 if (foto > 1048576) {
-                    this.setCustomValidity("Você só pode escolher imagens abaixo de 1 MB!");
+                    showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB!");
                     this.reportValidity();
                 } else {
                     this.setCustomValidity("");

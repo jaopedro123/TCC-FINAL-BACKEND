@@ -17,10 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.MotherBoard.Admin.export.InventarioCategoriaExcelExporter;
 import com.MotherBoard.Admin.export.InventarioCategoriaPdfExporter;
-import com.MotherBoard.Admin.export.InventarioProdExcelExporter;
-import com.MotherBoard.Admin.export.InventarioProdPdfExporter;
 import com.MotherBoard.entidade.comum.InventarioCategoria;
-import com.MotherBoard.entidade.comum.InventarioProduto;
 
 import jakarta.servlet.http.HttpServletResponse;
 

@@ -2433,13 +2433,6 @@ color: white;
 color: #643c96;
 }
 
-
-@media screen and (max-width: 1190px){
-	.iconsfigures{
-		display: none;
-	}
-}
-
 @media screen and (min-width: 992px) {
     .mediah1 {
         display: none;
@@ -2475,7 +2468,7 @@ color: #643c96;
 }
 
 
-@media screen and (max-width: 1190px){
+@media screen and (max-width: 932px){
 	.iconsfigures{
 		display: none;
 	}

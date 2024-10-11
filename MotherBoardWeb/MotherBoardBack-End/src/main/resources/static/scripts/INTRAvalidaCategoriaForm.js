@@ -10,8 +10,7 @@ $(document).ready(function () {
 
         // Limite de 1 MB (1048576 bytes)
         if (foto > 1048576) {
-            this.setCustomValidity("Você só pode escolher imagens abaixo de 1 MB! ");
-            this.reportValidity();
+            showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB! ");
         } else {
             this.setCustomValidity("");
             showImageThumbnail(this);

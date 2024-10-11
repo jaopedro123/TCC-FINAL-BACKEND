@@ -21,47 +21,30 @@
     </form>
 
     <header class="mb-3">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
             <div class="container-fluid">
-
                 <a th:href="@{/}" class="navbar-brand">
                     <img class="imgMother" th:src="@{/imagens/image-light.png}">
                 </a>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form class="d-flex mt-2 mx-auto flex-lg-nowrap" role="search">
-                        <input class="form-control me-2 custom-search barradepesquisa" type="search"
-                            placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" id="corcaraio" type="submit"><i
-                                class="bi bi-search"></i></button>
-                    </form>
-
-                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <div class="btn-group dropstart">
-                                <button type="button" class="btn btn-conta-form-back-end nav-link"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle iconeheader"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <a class="nav-link" th:href="@{/conta}">
-                                        <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-                                    </a>
-                                    <a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
-                                        onclick="document.getElementById('logoutForm').submit(); return false;">Logout
-                                        <i class="bi bi-box-arrow-right"></i></a>
-
-                                </ul>
-                            </div>
-
-
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person-circle fs-1"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <a class="nav-link" th:href="@{/conta}">
+                            <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                        </a>
+                        <a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
+                            onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a>
                     </ul>
                 </div>
-
+                </ul>
+            </div>
         </nav>
     </header>
-
-
 
     <main class="border rounded-4 mt-5 m-auto px-3 pt-3 text-white INTRAcontaForm">
         <form th:action="@{/usuarios/salvar}" method="post" id="registrationFormUsuario" enctype="multipart/form-data"
@@ -113,7 +96,7 @@
                             maxlength="20">
 
                         <input type="password" th:if="${usuario != null and usuario.id != null}" th:field="*{senha}"
-                            class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20" >
+                            class="form-control" id="senha" placeholder="Digite sua senha" minlength="8" maxlength="20">
 
                         <button type="button" id="togglePassword" class="btn btn-outline-secondary">
                             <i class="bi bi-eye-fill"></i>
@@ -153,9 +136,7 @@
                 </div>
                 <br>
             </div>
-
         </form>
-
     </main>
 
     <div class="modal fade text-center" id="modalDialog">
@@ -168,6 +149,16 @@
                     <span id="modalBody"></span>
                 </div>
                 <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-center" id="modalDialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalTitle">Cuidado</h4>
+                </div>
             </div>
         </div>
     </div>
@@ -188,14 +179,14 @@
         const checkboxCargosError = document.getElementById('checkboxCargosError'); // Mensagem de erro de funções
 
         const checkboxInput = document.querySelector('.permitido'); // Checkbox 'Permitido'
-        
+
         function validatePassword() {
             const password = passwordInput.value;
             const hasUpperCase = /[A-Z]/.test(password);
             const hasLowerCase = /[a-z]/.test(password);
             const hasNumber = /\d/.test(password);
             const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
+
             if (password === "") {
                 passwordError.textContent = "Preencha este campo.";
                 passwordError.style.display = "block";
@@ -218,7 +209,7 @@
                 passwordInput.classList.add('is-valid');
             }
         }
-        
+
         // Função para validar o checkbox 'Permitido'
         function validateCheckbox() {
             if (!checkboxInput.checked) {
@@ -424,7 +415,7 @@
 
                 // 1 MB = 1048576 bytes
                 if (foto > 1048576) {
-                    alert("nao pode mais de 1MB!");
+                    showModalDialog("Desculpe...", "Só é possível colocar imagens abaixo de 1MB!");
                 } else {
                     this.setCustomValidity("");
                     showImageThumbnail(this);
@@ -493,91 +484,91 @@
     </script>
 
 
-	<footer class="bg-body-tertiary fixarRodape">
-		      <br />
-		      <div class="container-fluid">
-		          <div class="row">
-		              <div class="col">
-		                  <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
-		                      
-							  <a  th:href="@{/}">
-							  						  			       <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
-																	 
-							  						  			    </a>
-		                  </div>
-		              </div>
-		              <div class="col">
-		                  <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
-		                      
-							  <a  th:href="@{/conta}">
-							  			        <i class="bi bi-person-square"  style="font-size: 2rem; color: white;"></i>
+    <footer class="bg-body-tertiary fixarRodape">
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
 
-							  			    </a>
-		                  </div>
-		              </div>
-		              <div class="col">
-		                  <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
-		                     
-							  <a  th:href="@{/SobreNos}">
-								<i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
+                        <a th:href="@{/}">
+                            <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
 
-							  						  			    </a>
-		                  </div>
-		              </div>
-		          </div>
-		      </div>
-		  </footer>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
 
-		    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
-		        <div class="container text-center text-md-left">
+                        <a th:href="@{/conta}">
+                            <i class="bi bi-person-square" style="font-size: 2rem; color: white;"></i>
 
-		            <div class="row text-center text-md-left">
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
 
-		                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-		                    <a class="navbar-brand">
+                        <a th:href="@{/SobreNos}">
+                            <i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
 
-		                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
-		                    </a>
-		                    <section class="mb-4">
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-		                                class="bi bi-facebook"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-		                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-		                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-		                                class="bi bi-instagram"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-		                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-		                                class="bi bi-youtube"></i></a>
-		                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-		                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-		                    </section>
-		                </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-		                    <p>
-		                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+        <div class="container text-center text-md-left">
 
-		                    </p>
-		                    <p>
-		                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
-		                    </p>
-		                    <p>
-		                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+            <div class="row text-center text-md-left">
 
-		                    </p>
-		                </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <a class="navbar-brand">
 
-		                <hr class="mb-4">
-		                <div>
-		                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-		                </div>
+                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+                    </a>
+                    <section class="mb-4">
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
+                </div>
 
-		            </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+                    <p>
+                        <a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
 
-		        </div>
-		    </footer>
+                    </p>
+                    <p>
+                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
+                    </p>
+                    <p>
+                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+                <div>
+                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
