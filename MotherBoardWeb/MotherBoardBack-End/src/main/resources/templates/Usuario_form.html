@@ -372,7 +372,11 @@
             validateFullName();
             validateCPF();
             validateEmail();
-            validatePassword();
+
+            if ("[[${tituloDaPag}]]".includes("Cadastrar")) {
+                validatePassword();
+            }
+
             validateCheckbox();
             validateCheckboxRoles(); // Validação para as funções
 
@@ -411,15 +415,7 @@
             });
 
             $("#foto").change(function () {
-                const foto = this.files[0].size;
-
-                // 1 MB = 1048576 bytes
-                if (foto > 1048576) {
-                    showModalDialog("Desculpe...", "Só é possível colocar imagens abaixo de 1MB!");
-                } else {
-                    this.setCustomValidity("");
-                    showImageThumbnail(this);
-                }
+                validateImageSize(this, 1, showModalDialog, showImageThumbnail);
             });
         });
 
@@ -470,6 +466,24 @@
                     return false;
                 }
             });
+        }
+
+        function validateImageSize(inputElement, maxSizeMB, showModalDialog, showImageThumbnail) {
+            const file = inputElement.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            const maxSize = maxSizeMB * 1024 * 1024;
+
+            if (file.size > maxSize) {
+                showModalDialog("Desculpe...", `Você só pode escolher imagens abaixo de ${maxSizeMB} MB!`);
+                inputElement.setCustomValidity("Tamanho de imagem inválido");
+            } else {
+                inputElement.setCustomValidity("");
+                showImageThumbnail(inputElement);
+            }
         }
 
         function showModalDialog(title, message) {

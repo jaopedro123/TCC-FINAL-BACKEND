@@ -140,7 +140,7 @@ $("#foto").change(function () {
 
     // Limitar o tamanho da imagem a 1 MB
     if (file > 1048576) {
-        alert("nao pode mais de 1MB!");
+        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB! ");
     } else {
         this.setCustomValidity("");
         showImageThumbnail(this);
@@ -154,6 +154,12 @@ $("#foto").change(function () {
 
 });
 
+function showModalDialog(title, message) {
+    $("#modalTitle").text(title);
+    $("#modalBody").text(message);
+    $("#modalDialog").modal('show');
+}
+
 function showImageThumbnail(fileInput) {
     var file = fileInput.files[0];
     var reader = new FileReader();
@@ -162,8 +168,6 @@ function showImageThumbnail(fileInput) {
     };
     reader.readAsDataURL(file);
 }
-
-
 
 // Mostrar/Ocultar Senha
 function togglePasswordVisibility(inputId, icon) {

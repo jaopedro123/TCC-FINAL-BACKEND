@@ -4,19 +4,10 @@ $(document).ready(function () {
         window.location = "/MotherBoardAdmin/categorias";
     });
 
-    // Verificação do tamanho da imagem selecionada
     $("#foto").change(function () {
-        const foto = this.files[0].size;
-
-        // Limite de 1 MB (1048576 bytes)
-        if (foto > 1048576) {
-            showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB! ");
-        } else {
-            this.setCustomValidity("");
-            showImageThumbnail(this);
-        }
+        validateImageSize(this, 1, showModalDialog, showImageThumbnail);
     });
-
+    
     // Pré-visualização de imagem selecionada
     document.getElementById('thumbnail').addEventListener('click', function () {
         document.getElementById('foto').click(); // Simula o clique no input de arquivo
@@ -29,22 +20,38 @@ $(document).ready(function () {
             event.preventDefault();
             event.stopPropagation();
 
-            // Validação padrão do Bootstrap
             if (!form.checkValidity()) {
                 form.classList.add('was-validated');
-                return; // Não continua se a validação básica falhar
+                return; 
             }
 
-            // Se validação do Bootstrap estiver correta, verifica `checkUniqueCategoria`
             checkUniqueCategoria(form).then((isUnique) => {
                 if (isUnique) {
                     form.classList.add('was-validated');
-                    form.submit(); // Submete o formulário se `checkUniqueCategoria` retornar `true`
+                    form.submit(); 
                 }
-            });
+            });   
         }, false);
     });
 });
+
+function validateImageSize(inputElement, maxSizeMB, showModalDialog, showImageThumbnail) {
+    const file = inputElement.files[0];
+    
+    if (!file) {
+        return;
+    }
+
+    const maxSize = maxSizeMB * 1024 * 1024; 
+
+    if (file.size > maxSize) {
+        showModalDialog("Desculpe...", `Você só pode escolher imagens abaixo de ${maxSizeMB} MB!`);
+        inputElement.setCustomValidity("Tamanho de imagem inválido"); 
+    } else {
+        inputElement.setCustomValidity("");
+        showImageThumbnail(inputElement); 
+    }
+} 
 
 // Função de verificação única para nome e alias da categoria
 function checkUniqueCategoria(form) {
