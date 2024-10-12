@@ -125,6 +125,11 @@ $(document).ready(function () {
                 event.preventDefault();
             }
         }
+
+        if(foto.files[0].size > 1 * 1024 * 1024) {
+            showModalDialog("Desculpe...", `Você só pode escolher imagens abaixo de 1 MB!`)
+            event.preventDefault();
+        }
     });
 
     $("#buttonCancel").on("click", function () {

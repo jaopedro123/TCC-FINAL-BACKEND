@@ -189,11 +189,13 @@
             <div th:each="produto : ${listaProdutos}" class="card mb-3 rounded-3">
                 <div style="background-color: #694a8f; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
                     
-                    <div class="d-flex justify-content-center align-items-center mx-auto mt-2" style="background-color: #2c3036; height: 50px; width: 50px; border-radius: 50%;">
-                        <h5 class="d-flex justify-content-center my-auto">[[${produto.id}]]</h5>
+                    <div class="d-flex align-items-center justify-content-center" style="height: 100px;">
+                        <div class="d-flex justify-content-center align-items-center me-2" style="background-color: #2c3036; height: 50px; width: 50px; border-radius: 50%;">
+                            <h5 class="d-flex justify-content-center my-auto">[[${produto.id}]]</h5>
+                        </div>
+                        <h5 class="text-center my-auto">[[${produto.usuarioId.nomeCompleto}]] - [[${produto.roleUsuario}]]</h5>
                     </div>
 
-                    <h5 class="text-center">[[${produto.usuarioId.nomeCompleto}]] - [[${produto.roleUsuario}]]</h5>
                 </div>
 
                 <ul class="list-group list-group-flush">

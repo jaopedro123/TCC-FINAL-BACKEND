@@ -60,11 +60,23 @@
 
                 <input type="hidden" th:field="*{id}" id="id" />
 
-                <div class="text-center">
+                <div>
                     <input type="hidden" th:field="*{fotos}" />
-                    <img th:src="@{${usuario.photosImagePath}}" id="thumbnail" class="INTRAimgConta">
-                    <input type="file" id="foto" name="imagem" style="display: none;">
-                    <i class="bi bi-pencil-square fs-4 INTRAiconeImg"></i>
+
+                    <div class="text-center">
+                        <img th:src="@{${usuario.photosImagePath}}" id="thumbnail"
+                            class="INTRACategoriaimg rounded-3 mb-3" style="cursor: pointer;">
+                        <i class="bi bi-pencil-square fs-4 INTRAiconeImg"
+                            style="margin-left: 10rem;margin-top:-45px;"></i>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Escolha uma imagem:</label>
+                        <input class="form-control" type="file" id="foto" name="imagem" accept="image/*" required>
+                        <div class="invalid-feedback">
+                            Por favor, selecione uma imagem.
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="mb-3">
@@ -375,6 +387,11 @@
 
             if ("[[${tituloDaPag}]]".includes("Cadastrar")) {
                 validatePassword();
+            }
+
+            if (foto.files[0].size > 1 * 1024 * 1024) {
+                showModalDialog("Desculpe...", `Você só pode escolher imagens abaixo de 1 MB!`)
+                return;
             }
 
             validateCheckbox();

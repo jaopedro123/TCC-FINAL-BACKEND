@@ -14,6 +14,7 @@ $(document).ready(function () {
 
         $(this).change(function() {
             showExtraImageThumbnail(this, index);
+            checkFileSizeImgExtra(this);
         })
     });
 
@@ -99,10 +100,11 @@ function addNextExtraImageSection(index) {
 }
 
 function checkFileSize(fileInput) {
-    fileSize = fileInput.files[0].size;
+    const fileSize = fileInput.files[0].size;
 
-    if (fileSize > 502400) {
-        fileInput.setCustomValidity("Você so pode escolher imagens abaixo de 500KB! ");
+    if (fileSize > 1 * 1024 * 1024) {
+        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1MB! ");
+        fileInput.setCustomValidity("Você só pode escolher imagens abaixo de 1MB! ");
         fileInput.reportvalidity();
 
         return false;
@@ -112,6 +114,18 @@ function checkFileSize(fileInput) {
 
         return true;
     }
+}
+
+function checkFileSizeImgExtra(fileInput) {
+    const imgSize = fileInput.files[0].size;
+
+    if (imgSize > 1 * 1024 * 1024) {
+        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB!");
+        return false;
+    }
+
+    return true;
+
 }
 
 function showModalDialog(title, message) {
