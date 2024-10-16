@@ -5,13 +5,13 @@
         <div th:fragment="conteudo" th:remove="tag">
             <div class="my-3">
                 <label for="categoria" class="form-label">Nome do produto:</label>
-                <input type="text" name="_csrf" th:field="*{nome}" class="form-control" placeholder="Digite o nome do produto" required minlength="3" maxlength="50">
+                <input type="text" name="_csrf" th:field="*{nome}" class="form-control" id="nome" placeholder="Digite o nome do produto" required minlength="3" maxlength="50">
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
 
             <div class="mb-3">
                 <label  class="form-label">Alias:</label>
-                <input type="text" th:field="*{alias}" class="form-control"  placeholder="Digite o alias" required minlength="3" maxlength="50">
+                <input type="text" th:field="*{alias}" class="form-control" id="alias" placeholder="Digite o alias" required minlength="3" maxlength="50">
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">

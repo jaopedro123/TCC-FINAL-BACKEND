@@ -65,15 +65,15 @@
             [[${message}]]
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <form id="INTRAformConta" th:action="@{/conta/update}" method="post" enctype="multipart/form-data"
-            th:object="${usuario}">
+        <form id="INTRAformConta" class="needs-validation" th:action="@{/conta/update}" method="post" enctype="multipart/form-data"
+            th:object="${usuario}" novalidate>
 
             <input type="hidden" th:field="*{id}" id="id" />
 
 
 
             <div class="row rounded-4 pt-3 px-4 mb-2 ms-auto me-auto d-flex align-items-center"
-                style="background-color: #33373f; max-width: 666px;">
+                style="background-color: #33373f; max-width: 667px;">
                 <div class="col ms-4">
                     <input type="hidden" th:field="*{fotos}" />
 
@@ -110,7 +110,7 @@
                     <label for="nomeCompleto" class="form-label">Nome Completo:</label>
                     <input type="text" th:field="*{nomeCompleto}" class="form-control" id="nomeCompleto"
                         placeholder="Digite seu nome completo" required minlength="3" maxlength="45">
-                    <div id="fullNameError" class="invalid-feedback">O nome deve ter pelo menos 3 caracteres.</div>
+                    <div id="nomeCompletoError" class="invalid-feedback">O nome deve ter pelo menos 3 caracteres.</div>
                 </div>
 
                 <div class="mb-3">

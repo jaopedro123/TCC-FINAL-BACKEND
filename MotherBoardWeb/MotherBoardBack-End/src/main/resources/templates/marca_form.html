@@ -47,8 +47,7 @@
 
     <main class="border rounded-4 mt-5 m-auto px-3 pt-3 pb-1 text-white INTRAcontaForm">
         <form id="marcaForm" th:action="@{/marcas/salvar}" method="post" enctype="multipart/form-data"
-            th:object="${marca}" class="needs-validation" novalidate onsubmit="return validateFormMarca(this);">
-
+            th:object="${marca}" novalidate>
             <div class="rounded-4 pt-3 px-4 mb-2 ms-auto me-auto" style="background-color: #33373f;">
                 <h2 class="p-3 text-center">
                     [[${tituloDaPag}]] <i class="bi bi-clipboard-check-fill me-2"></i>
@@ -57,32 +56,27 @@
                 <input type="hidden" th:field="*{Id}" id="id" />
 
                 <div class="form-group row mb-3">
-
                     <div class="text-center">
                         <img id="thumbnail" alt="Pré-visualização do logo" th:src="@{${marca.logoPath}}"
                             class="img-fluid mb-3 rounded-3" style="width: 130px;height: 130px;cursor: pointer;" />
                         <i class="bi bi-pencil-square fs-4 INTRAiconeImg"
                             style="margin-left: 10rem;margin-top:-45px;"></i>
                     </div>
-
                     <label class="form-label">Logo:</label>
-
                     <div>
                         <input type="hidden" th:field="*{logo}" />
-
                         <input type="file" id="fileImage" name="fileImage" accept="image/png, image/jpeg" required
                             th:required="${marca.id == null}" class="form-control rounded-3" />
                         <div class="invalid-feedback">
                             Por favor, selecione uma imagem.
                         </div>
                     </div>
-
                 </div>
 
                 <div class="mb-4">
                     <label for="categoria" class="form-label">Nome da marca:</label>
                     <input type="text" name="nome" th:field="*{nome}" class="form-control" id="nome"
-                        placeholder="Digite o nome da Categoria" required minlength="3" maxlength="50">
+                        placeholder="Digite o nome da Marca" required minlength="3" maxlength="50">
                     <div class="invalid-feedback">Preencha este campo.</div>
                 </div>
 
@@ -122,8 +116,6 @@
                     <button type="button" class="btn btn-outline-danger" id="butaocancela">Cancelar <i
                             class="bi bi-box-arrow-right"></i></button>
                 </div>
-
-                <br>
             </div>
         </form>
     </main>
@@ -137,116 +129,202 @@
                 <div class="modal-body">
                     <span id="modalBody"></span>
                 </div>
-                <div class="modal-footer">
-
-                </div>
             </div>
         </div>
     </div>
 
-    <script>
 
-        // Validar o formulário usando Bootstrap e `checkUniqueMarca`
-        const forms = document.querySelectorAll('.needs-validation');
-        Array.from(forms).forEach(function (form) {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('marcaForm');
+            const tituloDaPag = document.querySelector('h2.p-3.text-center').textContent.trim();
+            const nomeInput = document.querySelector('input[name="nome"]');
+
+            // Adicionar eventos de input e change para validar em tempo real
+            document.querySelectorAll('input, select').forEach(input => {
+                input.addEventListener('input', () => validateInput(input));
+                input.addEventListener('change', () => validateInput(input));
+            });
+
+            // Função de validação centralizada
+            function validateInput(input) {
+                if (input.name === 'nome') {
+                    return validateNome(input);
+                } else if (input.type === 'file') {
+                    return validateImage(input);
+                } else {
+                    return genericValidation(input);
+                }
+            }
+
+            // Validação de campo genérico
+            function genericValidation(input) {
+                if (input.checkValidity()) {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                    if (input.nextElementSibling) input.nextElementSibling.textContent = '';
+                    return true;
+                } else {
+                    input.classList.add('is-invalid');
+                    if (input.nextElementSibling) input.nextElementSibling.textContent = 'Preencha este campo corretamente.';
+                    return false;
+                }
+            }
+
+            // Validação específica para o campo "Nome"
+            function validateNome(input) {
+                const regex = /^[A-Za-z0-9.\-+=&()_\/]+( [A-Za-z0-9.\-+=&()_\/]+)*$/;
+                if (!regex.test(input.value) || input.value.length < 3) {
+                    input.classList.add('is-invalid');
+                    input.nextElementSibling.textContent = 'O nome da marca é inválido ou curto.';
+                    return false;
+                } else {
+                    input.classList.remove('is-invalid');
+                    input.classList.add('is-valid');
+                    input.nextElementSibling.textContent = '';
+                    return true;
+                }
+            }
+
+            // Validação de imagem com tamanho máximo
+            function validateImage(inputElement) {
+                const file = inputElement.files[0];
+                const maxSizeMB = 1; // Tamanho máximo em MB
+                const maxSize = maxSizeMB * 1024 * 1024; // Converter MB para bytes
+                const thumbnail = document.getElementById('thumbnail');
+
+                const brandId = document.getElementById('id').value;
+                if (!file && brandId) {
+                    inputElement.classList.remove('is-invalid');
+                    inputElement.classList.add('is-valid');
+                    return true;
+                }
+
+                if (!file) {
+                    inputElement.classList.add('is-invalid');
+                    inputElement.nextElementSibling.textContent = 'Por favor, selecione uma imagem.';
+                    return false;
+                }
+
+                if (file.size > maxSize) {
+                    showModalDialog('Desculpe...', `A imagem deve ter no máximo ${maxSizeMB} MB.`);
+                    inputElement.classList.add('is-invalid');
+                    inputElement.nextElementSibling.textContent = `A imagem deve ter no máximo ${maxSizeMB} MB.`;
+                    return false;
+                }
+
+                inputElement.classList.remove('is-invalid');
+                inputElement.classList.add('is-valid');
+                inputElement.nextElementSibling.textContent = '';
+                showImageThumbnail(inputElement); // Chama a função para mostrar a miniatura
+                return true;
+            }
+
+
+            // Submissão com validações finais
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
                 event.stopPropagation();
 
-                // Validação padrão do Bootstrap
-                if (!form.checkValidity()) {
-                    form.classList.add('was-validated');
-                    return; // Não continua se a validação básica falhar
+                const isNomeValido = validateNome(nomeInput);
+                const isImageValid = validateImage(document.querySelector('input[type="file"]'));
+                const isCategoriaValid = document.querySelector('select#categorias').selectedOptions.length > 0;
+                const habilitadoInput = document.querySelector('input[type="checkbox"]');
+                const isHabilitadoValid = habilitadoInput.checked;
+
+                if (!isCategoriaValid) {
+                    const categoriasSelect = document.querySelector('select#categorias');
+                    categoriasSelect.classList.add('is-invalid');
+                    categoriasSelect.nextElementSibling.textContent = 'Selecione uma ou mais categorias.';
                 }
 
-                // Se validação do Bootstrap estiver correta, verifica `checkUniqueMarca`
-                checkUniqueMarca(form).then((isUnique) => {
-                    if (isUnique) {
-                        form.classList.add('was-validated');
-                        form.submit(); // Submete o formulário se `checkUniqueMarca` retornar `true`
-                    }
-                });
-            }, false);
-        });
-
-        function checkUniqueMarca(form) {
-
-            brandName = $("#nome").val();
-            brandId = $("#id").val();
-
-            csrfValue = $("input[name='_csrf']").val();
-
-            url = "[[@{/marcas/check_unique}]]";
-
-            params = { id: brandId, nome: brandName, _csrf: csrfValue };
-
-            return $.post(url, params).then(function (response) {
-
-                if (response.trim() === "OK") {
-                    return true;
+                if (!isHabilitadoValid) {
+                    habilitadoInput.classList.add('is-invalid');
+                    habilitadoInput.nextElementSibling.textContent = 'Este campo é obrigatório.';
                 }
-                else if (response.trim() === "Duplicate") {
-                    showModalDialog("Cuidado", "Essa marca já está cadastrada: " + brandName);
-                    return false;
+
+                if (isNomeValido && isImageValid && isCategoriaValid && isHabilitadoValid) {
+                    // Verifica se o nome da marca é único
+                    checkUniqueMarca().then((isUnique) => {
+                        if (isUnique) {
+                            // Se for único e o formulário estiver válido, prossegue com a submissão
+                            form.classList.add('was-validated');
+                            form.submit(); // Submete o formulário
+                        }
+                    });
                 }
             });
-        }
 
+            // Função de verificação de nome de marca único
+            function checkUniqueMarca() {
+                const brandName = $("#nome").val();
+                const brandId = $("#id").val();
+                const csrfValue = $("input[name='_csrf']").val();
+                const url = "[[@{/marcas/check_unique}]]";
+                const params = { id: brandId, nome: brandName, _csrf: csrfValue };
+
+                // Faz a requisição AJAX para verificar a unicidade do nome
+                return $.post(url, params).then(function (response) {
+                    if (response.trim() === "OK") {
+                        return true;
+                    } else if (response.trim() === "Duplicate") {
+                        showModalDialog("Cuidado", "Essa marca já está cadastrada: " + brandName);
+                        // Exibe erro no campo de nome da marca
+                        nomeInput.classList.add('is-invalid');
+                        nomeInput.nextElementSibling.textContent = 'Insira outra marca.';
+                        return false;
+                    }
+                });
+            }
+
+            // Função para mostrar modal de alerta
+            function showModalDialog(title, body) {
+                const modalTitle = document.getElementById('modalTitle');
+                const modalBody = document.getElementById('modalBody');
+
+                modalTitle.textContent = title;
+                modalBody.textContent = body;
+
+                const modal = new bootstrap.Modal(document.getElementById('modalDialog'));
+                modal.show();
+            }
+
+            // Função para exibir a miniatura da imagem
+            function showImageThumbnail(fileInput) {
+                var file = fileInput.files[0];
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#thumbnail").attr("src", e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            $(document).ready(function () {
+                // Ao clicar no botão de cancelar
+                $("#butaocancela").on("click", function () {
+                    window.location = "[[@{/marcas}]]";
+                });
+
+                // Verifica o tamanho da imagem ao mudar o arquivo
+                $("#fileImage").change(function () {
+                    validateImage(this); // Chama a função de validação
+                });
+
+                // Tornar a imagem clicável para selecionar um arquivo
+                $("#thumbnail").on("click", function () {
+                    $("#fileImage").click();
+                });
+            });
+        });
+
+        // Modal
         function showModalDialog(title, message) {
             $("#modalTitle").text(title);
             $("#modalBody").text(message);
             $("#modalDialog").modal('show');
         }
 
-        // Tornar a imagem clicável para selecionar um arquivo
-        $("#thumbnail").on("click", function () {
-            $("#fileImage").click();
-        });
-    </script>
-
-
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $("#butaocancela").on("click", function () {
-                window.location = "[[@{/marcas}]]";
-            });
-
-            $("#fileImage").change(function () {
-                validateImageSize(this, 1, showModalDialog, showImageThumbnail);
-            });
-        });
-
-        function validateImageSize(inputElement, maxSizeMB, showModalDialog, showImageThumbnail) {
-            const file = inputElement.files[0];
-
-            if (!file) {
-                return;
-            }
-
-            const maxSize = maxSizeMB * 1024 * 1024;
-
-            if (file.size > maxSize) {
-                showModalDialog("Desculpe...", `Você só pode escolher imagens abaixo de ${maxSizeMB} MB!`);
-                inputElement.setCustomValidity("Tamanho de imagem inválido");
-            } else {
-                inputElement.setCustomValidity("");
-                showImageThumbnail(inputElement);
-            }
-        }
-
-        // Função para exibir a miniatura da imagem
-        function showImageThumbnail(fileInput) {
-            var file = fileInput.files[0];
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $("#thumbnail").attr("src", e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    </script>
-
-    <script type="text/javascript">
+        // Script das categorias
         moduleURL = "[[@{/marcas}]]";
         $(document).ready(function () {
             dropdownCategories = $("#categorias");

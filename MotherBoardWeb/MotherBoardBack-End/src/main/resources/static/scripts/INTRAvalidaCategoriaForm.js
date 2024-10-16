@@ -1,105 +1,201 @@
 $(document).ready(function () {
-    // Evento no botão de cancelar para redirecionar
-    $("#buttonCancel").on("click", function () {
-        window.location = "/MotherBoardAdmin/categorias";
+    const form = $('#CategoriaForm');
+
+    // Inicialização de eventos
+    initializeEventHandlers();
+
+    // Adicionar eventos de input e change para validar enquanto o usuário digita
+    form.find('input, select').on('input change', function () {
+        validateInput($(this));
     });
 
-    $("#foto").change(function () {
-        validateImageSize(this, 1, showModalDialog, showImageThumbnail);
-    });
-    
-    // Pré-visualização de imagem selecionada
-    document.getElementById('thumbnail').addEventListener('click', function () {
-        document.getElementById('foto').click(); // Simula o clique no input de arquivo
-    });
+    // Evento de submissão do formulário
+    form.on('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
 
-    // Validar o formulário usando Bootstrap e `checkUniqueCategoria`
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            event.stopPropagation();
+        form.removeClass('was-validated');
+        if (!form[0].checkValidity()) {
+            form.addClass('was-validated');
+            return;
+        }
 
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
-                return; 
+        // Validação personalizada para 'nome' e 'alias'
+        const isNomeValido = validateInput($('#nome'));
+        const isAliasValido = validateInput($('#alias'));
+
+        if (!isNomeValido || !isAliasValido) {
+            return;
+        }
+
+        // Checar unicidade dos campos nome e alias
+        checkUniqueCategoria().then((isUnique) => {
+            if (isUnique) {
+                form.addClass('was-validated');
+                form.off('submit').submit(); // Submeter o formulário
             }
-
-            checkUniqueCategoria(form).then((isUnique) => {
-                if (isUnique) {
-                    form.classList.add('was-validated');
-                    form.submit(); 
-                }
-            });   
-        }, false);
-    });
-});
-
-function validateImageSize(inputElement, maxSizeMB, showModalDialog, showImageThumbnail) {
-    const file = inputElement.files[0];
-    
-    if (!file) {
-        return;
-    }
-
-    const maxSize = maxSizeMB * 1024 * 1024; 
-
-    if (file.size > maxSize) {
-        showModalDialog("Desculpe...", `Você só pode escolher imagens abaixo de ${maxSizeMB} MB!`);
-        inputElement.setCustomValidity("Tamanho de imagem inválido"); 
-    } else {
-        inputElement.setCustomValidity("");
-        showImageThumbnail(inputElement); 
-    }
-} 
-
-// Função de verificação única para nome e alias da categoria
-function checkUniqueCategoria(form) {
-    return new Promise(function (resolve, reject) {
-        let categId = $("#id").val();
-        let categNome = $("#nome").val();
-        let categAlias = $("#alias").val();
-        let csrfValue = $("input[name='_csrf']").val();
-
-        let url = "/MotherBoardAdmin/categorias/check_unique";
-
-        let params = { id: categId, nome: categNome, alias: categAlias, _csrf: csrfValue };
-
-        $.post(url, params, function (response) {
-            if (response === "OK") {
-                resolve(true); // Verificação única bem-sucedida
-            } else if (response === "Nome Duplicado") {
-                showModalDialog("Erro ao criar categoria", "Nome já utilizado, por favor troque para prosseguir");
-                resolve(false);
-            } else if (response === "Alias Duplicado") {
-                showModalDialog("Erro ao criar categoria", "Alias já utilizado, por favor troque para prosseguir");
-                resolve(false);
-            }
-        }).fail(function () {
-            showModalDialog("Erro", "Resposta desconhecida do servidor");
-            reject(false);
         });
     });
+
+    // Verifica tamanho da imagem ao selecionar um arquivo
+    $('#foto').on('change', function () {
+        validateImageSize(this, 1);
+    });
+
+});
+
+
+// Função para validar um campo de entrada
+function validateInput($input) {
+    const name = $input.attr('name');
+    const value = $input.val();
+
+    const regex = /^[A-Za-z0-9.\-+=&()_\/]+( [A-Za-z0-9.\-+=&()_\/]+)*$/;
+
+    if (name === 'nome' || name === 'alias') {
+        const trimmedValue = value.trim();
+
+        if (trimmedValue === '') {
+            setInvalid($input, 'Preencha este campo.');
+            return false;
+        }
+
+        if (trimmedValue.length < 3) {
+            setInvalid($input, 'O campo deve ter pelo menos 3 caracteres.');
+            return false;
+        }
+
+        if (!regex.test(trimmedValue) || /\s{2,}/.test(trimmedValue) || value !== trimmedValue) {
+            setInvalid($input, 'O campo está inválido');
+            return false;
+        }
+
+        // Caso tudo esteja correto, marca como válido
+        setValid($input);
+        return true;
+    }
+
+    // Validação padrão para outros campos
+    if ($input[0].checkValidity()) {
+        setValid($input);
+        return true;
+    } else {
+        setInvalid($input, 'Preencha este campo corretamente.');
+        return false;
+    }
+}
+
+
+// Função para marcar um campo como inválido
+function setInvalid($input, message) {
+    $input.removeClass('is-valid').addClass('is-invalid');
+    $input.next('.invalid-feedback').text(message);
+}
+
+// Função para marcar um campo como válido
+function setValid($input) {
+    $input.removeClass('is-invalid').addClass('is-valid');
+    $input.next('.invalid-feedback').text('');
+}
+
+// Função para validar o tamanho da imagem
+function validateImageSize(inputElement, maxSizeMB) {
+    const file = inputElement.files[0];
+
+    if (!file) {
+        return;
+}
+
+    const maxSize = maxSizeMB * 1024 * 1024; // Converter MB para bytes
+
+    if (file.size > maxSize) {
+        showModalDialog("Erro", `Você só pode escolher imagens abaixo de ${maxSizeMB} MB!`);
+        $(inputElement).addClass('is-invalid');
+        $(inputElement).next('.invalid-feedback').text(`A imagem deve ter no máximo ${maxSizeMB} MB.`);
+    } else {
+        $(inputElement).removeClass('is-invalid');
+        $(inputElement).addClass('is-valid');
+        $(inputElement).next('.invalid-feedback').text('');
+        showImageThumbnail(inputElement);
+    }
 }
 
 // Função para exibir o modal com mensagens de erro
 function showModalDialog(title, message) {
-    $("#modalTitle").text(title);
-    $("#modalBody").text(message);
-    $("#modalDialog").modal('show');
+    $('#modalTitle').text(title);
+    $('#modalBody').text(message);
+    $('#modalDialog').modal('show');
 }
 
 // Função para exibir a miniatura da imagem
 function showImageThumbnail(fileInput) {
-    var file = fileInput.files[0];
-    var reader = new FileReader();
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
     reader.onload = function (e) {
-        $("#thumbnail").attr("src", e.target.result);
+        $('#thumbnail').attr('src', e.target.result);
     };
+
     reader.readAsDataURL(file);
 }
 
-// Impedir caracteres especiais no campo de nome da categoria
-$("#nome").on("input", function () {
-    this.value = this.value.replace(/[^a-zA-ZÀ-ÿ\s]/g, '');
-});
+// Função para verificar a unicidade de 'nome' e 'alias' via AJAX
+function checkUniqueCategoria() {
+    return new Promise(function (resolve, reject) {
+        const categId = $('#id').val();
+        const categNome = $('#nome').val().trim();
+        const categAlias = $('#alias').val().trim();
+        const csrfValue = $("input[name='_csrf']").val(); 
+
+        $.ajax({
+            url: "/MotherBoardAdmin/categorias/check_unique",
+            type: "POST",
+            data: {
+                id: categId,
+                nome: categNome,
+                alias: categAlias,
+                _csrf: csrfValue
+            },
+            success: function (response) {
+                if (response === "OK") {
+                    resolve(true);
+                } else {
+                    // Manipula erro de Nome Duplicado
+                    if (response === "Nome Duplicado") {
+                        const $nomeInput = $('#nome');
+                        setInvalid($nomeInput, 'Nome já utilizado, por favor troque para prosseguir.');
+                    }
+
+                    // Manipula erro de Alias Duplicado
+                    if (response === "Alias Duplicado") {
+                        const $aliasInput = $('#alias');
+                        setInvalid($aliasInput, 'Alias já utilizado, por favor troque para prosseguir.');
+                    }
+
+                    // Mostrar modal com erro
+                    showModalDialog("Erro ao criar/atualizar categoria", "Verifique o campo destacado.");
+                    resolve(false);
+                }
+            },
+            error: function () {
+                showModalDialog("Erro", "Resposta desconhecida do servidor.");
+                reject(false);
+            }
+        });
+    });
+}
+
+
+// Função para inicializar eventos
+function initializeEventHandlers() {
+    $("#buttonCancel").on("click", handleCancelButtonClick);
+    $("#foto").change(function () {
+        validateImageSize(this, 1, showModalDialog, showImageThumbnail);});
+    $('#thumbnail').on('click', function () {
+        $('#foto').click();});
+}
+
+// Evento no botão de cancelar para redirecionar
+function handleCancelButtonClick() {
+    window.location = "/MotherBoardAdmin/categorias";
+}
