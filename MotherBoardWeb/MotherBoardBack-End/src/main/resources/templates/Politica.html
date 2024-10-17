@@ -1,129 +1,143 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" data-bs-theme="dark">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <link rel="stylesheet" th:href="@{/css/styles.css}">
-        <title>Motherboard - Política de Privacidade</title>
-    </head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+    data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Motherboard - Política de Privacidade</title>
+</head>
+
 <body class="bg-dark text-light">
     <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
         <input type="submit" />
     </form>
 
-	<header class="mb-3">
-	    <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
-	        <div class="container-fluid">
+    <header class="mb-3">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
+            <div class="container-fluid">
 
 
-	            <a th:href="@{/}" class="navbar-brand">
-	                <img class="imgMother" th:src="@{/imagens/image-light.png}">
-	            </a>
+                <a th:href="@{/}" class="navbar-brand">
+                    <img class="imgMother" th:src="@{/imagens/image-light.png}">
+                </a>
 
 
-	                   
-	                        <div class="btn-group dropstart">
-	                            <button type="button" class="btn btn-conta-form-back-end nav-link"
-	                                data-bs-toggle="dropdown" aria-expanded="false">
-	                                <i class="bi bi-person-circle fs-1"></i>
-	                            </button>
-	                            <ul class="dropdown-menu">
-	                                <a class="nav-link" th:href="@{/conta}">
-	                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-	                                </a>
-	                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
-	                                    <i class="bi bi-box-arrow-right"></i></a>
 
-	                            </ul>
-	                        </div>
-	                   
+                <div class="btn-group dropstart">
+                    <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person-circle fs-1"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <a class="nav-link" th:href="@{/conta}">
+                            <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                        </a>
+                        <a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
+                            onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                            <i class="bi bi-box-arrow-right"></i></a>
 
-	                </ul>
-	            </div>
-	        
-	    </nav>
-	</header>
+                    </ul>
+                </div>
 
-    
+
+                </ul>
+            </div>
+
+        </nav>
+    </header>
+
+
 
     <div class="container justifyText">
         <div class="iconsfigures container py-5 fundoprod justifyText" style="background-color: #2c3036">
-        <h1 class="text-center cargo mb-4 fundoPoli mx-auto">Política De Privacidade</h1>
-        <div class="d-flex container py-5 fundoprod justifyText justify-content-center" style="background-color: #33373f">
-        <div class="d-flex p-3">
-            <div class="m-2 text-center mini">
-                <a href="#parte1" class="text-decoration-none">
-                    <i class="bi bi-person-plus icon-large2 mini">
-                    <h3 >Cadastro</h3></i>
-                </a>
+            <h1 class="text-center cargo mb-4 fundoPoli mx-auto">Política De Privacidade</h1>
+            <div class="d-flex container py-5 fundoprod justifyText justify-content-center"
+                style="background-color: #33373f">
+                <div class="d-flex p-3">
+                    <div class="m-2 text-center mini">
+                        <a href="#parte1" class="text-decoration-none">
+                            <i class="bi bi-person-plus icon-large2 mini">
+                                <h3>Cadastro</h3>
+                            </i>
+                        </a>
+                    </div>
+                    <div class="m-2 text-center mini">
+                        <a href="#parte2" class="text-decoration-none">
+                            <i class="bi bi-database icon-large2 mini">
+                                <h3>Dados</h3>
+                            </i>
+                        </a>
+                    </div>
+                    <div class="m-2 text-center mini">
+                        <a href="#parte3" class="text-decoration-none">
+                            <i class="bi bi-clock-history icon-large2 mini">
+                                <h3>Tratar</h3>
+                            </i>
+                        </a>
+                    </div>
+                    <div class="m-2 text-center mini">
+                        <a href="#parte4" class="text-decoration-none">
+                            <i class="bi bi-upload icon-large2 mini">
+                                <h3>Transferir</h3>
+                            </i>
+                        </a>
+                    </div>
+                    <div class="m-2 text-center mini">
+                        <a href="#parte5" class="text-decoration-none">
+                            <i class="bi bi-shield-lock icon-large2 mini">
+                                <h3>Segurança</h3>
+                            </i>
+                        </a>
+                    </div>
+                    <div class="m-2 text-center mini">
+                        <a href="#parte6" class="text-decoration-none">
+                            <i class="bi bi-shield icon-large2  mini">
+                                <h3>Direitos</h3>
+                            </i>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="m-2 text-center mini">
-                <a href="#parte2" class="text-decoration-none">
-                    <i class="bi bi-database icon-large2 mini">
-                    <h3>Dados</h3></i>
-                </a>
-            </div>
-            <div class="m-2 text-center mini">
-                <a href="#parte3" class="text-decoration-none">
-                    <i class="bi bi-clock-history icon-large2 mini">
-                    <h3>Tratar</h3></i>
-                </a>
-            </div>
-            <div class="m-2 text-center mini">
-                <a href="#parte4" class="text-decoration-none">
-                    <i class="bi bi-upload icon-large2 mini">
-                    <h3>Transferir</h3></i>
-                </a>
-            </div>
-            <div class="m-2 text-center mini">
-                <a href="#parte5" class="text-decoration-none">
-                    <i class="bi bi-cookie icon-large2 mini">
-                    <h3>Cookies</h3></i>
-                </a>
-            </div>
-            <div class="m-2 text-center mini">
-                <a href="#parte6" class="text-decoration-none">
-                    <i class="bi bi-shield-lock icon-large2 mini">
-                    <h3>Segurança</h3></i>
-                </a>
-            </div>
-            <div class="m-2 text-center mini">
-                <a href="#parte7" class="text-decoration-none">
-                    <i class="bi bi-shield icon-large2  mini">
-                    <h3>Direitos</h3></i>
-                </a>
-            </div>
-        </div>
-        </div>
         </div>
     </div>
-        <br/>
+    <br />
 
-<div class="container py-5 fundoprod justifyText" style="background-color: #2c3036">
-    <h1 class="text-center cargo mb-4 justify-content-center fundoPoli mx-auto mediah1">Política De Privacidade</h1>
-    <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-        <p>A Motherboard tem compromisso firmado com a segurança dos seus dados. Quando você acessa o nosso site e quando faz uma compra com a Motherboard, você nos fornece alguns dados
-    pessoais com o objetivo de viabilizar a sua operação.
-    Somos a Ltda, Motherboard Informática, inscrita no CNPJ 00,000.000/00 com sede em São Paulo Brooklin, 123 na cidade de São Paulo - SP e seremos a controladora das suas 
-    informações, ou seja, somos os responsáveis pelo que acontece com os seus dados e pela proteção deles, conforme definição da Lei Geral de Proteção de Dados “LGPD” 
-    (Lei Federal nº 13.709.2018).
-    Este documento é dedicado a te explicar como os seus dados pessoais serão tratados pela Motherboard Informática e quais são as medidas que aplicamos para mantê-los 
-    seguros.
-    Para facilitar a compreensão desta política:
-    Qualquer informação relacionada a uma pessoa que a identifique como um indivíduo é o que chamamos de dados pessoais.<br><br>
-    Quando citarmos os termos “Motherboard Informática”, “Motherboard”, “nós” ou “nossos”, estamos nos referindo a controladora dos seus dados pessoais, ou seja, a Motherboard Informática;
-    Todas as vezes que ler “usuário”, “você”, “titular”, “cliente”, “seu” ou “sua”, nos referimos a você, nosso cliente ou usuário do nosso site, o titular dos dados.
-    O consentimento é a autorização clara e objetiva que você dá para o tratamento de seus dados pessoais, com a finalidade destacada neste consentimento. </p>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte1"></a>
-<h3 class="cargo"> 1. Dados Cadastrais Que Podemos Coletar</h3>
+    <div class="container py-5 fundoprod justifyText" style="background-color: #2c3036">
+        <h1 class="text-center cargo mb-4 justify-content-center fundoPoli mx-auto mediah1">Política De Privacidade</h1>
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <p>A Motherboard tem compromisso firmado com a segurança dos seus dados. Quando você acessa o nosso site e
+                quando faz uma compra com a Motherboard, você nos fornece alguns dados
+                pessoais com o objetivo de viabilizar a sua operação.
+                Somos a Ltda, Motherboard Informática, inscrita no CNPJ 00,000.000/00 com sede em São Paulo Brooklin,
+                123 na cidade de São Paulo - SP e seremos a controladora das suas
+                informações, ou seja, somos os responsáveis pelo que acontece com os seus dados e pela proteção deles,
+                conforme definição da Lei Geral de Proteção de Dados “LGPD”
+                (Lei Federal nº 13.709.2018).
+                Este documento é dedicado a te explicar como os seus dados pessoais serão tratados pela Motherboard
+                Informática e quais são as medidas que aplicamos para mantê-los
+                seguros.
+                Para facilitar a compreensão desta política:
+                Qualquer informação relacionada a uma pessoa que a identifique como um indivíduo é o que chamamos de
+                dados pessoais.<br><br>
+                Quando citarmos os termos “Motherboard Informática”, “Motherboard”, “nós” ou “nossos”, estamos nos
+                referindo a controladora dos seus dados pessoais, ou seja, a Motherboard Informática;
+                Todas as vezes que ler “usuário”, “você”, “titular”, “cliente”, “seu” ou “sua”, nos referimos a você,
+                nosso cliente ou usuário do nosso site, o titular dos dados.
+                O consentimento é a autorização clara e objetiva que você dá para o tratamento de seus dados pessoais,
+                com a finalidade destacada neste consentimento. </p>
+        </div>
+        <br />
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <a name="parte1"></a>
+            <h3 class="cargo"> 1. Dados Cadastrais Que Podemos Coletar</h3>
 
-<pre>
+            <pre>
     <table class="table table-dark border-light table-hover table-bordered">
         
         <thead class="table-secondary">
@@ -150,192 +164,212 @@
         </tbody>
     </table>
 </pre>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte2"></a>
-<h3 class="cargo"> 2. Com Quem Seus Dados Pessoais São Compartilhados?</h3>
-<p>Poderemos compartilhar os seus dados pessoais com:
-Nossos parceiros, prestadores de serviços e fornecedores. Para a consecução de nossas atividades, mantemos relacionamento e contratamos diversos parceiros, prestadores de serviços
-e fornecedores, que são essenciais para os nossos negócios. Alguns desses parceiros, prestadores de serviços e fornecedores podem precisar ter acesso aos dados pessoais que 
-coletamos para exercer suas funções, como prestadores de serviços de tecnologia da informação, serviços de hospedagem de dados, serviços de recrutamento e seleção, serviços de
-gerenciamento e promoção de eventos, provedores de softwares de produtividade, provedores de softwares de gestão de contatos, auditores, correspondentes, tradutores, entre outros
-prestadores de serviços, casos nos quais poderemos compartilhar seus dados pessoais com eles. 
-Autoridades Governamentais. Podemos compartilhar os seus dados pessoais com toda e qualquer Autoridade Governamental que os solicite, inclusive com órgãos de fiscalização das atividades laborais ou de atividades financeiras, órgãos reguladores, como órgãos do Poder Judiciário ou Autoridades Policiais.
-Com terceiros interessados na combinação ou aquisição de nossos negócios. Podemos compartilhar os seus dados pessoais com terceiros interessados na combinação ou aquisição de nossos negócios, com os quais estivermos tratando sobre potenciais operações de fusão, aquisição ou incorporação.
-Para terceiros indicados por você. Podemos compartilhar seus dados pessoais com terceiros que tenham sido indicados por você, mediante a sua solicitação.</p>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte3"></a>
-<h3 class="cargo">3. Por Quanto Tempo Seus Dados São Tratados?</h3> 
-<p>A Motherboard Informática tem o compromisso de tratar os seus dados pessoais somente pelo período que for necessário para alcançar as finalidades específicas de cada tratamento,
-com a retenção dos dados pela menor duração possível, levando em consideração todas as obrigações legais e regulatórias existentes.
-Nesse sentido, os prazos de retenção de cada categoria de dados pessoais são definidos pela Motherboard Informática de acordo com as características específicas de cada tratamento,
-incluindo a natureza dos dados, as finalidades para o tratamento, as obrigações legais ou regulatórias existentes, entre outros critérios relevantes para essa definição.
-Em determinados casos, temos obrigações legais que determinam a guarda dos dados pessoais por períodos específicos, a exemplo dos dados de seu endereço IP, hora e data de cada 
-acesso ao nosso site, que precisam ser retidos pelo menos por 6 meses, em observância ao artigo 15 do Marco Civil da Internet.</p>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte4"></a>
-<h3 class="cargo"> 4. Transferências Internacionais de Dados </h3>
-<p>Em certas circunstâncias, como quando utilizarmos serviços de hospedagem em nuvem localizados em outros países ou quando necessitarmos proceder com a transferência de dados 
-para outros países, adotaremos as medidas exigidas por lei para assegurar que seus dados pessoais continuem protegidos, e que essa transferência seja realizada de acordo com um
-dos mecanismos de transferência previstos na LGPD.</p>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte5"></a>
-<h3 class="cargo">5. Cookies</h3> 
-<p>Cookies são pequenos arquivos de texto que ficam armazenados em seu navegador ou em seu dispositivo e que são disparados quando você acessa grande parte dos sites disponíveis
-na internet, inclusive o nosso. Eles servem, entre outras finalidades, para permitir que suas preferências sejam reconhecidas e que o nosso site seja mostrado para você de acordo
-com essas preferências, a exemplo da língua em que ele é disponibilizado. Além disso, cookies podem ser utilizados para avaliar métricas de performance, identificar problemas de
-uso, permitir o funcionamento correto do site e coletar informações sobre o comportamento do usuário.Existem tipos distintos de cookies. 
-Em nosso site, nós poderemos utilizar os seguintes cookies:
-Cookies estritamente necessários. São essenciais para o funcionamento de nosso site, para garantir a sua segurança e performance adequada, sem os quais ele não funcionaria corretamente.
-Cookies preferenciais. Armazenam informações sobre suas preferências, como, por exemplo, o seu idioma e sua região, permitindo uma melhor experiência de navegação no site.
-Cookies de análise. Coletam informações sobre o seu comportamento durante a navegação em nosso site, como as páginas que são acessadas, o tempo de visita, as páginas pouco 
-acessadas, de modo a nos permitir melhorar a qualidade do site.
-Caso você se oponha à sua utilização você pode recusar a instalação desses cookies ou removê-los manualmente acessando a área de configurações do seu navegador ou dispositivo, 
-com exceção dos cookies estritamente necessários, que são fundamentais para o funcionamento correto do site.
-Para mais informações sobre como remover cookies do seu dispositivo, você pode acessar os seguintes sites, de acordo com o navegador que você utiliza. Ao acessar os respectivos
-sites, você estará sujeito às políticas de privacidade de outras empresas, que podem não ser condizentes ou similares aos termos desta Política:
-Como remover cookies no Google Chrome
-Como remover cookies no Mozilla Firefox
-Como remover cookies no Internet Explorer
-Como remover cookies no Safari. </p>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte6"></a>
-<h3 class="cargo">6. Segurança Dos Dados Pessoais Armazenados</h3>
-<p>A plataforma se compromete a aplicar as medidas técnicas e organizativas aptas a proteger os dados pessoais de acessos não autorizados e de situações de destruição, perda, 
-alteração, comunicação ou difusão de tais dados. A plataforma não se exime de responsabilidade por culpa exclusiva de terceiros, como em caso de ataque de hackers ou crackers, 
-ou culpa exclusiva do usuário, como no caso em que ele mesmo transfere seus dados a terceiros. O site se compromete a comunicar o usuário em caso de alguma violação de segurança
-dos seus dados pessoais. Os dados pessoais armazenados são tratados com confidencialidade, dentro dos limites legais. No entanto, podemos divulgar suas informações pessoais caso
-sejamos obrigados pela lei para fazê-lo ou se você violar nossos Termos de Uso. </p>
-</div>
-<br/>
-<div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
-<a name="parte7"></a>
-<h3 class="cargo"> 7. Seus Direitos Como Titular de Dados</h3>
-<p> Você possui uma série de direitos em relação aos seus dados pessoais e estamos comprometidos em respeitar esses direitos, garantindo que você possa exercê-los a qualquer tempo.
-Entre os direitos disponíveis a você, estão os seguintes:
-Confirmação da existência do tratamento. 
-Acesso aos seus dados pessoais.
-Retificação de dados pessoais que estejam incompletos, inexatos ou desatualizados.
-Anonimização, bloqueio ou exclusão, nos casos em que forem tratados dados desnecessários, excessivos ou em desconformidade com a legislação. 
-Portabilidade, na forma da regulamentação expedida pela Autoridade Nacional de Proteção de Dados.
-Exclusão de dados tratados com consentimento, nos casos em que essa for a base legal para uma determinada atividade de tratamento, exceto nas hipóteses de conservação de dados 
-pessoais previstas na LGPD.
-Informações sobre compartilhamento de dados com entidades públicas e privadas.
-Informações sobre a possibilidade de negar seu consentimento, esse for a base legal aplicável para o tratamento de dados pessoais, com a indicação das consequências dessa negativa.
-<br><br>
-Revogação de consentimento, a qualquer tempo, de forma fácil e gratuita, bastando comunicar sua decisão ao Encarregado da Motherboard Informática. A revogação do consentimento 
-não invalida ou torna ilegítimas as atividades de tratamento de dados pessoais que tenham sido concretizadas antes da data da revogação.
-Oposição ao tratamento, nos casos em que o consentimento não for a base legal aplicável ao tratamento dos seus dados pessoais, e quando houver algum descumprimento à legislação.
-A Motherboard avaliará se a sua oposição é justificada ou não, adotando as medidas necessárias para suspender o tratamento ou informar os fundamentos pelos quais compreende que
-o tratamento é lícito e permitido. Realizar uma reclamação, perante a Autoridade Nacional de Proteção de Dados. Todos esses direitos podem ser exercidos por você a qualquer 
-tempo, de modo gratuito, salvo se a cobrança de uma taxa eventualmente for permitida de acordo com a legislação ou regulamentação vigente, e nós nos comprometemos a envidar seus
-melhores esforços para atender às suas solicitações de forma transparente e célere.Para garantir que os direitos estão sendo exercidos por você ou por seu representante legal 
-devidamente constituído, a Motherboard Informática poderá solicitar informações ou comprovações necessárias acerca da sua identidade, no sentido de evitar fraudes e garantir a 
-sua privacidade, para que seus dados pessoais não sejam compartilhados com quem não tenha autorização para tanto. Atenderemos às suas solicitações dentro de um prazo razoável, 
-em conformidade com a legislação aplicável, lembrando que somente poderemos responder a algumas solicitações depois de recebermos as confirmações previstas acima.</p>
+        </div>
+        <br />
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <a name="parte2"></a>
+            <h3 class="cargo"> 2. Com Quem Seus Dados Pessoais São Compartilhados?</h3>
+            <p>Poderemos compartilhar os seus dados pessoais com:
+                Nossos parceiros, prestadores de serviços e fornecedores. Para a consecução de nossas atividades,
+                mantemos relacionamento e contratamos diversos parceiros, prestadores de serviços
+                e fornecedores, que são essenciais para os nossos negócios. Alguns desses parceiros, prestadores de
+                serviços e fornecedores podem precisar ter acesso aos dados pessoais que
+                coletamos para exercer suas funções, como prestadores de serviços de tecnologia da informação, serviços
+                de hospedagem de dados, serviços de recrutamento e seleção, serviços de
+                gerenciamento e promoção de eventos, provedores de softwares de produtividade, provedores de softwares
+                de gestão de contatos, auditores, correspondentes, tradutores, entre outros
+                prestadores de serviços, casos nos quais poderemos compartilhar seus dados pessoais com eles.
+                Autoridades Governamentais. Podemos compartilhar os seus dados pessoais com toda e qualquer Autoridade
+                Governamental que os solicite, inclusive com órgãos de fiscalização das atividades laborais ou de
+                atividades financeiras, órgãos reguladores, como órgãos do Poder Judiciário ou Autoridades Policiais.
+                Com terceiros interessados na combinação ou aquisição de nossos negócios. Podemos compartilhar os seus
+                dados pessoais com terceiros interessados na combinação ou aquisição de nossos negócios, com os quais
+                estivermos tratando sobre potenciais operações de fusão, aquisição ou incorporação.
+                Para terceiros indicados por você. Podemos compartilhar seus dados pessoais com terceiros que tenham
+                sido indicados por você, mediante a sua solicitação.</p>
+        </div>
+        <br />
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <a name="parte3"></a>
+            <h3 class="cargo">3. Por Quanto Tempo Seus Dados São Tratados?</h3>
+            <p>A Motherboard Informática tem o compromisso de tratar os seus dados pessoais somente pelo período que for
+                necessário para alcançar as finalidades específicas de cada tratamento,
+                com a retenção dos dados pela menor duração possível, levando em consideração todas as obrigações legais
+                e regulatórias existentes.
+                Nesse sentido, os prazos de retenção de cada categoria de dados pessoais são definidos pela Motherboard
+                Informática de acordo com as características específicas de cada tratamento,
+                incluindo a natureza dos dados, as finalidades para o tratamento, as obrigações legais ou regulatórias
+                existentes, entre outros critérios relevantes para essa definição.
+                Em determinados casos, temos obrigações legais que determinam a guarda dos dados pessoais por períodos
+                específicos, a exemplo dos dados de seu endereço IP, hora e data de cada
+                acesso ao nosso site, que precisam ser retidos pelo menos por 6 meses, em observância ao artigo 15 do
+                Marco Civil da Internet.</p>
+        </div>
+        <br />
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <a name="parte4"></a>
+            <h3 class="cargo"> 4. Transferências Internacionais de Dados </h3>
+            <p>Em certas circunstâncias, como quando utilizarmos serviços de hospedagem em nuvem localizados em outros
+                países ou quando necessitarmos proceder com a transferência de dados
+                para outros países, adotaremos as medidas exigidas por lei para assegurar que seus dados pessoais
+                continuem protegidos, e que essa transferência seja realizada de acordo com um
+                dos mecanismos de transferência previstos na LGPD.</p>
+        </div>
+        <br />
 
-</div>
-</div>
-</div>
-<br/>
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <a name="parte5"></a>
+            <h3 class="cargo">5. Segurança Dos Dados Pessoais Armazenados</h3>
+            <p>A plataforma se compromete a aplicar as medidas técnicas e organizativas aptas a proteger os dados
+                pessoais de acessos não autorizados e de situações de destruição, perda,
+                alteração, comunicação ou difusão de tais dados. A plataforma não se exime de responsabilidade por culpa
+                exclusiva de terceiros, como em caso de ataque de hackers ou crackers,
+                ou culpa exclusiva do usuário, como no caso em que ele mesmo transfere seus dados a terceiros. O site se
+                compromete a comunicar o usuário em caso de alguma violação de segurança
+                dos seus dados pessoais. Os dados pessoais armazenados são tratados com confidencialidade, dentro dos
+                limites legais. No entanto, podemos divulgar suas informações pessoais caso
+                sejamos obrigados pela lei para fazê-lo ou se você violar nossos Termos de Uso. </p>
+        </div>
+        <br />
+        <div class="container py-5 fundoprod justifyText" style="background-color: #33373f">
+            <a name="parte6"></a>
+            <h3 class="cargo"> 6. Seus Direitos Como Titular de Dados</h3>
+            <p> Você possui uma série de direitos em relação aos seus dados pessoais e estamos comprometidos em
+                respeitar esses direitos, garantindo que você possa exercê-los a qualquer tempo.
+                Entre os direitos disponíveis a você, estão os seguintes:
+                Confirmação da existência do tratamento.
+                Acesso aos seus dados pessoais.
+                Retificação de dados pessoais que estejam incompletos, inexatos ou desatualizados.
+                Anonimização, bloqueio ou exclusão, nos casos em que forem tratados dados desnecessários, excessivos ou
+                em desconformidade com a legislação.
+                Portabilidade, na forma da regulamentação expedida pela Autoridade Nacional de Proteção de Dados.
+                Exclusão de dados tratados com consentimento, nos casos em que essa for a base legal para uma
+                determinada atividade de tratamento, exceto nas hipóteses de conservação de dados
+                pessoais previstas na LGPD.
+                Informações sobre compartilhamento de dados com entidades públicas e privadas.
+                Informações sobre a possibilidade de negar seu consentimento, esse for a base legal aplicável para o
+                tratamento de dados pessoais, com a indicação das consequências dessa negativa.
+                <br><br>
+                Revogação de consentimento, a qualquer tempo, de forma fácil e gratuita, bastando comunicar sua decisão
+                ao Encarregado da Motherboard Informática. A revogação do consentimento
+                não invalida ou torna ilegítimas as atividades de tratamento de dados pessoais que tenham sido
+                concretizadas antes da data da revogação.
+                Oposição ao tratamento, nos casos em que o consentimento não for a base legal aplicável ao tratamento
+                dos seus dados pessoais, e quando houver algum descumprimento à legislação.
+                A Motherboard avaliará se a sua oposição é justificada ou não, adotando as medidas necessárias para
+                suspender o tratamento ou informar os fundamentos pelos quais compreende que
+                o tratamento é lícito e permitido. Realizar uma reclamação, perante a Autoridade Nacional de Proteção de
+                Dados. Todos esses direitos podem ser exercidos por você a qualquer
+                tempo, de modo gratuito, salvo se a cobrança de uma taxa eventualmente for permitida de acordo com a
+                legislação ou regulamentação vigente, e nós nos comprometemos a envidar seus
+                melhores esforços para atender às suas solicitações de forma transparente e célere.Para garantir que os
+                direitos estão sendo exercidos por você ou por seu representante legal
+                devidamente constituído, a Motherboard Informática poderá solicitar informações ou comprovações
+                necessárias acerca da sua identidade, no sentido de evitar fraudes e garantir a
+                sua privacidade, para que seus dados pessoais não sejam compartilhados com quem não tenha autorização
+                para tanto. Atenderemos às suas solicitações dentro de um prazo razoável,
+                em conformidade com a legislação aplicável, lembrando que somente poderemos responder a algumas
+                solicitações depois de recebermos as confirmações previstas acima.
+            </p>
+
+        </div>
+    </div>
+    </div>
+    <br />
 
 
-<footer class="bg-body-tertiary fixarRodape">
-	      <br />
-	      <div class="container-fluid">
-	          <div class="row">
-	              <div class="col">
-	                  <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
-	                      
-						  <a  th:href="@{/}">
-						  						  			       <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
-																 
-						  						  			    </a>
-	                  </div>
-	              </div>
-	              <div class="col">
-	                  <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
-	                      
-						  <a  th:href="@{/conta}">
-						  			        <i class="bi bi-person-square"  style="font-size: 2rem; color: white;"></i>
+    <footer class="bg-body-tertiary fixarRodape">
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
 
-						  			    </a>
-	                  </div>
-	              </div>
-	              <div class="col">
-	                  <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
-	                     
-						  <a  th:href="@{/SobreNos}">
-							<i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
+                        <a th:href="@{/}">
+                            <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
 
-						  						  			    </a>
-	                  </div>
-	              </div>
-	          </div>
-	      </div>
-	  </footer>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
 
-	    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
-	        <div class="container text-center text-md-left">
+                        <a th:href="@{/conta}">
+                            <i class="bi bi-person-square" style="font-size: 2rem; color: white;"></i>
 
-	            <div class="row text-center text-md-left">
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
 
-	                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-	                    <a class="navbar-brand">
+                        <a th:href="@{/SobreNos}">
+                            <i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
 
-	                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
-	                    </a>
-	                    <section class="mb-4">
-	                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-	                                class="bi bi-facebook"></i></a>
-	                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-	                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-	                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-	                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-	                                class="bi bi-instagram"></i></a>
-	                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-	                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-	                                class="bi bi-youtube"></i></a>
-	                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-	                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-	                    </section>
-	                </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-	                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-	                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-	                    <p>
-	                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+        <div class="container text-center text-md-left">
 
-	                    </p>
-	                    <p>
-	                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
-	                    </p>
-	                    <p>
-	                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+            <div class="row text-center text-md-left">
 
-	                    </p>
-	                </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <a class="navbar-brand">
 
-	                <hr class="mb-4">
-	                <div>
-	                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-	                </div>
+                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+                    </a>
+                    <section class="mb-4">
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
+                </div>
 
-	            </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+                    <p>
+                        <a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
 
-	        </div>
-	    </footer>
-        <!-- Bootstrap JavaScript Libraries -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+                    </p>
+                    <p>
+                        <a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+                    </p>
+                    <p>
+                        <a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+                <div>
+                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

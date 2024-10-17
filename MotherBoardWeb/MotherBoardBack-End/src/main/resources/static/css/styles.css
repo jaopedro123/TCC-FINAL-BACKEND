@@ -2123,70 +2123,51 @@ display: none;
 	color: #ffe865;
 }
 .squaredoADM {
-    width: 150px;
-    height: 150px;
-    margin: 10px;
-	text-shadow: 
-		0 0 5px #878787, 
-		0 0 5px #878787; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: #fff;
-    font-size: 24px;
-    text-decoration: none;
-    border-radius: 16px;
-    background: linear-gradient(145deg, #494949, #6d6d6d); 
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
+	width: 160px;
+	height: 160px;
+	margin: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	color: #fff;
+	font-size: 24px;
+	text-decoration: none;
+	border-radius: 16px;
+	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
 }
 .squaredoADM::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: #ffffff1a;
-    transform: rotate(45deg);
-    transition: all 0.3s ease;
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: rgba(255, 255, 255, 0.1);
+	transform: rotate(45deg);
+	transition: all 0.3s ease;
 }
-
 .squaredoADM:hover::before {
-    top: -30%;
-    left: -30%;
-    background: #ffffff4d; 
+	top: -30%;
+	left: -30%;
+	background: rgba(255, 255, 255, 0.2);
 }
-
 .squaredoADM:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 30px #8f8e8e; 
+	transform: translateY(-10px);
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
-
 .squaredoADM h5 {
-    margin: 10px 0 0;
-    font-weight: 600;
-    font-size: 16px;
-    z-index: 1;
+	margin: 10px 0 0;
+	font-weight: 600;
+	font-size: 16px;
+	z-index: 1;
 }
 
-.btnCadFunc{
-	color: white;
-    background-color: #694a8f;
-}
 
-.btnCadFunc:hover{
-	color: white;
-	background-color: #8542bd;
-}
-.btnCadFunc:hover:first-child:active, :not(.btn-check)+.btnCadFunc:hover:active {
-	color: white;
-    background-color: #7c3bb1;
-}
 .colorPagelink{
 	color:#b07fec;
 }
@@ -2485,15 +2466,9 @@ color: #643c96;
 .h3-tabela{
 	background-color: #6f42c1;
 	color: #ffffff; 
-	text-shadow: 
-		0 0 4px #c0c0c0, 
-		0 0 4px #c0c0c0; 
 }
 .intra-header{
 	background-color: #303336;
-	text-shadow: 
-		0 0 5px #c0c0c0, 
-		0 0 10px #c0c0c0; 
 }
 
 .btnIntranet {
@@ -2510,7 +2485,7 @@ color: #643c96;
 }
 
 .btnIntranet:hover {
-    box-shadow: 0 0 20px rgba(122, 122, 122, 0.8), 0 0 20px rgba(122, 122, 122, 0.8);
+    transform: scale(1.05);
 }
 
 .linkhoverColor:hover{
