@@ -3,10 +3,21 @@ var extraImagesCount = 0;
 $(document).ready(function () {
 
     $("#fileImage").change(function () {
-        if (!checkFileSize(this)) {
+        if (!checkFileSize(this, "thumbnail")) {
             return;
         }
-        showImageThumbnail(this);
+
+        addCerto(this)
+        showImagemThumbnail(this, "thumbnail");
+    });
+
+    $("#imagemExtra1").change(function () {
+        if (!checkFileSize(this, "imagemThumbnailExtra1")) {
+            return;
+        }
+
+        addCerto(this)
+        showImagemThumbnail(this, "imagemThumbnailExtra1");
     });
 
     $("input[name='imagemExtra']").each(function(index) {
@@ -14,25 +25,16 @@ $(document).ready(function () {
 
         $(this).change(function() {
             showExtraImageThumbnail(this, index);
-            checkFileSizeImgExtra(this);
+            checkFileSize(this);
         })
     });
-
     $("a[name='linkRemoverImagemExtra']").each(function(index) {
         $(this).click(function() {
             removerImagemExtra(index);
         })
     })
-});
 
-function showImageThumbnail(fileInput) {
-    var file = fileInput.files[0];
-    var reader = new FileReader();
-    reader.onload = function (e) {
-        $("#thumbnail").attr("src", e.target.result);
-    };
-    reader.readAsDataURL(file);
-}
+});
 
 function showExtraImageThumbnail(fileInput, index) {
     var file = fileInput.files[0];
@@ -49,7 +51,7 @@ function showExtraImageThumbnail(fileInput, index) {
     };
     reader.readAsDataURL(file);
 
-    if(index >= extraImagesCount - 1) {
+    if(index < 4) {
         addNextExtraImageSection(index + 1);
     }
 }
@@ -79,6 +81,9 @@ function addNextExtraImageSection(index) {
         <input type="file" name="imagemExtra" class="form-control" id="fileInput${index}"
                onchange="showExtraImageThumbnail(this, ${index})"
                accept="image/png, image/jpeg" />
+               <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1 MB.
+                            </div>
     </div>
 
     <!-- Campo oculto para ID da imagem -->
@@ -88,44 +93,30 @@ function addNextExtraImageSection(index) {
 
     htmlLinkRemove = `
         <button type="button" class="btn btn-danger d-flex align-items-center" 
-        onclick="removerImagemExtra(${index - 1})" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></button>
+        onclick="removerImagemExtra(${index})" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></button>
     `;
 
     $("#divImagensProduto").append(htmlImagemExtra);
 
-    $("#imagemExtraHeader" + (index - 1)).append(htmlLinkRemove);
+    $("#imagemExtraHeader" + index).append(htmlLinkRemove);
 
     extraImagesCount++;
 
 }
 
-function checkFileSize(fileInput) {
-    const fileSize = fileInput.files[0].size;
-
-    if (fileSize > 1 * 1024 * 1024) {
-        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1MB! ");
-        fileInput.setCustomValidity("Você só pode escolher imagens abaixo de 1MB! ");
-        fileInput.reportvalidity();
-
-        return false;
-    }
-    else {
-        fileInput.setCustomValidity("");
-
-        return true;
-    }
+function showImagemThumbnail(fileInput, idImg) {
+    var file = fileInput.files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+        $(`#${idImg}`).attr("src", e.target.result);
+    };
+    reader.readAsDataURL(file);
 }
 
-function checkFileSizeImgExtra(fileInput) {
-    const imgSize = fileInput.files[0].size;
 
-    if (imgSize > 1 * 1024 * 1024) {
-        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB!");
-        return false;
-    }
-
-    return true;
-
+function addCerto(fileInput) {
+    fileInput.classList.remove('is-invalid');
+    fileInput.classList.add('is-valid');
 }
 
 function showModalDialog(title, message) {

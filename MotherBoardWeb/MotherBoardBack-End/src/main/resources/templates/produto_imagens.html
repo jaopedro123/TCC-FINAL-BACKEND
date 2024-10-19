@@ -6,7 +6,6 @@
         <div th:fragment="conteudo" th:remove="tag">
             <div class="row p-4" id="divImagensProduto">
 
-                <!-- Imagem principal -->
                 <div class="col-md-6 col-sm-12 mt-2 p-2">
                     <label>Imagem Principal: [[${produto.imagem_principal}]]</label>
                     <div class="file-input-container">
@@ -19,48 +18,147 @@
                             th:required="${produto.imagem_principal == null}"
                             accept="image/png, image/jpeg" class="form-control" />
 
-                        <input type="hidden" th:field="*{imagem_principal}">
                         <div class="invalid-feedback">
                             Por favor, selecione uma imagem.
                         </div>
+                        <input type="hidden" th:field="*{imagem_principal}">
                     </div>
                 </div>
 
-                <!-- Imagens adicionais -->
-                <th:block th:each="produtoImagem, status : ${produto.imagens}">
-                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${status.index}">
-                        <label>Imagem Extra #[[${status.index + 1}]]: [[${produtoImagem.nome}]]</label>
-                        <a name="linkRemoverImagemExtra" class="btn btn-danger link-remover d-flex align-items-center" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></a>
-
+                <div id="divProdutoEditar" style="display: none;">
+                    <th:block th:each="produtoImagem, status : ${produto.imagens}">
+                        <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${status.index}">
+                            <label>Imagem Extra #[[${status.index + 1}]]: [[${produtoImagem.nome}]]</label>
+                            <a name="linkRemoverImagemExtra" class="btn btn-danger link-remover d-flex align-items-center" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></a>
+                            <div class="file-input-container">
+                                <div class="my-1">
+                                    <img th:id="'extraThumbnail' + ${status.index}" th:src="@{${produtoImagem.imagemPath}}"
+                                        alt="Imagem extra #[[${status.index}]] preview"
+                                        class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                                </div>
+                                <input type="file" name="imagemExtra"
+                                    accept="image/png, image/jpeg" class="form-control" />
+                                <div class="invalid-feedback">
+                                    A imagem deve ter no máximo 1 MB.
+                                </div>
+                            </div>
+                            <input type="hidden" name="imagemIDs" th:id="'imagemId' + ${status.index}"
+                                th:value="${produtoImagem.id}" />
+                            <input type="hidden" name="imagemNomes" th:id="'imagemNome' + ${status.index}"
+                                th:value="${produtoImagem.nome}" />
+                        </div>
+                    </th:block>
+                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                        <label>Imagem Extra #[[${numeroDeImagensExtras + 1}]]:</label>
+                        <button type="button" class="btn btn-danger d-flex align-items-center"
+                            onclick="removerImagemExtra(0)" title="Remover essa imagem"
+                            style="position: absolute;margin-left: 160px;margin-top: 5px;">
+                            <i class="bi bi-trash3-fill fs-4"></i>
+                        </button>
                         <div class="file-input-container">
                             <div class="my-1">
-                                <img th:id="'extraThumbnail' + ${status.index}" th:src="@{${produtoImagem.imagemPath}}"
-                                    alt="Imagem extra #[[${status.index}]] preview"
+                                <img th:id="'extraThumbnail' + ${numeroDeImagensExtras}"
+                                    th:src="@{/imagens/image-thumbnail.png}"
                                     class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
                             </div>
                             <input type="file" name="imagemExtra"
                                 accept="image/png, image/jpeg" class="form-control" />
+                                <div class="invalid-feedback">
+                                    A imagem deve ter no máximo 1 MB.
+                                </div>
                         </div>
-                        <input type="hidden" name="imagemIDs" th:id="'imagemId' + ${status.index}"
-                            th:value="${produtoImagem.id}" />
-                        <input type="hidden" name="imagemNomes" th:id="'imagemNome' + ${status.index}"
-                            th:value="${produtoImagem.nome}" />
-                    </div>
-                </th:block>
-
-                <!-- Campo para adicionar nova imagem extra -->
-                <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
-                    <label>Imagem Extra #[[${numeroDeImagensExtras + 1}]]:</label>
-                    <div class="file-input-container">
-                        <div class="my-1">
-                            <img th:id="'extraThumbnail' + ${numeroDeImagensExtras}"
-                                th:src="@{/imagens/image-thumbnail.png}"
-                                class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
-                        </div>
-                        <input type="file" name="imagemExtra"
-                            accept="image/png, image/jpeg" class="form-control" />
                     </div>
                 </div>
+
+                <div id="divProdutoCriar"  style="display: none;">
+
+                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                        <label>Imagem Extra #1:</label>
+                        <div class="file-input-container">
+                            <div class="my-1">
+                                <img th:id="imagemThumbnailExtra1"
+                                    th:src="@{/imagens/image-thumbnail.png}"
+                                    class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                            </div>
+                            <input type="file" id="imagemExtra1" name="imagemExtra"
+                                accept="image/png, image/jpeg" class="form-control" />
+    
+                            <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1 MB.
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                        <label>Imagem Extra #2:</label>
+                        <div class="file-input-container">
+                            <div class="my-1">
+                                <img th:id="imagemThumbnailExtra2"
+                                    th:src="@{/imagens/image-thumbnail.png}"
+                                    class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                            </div>
+                            <input type="file" id="imagemExtra2" name="imagemExtra"
+                                accept="image/png, image/jpeg" class="form-control" />
+    
+                            <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1 MB.
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                        <label>Imagem Extra #3:</label>
+                        <div class="file-input-container">
+                            <div class="my-1">
+                                <img th:id="imagemThumbnailExtra3"
+                                    th:src="@{/imagens/image-thumbnail.png}"
+                                    class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                            </div>
+                            <input type="file" id="imagemExtra3" name="imagemExtra"
+                                accept="image/png, image/jpeg" class="form-control" />
+    
+                            <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1 MB.
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                        <label>Imagem Extra #4:</label>
+                        <div class="file-input-container">
+                            <div class="my-1">
+                                <img th:id="imagemThumbnailExtra4"
+                                    th:src="@{/imagens/image-thumbnail.png}"
+                                    class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                            </div>
+                            <input type="file" id="imagemExtra4" name="imagemExtra"
+                                accept="image/png, image/jpeg" class="form-control" />
+    
+                            <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1 MB.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                        <label>Imagem Extra #5:</label>
+                        <div class="file-input-container">
+                            <div class="my-1">
+                                <img th:id="imagemThumbnailExtra5"
+                                    th:src="@{/imagens/image-thumbnail.png}"
+                                    class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                            </div>
+                            <input type="file" id="imagemExtra5" name="imagemExtra"
+                                accept="image/png, image/jpeg" class="form-control" />
+    
+                            <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1 MB.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
 
             </div>
         </div>

@@ -2,6 +2,18 @@ $(document).ready(function () {
     const dropdownMarca = $("#marca");
     const dropdownCategorias = $("#categoria");
 
+    $(document).ready(function() {
+        const titulo = $("#tituloDaPag").text();
+    
+        if (titulo.includes("Criar")) {
+            $("#divProdutoCriar").css("display", "block");
+
+        } else {
+            $("#divProdutoEditar").css("display", "block");
+        }
+    });
+    
+
     $("#buttonCancel").on("click", function () {
         window.location = "/MotherBoardAdmin/produtos";
     });
@@ -75,13 +87,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('#ProdutoForm');
 
     // Adicionar eventos de input e change para validar enquanto o usuário digita
-    document.querySelectorAll('input, select').forEach(input => {
+    document.querySelectorAll('.validar').forEach(input => {
         input.addEventListener('input', function () {
             validateInput(input); 
-        });
-
-        input.addEventListener('change', function () {
-            validateInput(input);
         });
     });
 
@@ -136,31 +144,78 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    const maxSize = 1 * 1024 * 1024;
+
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        // Verifica se o formulário é válido com Bootstrap
         if (!form.checkValidity()) {
             form.classList.add('was-validated');
             return;
         }
 
-        // Validação do campo "Nome da marca" e "Alias"
         const nomeInput = form.querySelector('input[name="nome"]');
         const aliasInput = form.querySelector('input[name="alias"]');
         const isNomeValido = validateInput(nomeInput);
         const isAliasValido = validateInput(aliasInput);
 
-        // Se alguma validação falhar, não continua
         if (!isNomeValido || !isAliasValido) {
             return; 
         }
 
-        // Executa a validação de unicidade antes de submeter
+        const imagemExtras = document.querySelectorAll('input[name="imagemExtra"]');
+        let isValid = true; 
+
+        imagemExtras.forEach(function(imagemExtra) {
+
+            if (imagemExtra.files && imagemExtra.files[0]) {
+                const fileSize = imagemExtra.files[0].size;
+
+                if (fileSize > maxSize) {
+                    
+                    const invalidFeedback = imagemExtra.nextElementSibling; 
+                    invalidFeedback.style.display = "block";
+                    imagemExtra.classList.add("is-invalid");
+                    imagemExtra.classList.remove("is-valid");
+
+                    isValid = false; 
+                } else {
+                    const invalidFeedback = imagemExtra.nextElementSibling;
+                    invalidFeedback.style.display = "none";
+                    imagemExtra.classList.remove("is-invalid");
+                    imagemExtra.classList.add("is-valid");
+                }
+            }
+        });
+
+        if (!isValid) {
+            showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1MB! ");
+            return;
+        }
+
         checkUniqueProduto(form, nomeInput);
     });
 });
+
+function checkFileSize(fileInput, idImg) {
+    const fileSize = fileInput.files[0].size;
+
+    if (fileSize > 1 * 1024 * 1024) {
+        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1MB! ");
+        $(fileInput).next('.invalid-feedback').text("A imagem deve ter no máximo 1MB.");
+        fileInput.classList.remove('is-valid');
+        fileInput.classList.add('is-invalid');
+
+        return false;
+    }
+    else {
+        fileInput.setCustomValidity("");
+
+        return true;
+    }
+}
+
 
 // Validação de unicidade antes de submeter o formulário
 function checkUniqueProduto(form, nomeInput) {
