@@ -94,7 +94,7 @@
                     <label for="categoria" class="form-label">Será filho de alguém? ou não terá pai:</label>
                     <select th:field="*{pai}" class="form-select" required
                         style="--bs-body-bg: #212529; --bs-body-color: none;">
-                        <option value="0">Sem pai :(</option>
+                        <option value="0">Não possui categoria pai</option>
                         <th:block th:each="categoria : ${listarCategorias}">
                             <option th:value="${categoria.id}">ID: [[${categoria.id}]], NOME: [[${categoria.nome}]]
                             </option>

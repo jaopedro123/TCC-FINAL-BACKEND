@@ -207,7 +207,7 @@
                 }
 
                 if (file.size > maxSize) {
-                    showModalDialog('Desculpe...', `A imagem deve ter no máximo ${maxSizeMB} MB.`);
+                    showModalDialog('Desculpe...', `Você só pode escolher imagens abaixo de 1 MB!`);
                     inputElement.classList.add('is-invalid');
                     inputElement.nextElementSibling.textContent = `A imagem deve ter no máximo ${maxSizeMB} MB.`;
                     return false;

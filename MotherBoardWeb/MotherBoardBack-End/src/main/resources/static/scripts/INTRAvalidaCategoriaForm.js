@@ -1,5 +1,6 @@
 $(document).ready(function () {
     const form = $('#CategoriaForm');
+    let isImageValid = true; 
 
     // Inicialização de eventos
     initializeEventHandlers();
@@ -20,7 +21,13 @@ $(document).ready(function () {
             return;
         }
 
-        // Validação personalizada para 'nome' e 'alias'
+        // Verifica se a imagem é válida
+        if (!isImageValid) {
+            showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB!");
+            return;
+        }
+
+        // Validação para o 'nome' e 'alias'
         const isNomeValido = validateInput($('#nome'));
         const isAliasValido = validateInput($('#alias'));
 
@@ -39,10 +46,35 @@ $(document).ready(function () {
 
     // Verifica tamanho da imagem ao selecionar um arquivo
     $('#foto').on('change', function () {
-        validateImageSize(this, 1);
+        isImageValid = validateImageSize(this, 1);
+        if (!isImageValid) {
+            showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB!");
+        }
     });
-
 });
+
+// Função para validar o tamanho da imagem
+function validateImageSize(inputElement, maxSizeMB) {
+    const file = inputElement.files[0];
+
+    if (!file) {
+        return true; // Se não houver imagem selecionada, é válido
+    }
+
+    const maxSize = maxSizeMB * 1024 * 1024; // Converter MB para bytes
+
+    if (file.size > maxSize) {
+        $(inputElement).addClass('is-invalid');
+        $(inputElement).next('.invalid-feedback').text(`A imagem deve ter no máximo ${maxSizeMB} MB.`);
+        return false; // Retorna falso se o arquivo for inválido
+    } else {
+        $(inputElement).removeClass('is-invalid').addClass('is-valid');
+        $(inputElement).next('.invalid-feedback').text('');
+        showImageThumbnail(inputElement);
+        return true; // Retorna verdadeiro se o arquivo for válido
+    }
+}
+
 
 
 // Função para validar um campo de entrada
@@ -96,28 +128,6 @@ function setInvalid($input, message) {
 function setValid($input) {
     $input.removeClass('is-invalid').addClass('is-valid');
     $input.next('.invalid-feedback').text('');
-}
-
-// Função para validar o tamanho da imagem
-function validateImageSize(inputElement, maxSizeMB) {
-    const file = inputElement.files[0];
-
-    if (!file) {
-        return;
-}
-
-    const maxSize = maxSizeMB * 1024 * 1024; // Converter MB para bytes
-
-    if (file.size > maxSize) {
-        showModalDialog("Erro", `Você só pode escolher imagens abaixo de ${maxSizeMB} MB!`);
-        $(inputElement).addClass('is-invalid');
-        $(inputElement).next('.invalid-feedback').text(`A imagem deve ter no máximo ${maxSizeMB} MB.`);
-    } else {
-        $(inputElement).removeClass('is-invalid');
-        $(inputElement).addClass('is-valid');
-        $(inputElement).next('.invalid-feedback').text('');
-        showImageThumbnail(inputElement);
-    }
 }
 
 // Função para exibir o modal com mensagens de erro
