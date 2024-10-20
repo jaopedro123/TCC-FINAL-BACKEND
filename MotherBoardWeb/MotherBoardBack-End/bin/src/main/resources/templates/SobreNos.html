@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme=dark>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+ <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <title>Motherboard - Sobre Nós</title>
+</head>
+
+<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+    <input type="submit" />
+</form>
+
+<header class="mb-3">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
+        <div class="container-fluid">
+
+
+            <a th:href="@{/}" class="navbar-brand">
+                <img class="imgMother" th:src="@{/imagens/image-light.png}">
+            </a>
+
+
+                   
+                        <div class="btn-group dropstart iconsfigures">
+                            <button type="button" class="btn btn-conta-form-back-end nav-link"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle fs-1"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link" th:href="@{/conta}">
+                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                                </a>
+                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                                    <i class="bi bi-box-arrow-right"></i></a>
+
+                            </ul>
+                        </div>
+                   
+
+                </ul>
+            </div>
+        
+    </nav>
+</header>
+
+
+<body class="bg-dark text-light">
+    <div class="container rounded-5 p-3 mt-5" style="background-color: #2c3036;">
+        <div class="rounded-5 p-3 justifyText" style="background-color: #33373f;">
+            <h1 class="text-center mt-4">Quem nós Somos</h1>
+            <h6 class="text-center mb-4 descRoxo">BEM-VINDO A MOTHERBOARD TECNOLOGIC</h6>
+            <p>Projeto iniciando no ano de 2023, a Motherboard foi criada com o intuito de atuar principalmente no setor
+                de informática. Atualmente em 2024 ainda somos um grupo de estudantes do
+                terceiro ano do ensino médio que se interessam por tecnologia e
+                inovação. Acreditamos que, apesar da nossa idade, podemos fazer a diferença no mercado de trabalho,
+                especialmente na área de informática, onde vemos uma oportunidade de
+                crescimento e aprendizado. Escolhemos esse tema porque ele trabalha principalmente no setor de
+                informática, no qual possuímos certa dominância e temos como objetivo nos
+                aperfeiçoar cada vez mais na área de programação. Muitos clientes podem se perguntar por que escolhemos
+                o nome "Motherboard" para a nossa empresa. Explicamos que a
+                placa-mãe é um componente central em qualquer computador, simbolizando nossa paixão e foco no setor de
+                informática e tecnologia.<br><br>
+
+                A Motherboard nasceu do nosso desejo por tecnologia e empreendimento, nosso compromisso é garantir a
+                melhor experiência possível para nossos futuros clientes, oferecendo produtos de alta
+                qualidade, atendimento personalizado. Estamos empenhados em construir
+                uma relação de confiança, comprometimento e satisfação, sempre buscando inovações e
+                aprimoramentos que possam agregar valor ao nosso projeto. Apesar de ainda sermos jovens, nossa visão é
+                clara: queremos ser uma referência no mercado de e-commerce de
+                eletrônicos. Sabemos que essa é uma jornada desafiadora, mas estamos determinados a construir uma marca
+                sólida e confiável, que se destaca pela excelência em seus serviços. <br><br>
+
+                Agradecemos sua preferência ao nosso projeto, e convidamos todos a acompanharem de perto nossa
+                trajetória. A Motherboard está apenas começando, mas com muito empenho,
+                estamos certos de que conquistaremos nosso espaço no mercado e faremos a diferença.
+            </p>
+
+            <div class="p-3">
+                <div class="row border rounded">
+                    <div class="col-md-4 p-3">
+                        <div class="text-center">
+                            <i class="fas fa-bullseye fa-2x mb-3"></i>
+                            <h4>Missão</h4>
+                        </div>
+                        <p>Proporcionar aos nossos futuros clientes melhores qualidades de produto e serviços do
+                            Motherboard, transmitindo qualidade e confiança.</p>
+                    </div>
+
+                    <div class="col-md-4 p-3 bg-secondary">
+                        <div class="text-center">
+                            <i class="fas fa-eye fa-2x mb-3"></i>
+                            <h4>Visão</h4>
+                        </div>
+                        <p>Nós pretendemos ser referência no segmento de informática na região do Jd. Belval em Barueri
+                            (SP-Brasil).</p>
+                    </div>
+
+                    <div class="col-md-4 p-3 text-center">
+                        <i class="fas fa-thumbs-up fa-2x mb-3"></i>
+                        <h4>Valores</h4>
+                        <p>Gestão de Tempo Eficiente</p>
+                        <p>Comunicação Eficaz</p>
+                        <p>Comprometimento</p>
+                        <p>Proatividade</p>
+                        <p>Organização</p>
+                        <p>Honestidade</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class=" container mt-5 mb-5 rounded-5 p-5" style="background-color: #33373f">
+            <div class="row">
+                <h2 class="text-center descRoxo mb-5">
+                    Contate-nos <i class="bi bi-telephone-inbound-fill me-2"></i>
+                </h2>
+
+                <div class="col-md-3 bg-secondary rounded-5 p-3 mb-3 mx-auto">
+                    <h3> <i class="bi bi-telephone-fill"></i> Ligue para Nós </h3>
+                    <p>Telefone: (11) 9999-9999</p>
+                    <p>Telefone: (11) 8888-8888</p>
+                </div>
+
+                <div class="col-md-3 bg-secondary rounded-5 p-3 mb-3 mx-auto">
+                    <h3><i class="bi bi-clock-fill"></i> Expediente </h3>
+                    <p>Segunda à Sexta: 6h às 12h e das 13h às 20h.</p>
+                </div>
+
+                <div class="col-md-3 bg-secondary rounded-5 text-center p-3 mb-3 mx-auto">
+                    <h3>Redes Sociais</h3>
+                    <div class="justify-content-center">
+                        <a class="btn btn-outline-light btn-floating m-1 fs-2 border-0 botaozinhottw rounded-circle"
+                            href="https://x.com/MotherboardTec1" target="_blank" role="button"><i
+                                class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 fs-2 border-0 botaozinhoinsta rounded-circle"
+                            href="https://www.instagram.com/motherboard_tecnologic" target="_blank" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 fs-2 border-0 botaozinhoyou rounded-circle"
+                            href="https://www.youtube.com/@MotherboardTecnologic" target="_blank" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container swiper p-4 rounded-5">
+            <h2 class="text-center mb-3 descRoxo">Colaboradores <i class="bi bi-people-fill"></i></h2>
+
+            <div class="slider-wrapper mt-5 text-center"> <!--container carrossel-->
+
+                <div class="card-list swiper-wrapper"> <!--container de todos os integrantes-->
+                    <div class="card-item swiper-slide"> <!--container de cada integrante-->
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/Felipe.png" alt="Felipe" class="user-image">
+                                <h2 class="user-name">Felipe dos Santos</h2>
+                                <p class="user-profession">Gerente</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>
+                                    Felipe foi responsável pela administração geral do projeto. Criou o app usando PWA e TWA e realizando a hospedagem nas plataformas da AWS(S3), Azure(SQL Server) e Heroku.</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="card-item swiper-slide">
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/Joao.png" alt="João" class="user-image">
+                                <h2 class="user-name">João Pedro</h2>
+                                <p class="user-profession">Desenvolvedor Back-End</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>João foi responsável pelo desenvolvimento do back-end e criação do banco de dados, implementando sistemas de cadastro de funcionários, contas, marcas, inventário e categorias, com funcionalidades de filtragem e paginação para navegação eficiente.</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="card-item swiper-slide">
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/Lucas.jpg" alt="Lucas" class="user-image">
+                                <h2 class="user-name">Lucas Morais</h2>
+                                <p class="user-profession">Desenvolvedor Front-End</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>Responsável pelo desenvolvimento do back-end e
+                                    desenvolveu e auxiliou no sistemas de cadastro de produtos e categorias.</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="card-item swiper-slide">
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/melquis.jpeg" alt="Melquisedec" class="user-image">
+                                <h2 class="user-name">Melquisedec Reis</h2>
+                                <p class="user-profession">Desenvolvedor Front-End</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>Contribuiu para o projeto, página de “Política de Privacidade”</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="card-item swiper-slide">
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/Murilon.png" alt="Murilo" class="user-image">
+                                <h2 class="user-name">Murilo da Silva</h2>
+                                <p class="user-profession">Desenvolvedor Front-End</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>Murilo foi responsável pelo desenvolvimento do back-end em geral, criando sistemas eficientes de cadastro de produtos e categorias. Além disso, elaborou o Termo de Abertura do Projeto, contribuindo de forma significativa para a documentação do projeto.</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="card-item swiper-slide">
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/Nicolas.jpg" alt="Nicolas" class="user-image">
+                                <h2 class="user-name">Nicolas da Luz</h2>
+                                <p class="user-profession">Desenvolvedor Front-End</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>Nicolas contribuiu para a documentação do projeto e criação do formulário de atendimento ao Funcionário.</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="card-item swiper-slide">
+                        <div class="card-item-inner">
+                            <div class="card-front">
+                                <img src="Imagens/Stanley.jpg" alt="Stanley" class="user-image">
+                                <h2 class="user-name">Stanley Sousa</h2>
+                                <p class="user-profession">Desenvolvedor Front-End</p>
+                                <button class="message-button" onclick="flipCard(this)">Descrição</button>
+                            </div>
+                            <div class="card-back">
+                                <p>Stanley foi responsável pela estilização e validação do projeto com JavaScript como um todo, e criou a pagina "Sobre Nós".</p>
+                                <button class="back-button" onclick="flipCard(this)">Voltar</button>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+                
+                <div class="swiper-pagination mb-2"></div>
+                <div class="swiper-slide-button swiper-button-prev"></div>
+                <div class="swiper-slide-button swiper-button-next"></div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a class="text-decoration-none descRoxo" href="mailto:motherboardtecnologic1@gmail.com">
+                <i class="bi bi-envelope-fill"></i> motherboardtecnologic1@gmail.com.br
+            </a>
+        </div>
+
+    </div>
+
+	<footer class="bg-body-tertiary fixarRodape">
+		      <br />
+		      <div class="container-fluid">
+		          <div class="row">
+		              <div class="col">
+		                  <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
+		                      
+							  <a  th:href="@{/}">
+							  						  			       <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
+																	 
+							  						  			    </a>
+		                  </div>
+		              </div>
+		              <div class="col">
+		                  <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
+		                      
+							  <a  th:href="@{/conta}">
+							  			        <i class="bi bi-person-square"  style="font-size: 2rem; color: white;"></i>
+
+							  			    </a>
+		                  </div>
+		              </div>
+		              <div class="col">
+		                  <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
+		                     
+							  <a  th:href="@{/SobreNos}">
+								<i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
+
+							  						  			    </a>
+		                  </div>
+		              </div>
+		          </div>
+		      </div>
+		  </footer>
+
+		    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+		        <div class="container text-center text-md-left">
+
+		            <div class="row text-center text-md-left">
+
+		                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+		                    <a class="navbar-brand">
+
+		                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+		                    </a>
+		                    <section class="mb-4">
+                                <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                        class="bi bi-facebook"></i></a>
+                                <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                                    href="https://x.com/MotherboardTec1" role="button"><i class="bi bi-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                                    href="https://www.instagram.com/motherboard_tecnologic" role="button"><i
+                                        class="bi bi-instagram"></i></a>
+                                <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                                    href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                        class="bi bi-youtube"></i></a>
+                                <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                                    href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                            </section>
+		                </div>
+
+		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+		                    <p>
+								<a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+		
+							</p>
+							<p>
+								<a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+							</p>
+							<p>
+								<a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+		
+							</p>
+		                </div>
+
+		                <hr class="mb-4">
+		                <div>
+		                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+		                </div>
+
+		            </div>
+
+		        </div>
+		    </footer>
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <!-- SwiperJS Script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Custom Script -->
+    <script>
+        const swiper = new Swiper('.slider-wrapper', {
+            loop: true,
+            grabCursor: true,
+            spaceBetween: 30,
+
+            // Pagination bullets
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true
+            },
+
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+
+            // Responsive breakpoints
+            breakpoints: {
+                0: {
+                    slidesPerView: 1
+                },
+                768: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                }
+            }
+        });
+
+        function flipCard(button) {
+            const cardItem = button.closest('.card-item');
+            cardItem.classList.toggle('flipped');
+        }
+    </script>
+</body>
+
+</html>

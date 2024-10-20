@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
     data-bs-theme="dark">
 
@@ -5,7 +6,7 @@
     <title>MotherBoard - Funcionários</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="shortcut icon" href="icones/logorapa.png">
+    <link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -20,7 +21,7 @@
     </form>
 
     <header class="mb-3">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
             <div class="container-fluid">
 
 
@@ -29,32 +30,33 @@
                 </a>
 
 
-                    <ul class="nav d-flex justify-content-between mb-2 mb-lg-0">
 
-                        <li class="nav-item">
-                            <div class="btn-group dropstart">
-                                <button type="button" class="btn btn-conta-form-back-end nav-link"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-person-circle iconeheader"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <a class="nav-link" th:href="@{/conta}">
-                                        <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-                                    </a>
-                                    <a class="nav-link btn text-center" href="#" id="logoutLink"
-                                        onclick="document.getElementById('logoutForm').submit(); return false;">Logout</a>
-
-                                </ul>
-                            </div>
-                       
+                <div class="btn-group dropstart iconsfigures">
+                    <button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-person-circle fs-1"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <a class="nav-link" th:href="@{/conta}">
+                            <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+                        </a>
+                        <a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
+                            onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+                            <i class="bi bi-box-arrow-right"></i></a>
 
                     </ul>
                 </div>
-            
+
+
+                </ul>
+            </div>
+
         </nav>
     </header>
 
-    <div class="container rounded-4 py-4 px-5 mt-5" style="background-color: #2c3036;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+
+    <div class="container rounded-4 py-4 px-5 mt-5"
+        style="background-color: #2c3036;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
 
         <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center mt-5"
             role="alert">
@@ -64,43 +66,59 @@
         </div>
 
         <div>
-            <form th:action="@{/Usuarios/pag/1}" class="form-inline m-3 d-flex align-items-center p-3 rounded-3"
-                style="background-color: #40454e;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+            <form th:action="@{/Usuarios/pag/1}" class="form-inline m-3 p-1 rounded-3"
+                style="background-color: #40454e; box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+                <div class="container-fluid">
+                    <div class="row p-2">
+                        <div class="col-12 col-md-4 mb-3">
+                            <label class="form-label text-white">Filtrar por: </label>
+                            <div class="d-flex">
+                                <div class="form-check me-2">
+                                    <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
+                                        th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()"
+                                        class="form-check-input">
+                                    <label for="filterByName" class="form-check-label text-white">Nome</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="radio" id="filterByCpf" name="filterBy" value="cpf"
+                                        th:checked="${filterBy == 'cpf'}" onclick="toggleSearchInput()"
+                                        class="form-check-input">
+                                    <label for="filterByCpf" class="form-check-label text-white">CPF</label>
+                                </div>
+                            </div>
+                            <small id="instructionText" class="instruction-text text-white">Selecione um filtro para
+                                habilitar a barra de pesquisa.</small>
+                        </div>
 
-                <div class="container">
-                    <label>Filtrar por: </label>
+                        <div class="col-12 col-md-6 d-flex flex-md-row justify-content-center align-items-center">
+                            <div class="w-100 mb-md-0">
+                                <input type="search" name="keyword" th:value="${keyword}"
+                                    class="form-control mb-md-0 w-100" required disabled id="searchInput"
+                                    placeholder="Procurar..." maxlength="50" />
+                            </div>
+                            <input type="hidden" name="sortField" th:value="${sortField}" />
+                            <input type="hidden" name="sortDir" th:value="${sortDir}" />
 
-                    <div class="filter-options">
-                        <input type="radio" id="filterByName" name="filterBy" value="nomeCompleto"
-                            th:checked="${filterBy == 'nomeCompleto'}" onclick="toggleSearchInput()">
-                        <label for="filterByName" class="mr-2">Nome</label>
+                            <div class="d-flex justify-content-center ms-2">
+                                <button type="submit" class="btn btnCadFunc me-2">
+                                    <i class="bi bi-search p-1"></i>
+                                </button>
+                                <button type="button" class="btn btnCadFunc" onclick="limparFiltro()">
+                                    <i class="bi bi-arrow-counterclockwise"></i>
+                                </button>
+                            </div>
+                        </div>
 
-                        <input type="radio" id="filterByCpf" name="filterBy" value="cpf"
-                            th:checked="${filterBy == 'cpf'}" onclick="toggleSearchInput()">
-                        <label for="filterByCpf" class="mr-2">CPF</label>
                     </div>
-
-                    <span id="instructionText" class="instruction-text">Selecione um filtro para habilitar a barra de
-                        pesquisa.</span>
                 </div>
-
-                &nbsp;
-                <input type="hidden" name="sortField" th:value="${sortField}" />
-                <input type="hidden" name="sortDir" th:value="${sortDir}" />
-                &nbsp;
-                <input type="search" name="keyword" th:value="${keyword}" class="form-control"
-                    required disabled id="searchInput" placeholder="Procurar..." maxlength="50" />
-                &nbsp;
-                <input type="submit" value="Procurar" class="btn btnCadFunc mr-2" />
-                &nbsp;
-                <input type="button" value="Limpar" class="btn btnCadFunc" onclick="limparFiltro()" />
             </form>
         </div>
 
 
-        <div class="rounded-3 mt-5" style="background: #694a8f;">
-            <h3 class="text-center p-2">Tabela de Funcionário<i class="bi bi-person-fill-gear"></i></h3>
-            <table class="table table-dark table-striped" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+        <h3 class="text-center p-2 rounded-2 mb-0 mt-5 h3-tabela">Tabela de Funcionário <i
+                class="bi bi-person-fill-gear"></i></h3>
+        <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
+            <table class="table table-dark table-striped">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -109,13 +127,13 @@
                         <th scope="col">
                             <a th:if="${sortField != 'nomeCompleto'}"
                                 th:href="@{'/Usuarios/pag/' + ${PaginaAtual} + '?sortField=nomeCompleto&sortDir=' + ${sortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">
+                                style="text-decoration: none;color: white;">
                                 Nome Completo
                             </a>
 
                             <a th:if="${sortField == 'nomeCompleto'}"
                                 th:href="@{'/Usuarios/pag/' + ${PaginaAtual} + '?sortField=nomeCompleto&sortDir=' + ${reverseSortDir}}"
-                                style="text-decoration: none; color: rgb(128, 128, 128);">
+                                style="text-decoration: none;color: white;">
                                 Nome Completo
                             </a>
 
@@ -131,7 +149,7 @@
                         <th scope="col">Roles</th>
                         <th scope="col">Permitido</th>
                         <th scope="col">Editar</th>
-                        <th scope="col">Excluir</th>
+                        <!--<th scope="col">Excluir</th>-->
                     </tr>
                 </thead>
                 <tbody>
@@ -139,9 +157,10 @@
                         <td>[[${Usuario.id}]]</td>
                         <td>
                             <img th:if="${Usuario.fotos == null}" th:src="@{/imagens/perfilConta.png}"
-                                style="width: 150px; height: 150px;" />
+                                style="width: 150px; height: 150px;border-radius: 10px;" />
                             <img th:if="${Usuario.fotos != null}" id="thumbnail" alt="Preview das fotos"
-                                th:src="@{${Usuario.photosImagePath}}" style="width: 150px; height: 150px;" />
+                                th:src="@{${Usuario.photosImagePath}}"
+                                style="width: 150px; height: 150px;border-radius: 10px;" />
                         </td>
 
                         <td>[[${Usuario.nomeCompleto}]]</td>
@@ -168,36 +187,37 @@
 
                         </td>
 
+                        <!--
                         <td>
-
                             <a class="delete-link" th:href="@{'/usuarios/deletar/' + ${Usuario.id}}"
                                 th:userId="${Usuario.id}">
                                 <i class="bi bi-trash3-fill link-danger fs-4 m-2" title="Deletar esse usuario"></i>
                             </a>
                         </td>
+                        -->
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="d-flex justify-content-center align-items-center">
-            <a th:href="@{/Usuarios/new}" class="btn btnCadFunc mr-2"> Novo Funcionário </a>
-            &nbsp;
-            <a th:href="@{/Usuarios/export/excel}" class="btn btnCadFunc mr-2"> Exportar funcionários para o EXCEL</a>
-            &nbsp;
-            <a th:href="@{/Usuarios/export/pdf}" class="btn btnCadFunc me-1"> Exportar funcionários para o PDF</a>
-
-            <a th:href="@{/}" class="btn btnCadFunc mr-2"> Voltar para Intranet</a>
-
+        <div class="d-flex justify-content-center align-items-center mt-5 flex-wrap">
+            <a th:href="@{/Usuarios/new}" class="btn btnCadFunc flex-fill me-3 mb-2 text-center">Novo Funcionário <i
+                    class="bi bi-person-fill"></i></a>
+            <a th:href="@{/Usuarios/export/excel}" class="btn btnCadFunc flex-fill me-3 mb-2 text-center">Exportar para
+                o EXCEL <i class="bi bi-file-earmark-spreadsheet-fill"></i></a>
+            <a th:href="@{/Usuarios/export/pdf}" class="btn btnCadFunc flex-fill me-3 mb-2 text-center">Exportar para
+                PDF <i class="bi bi-file-earmark-pdf-fill"></i></a>
+            <a th:href="@{/}" class="btn btnCadFunc flex-fill me-3 mb-2 text-center">Voltar para Intranet <i
+                    class="bi bi-globe2"></i></a>
         </div>
 
         <br />
         <div class="text-center	m-1" th:if="${TotalDePaginas > 0}">
-            <p> Mostrando funcionário [[${comecaAConta}]] A [[${terminaDeConta}]] DE [[${TotalDePaginas}]]</p>
+            <p> Mostrando Funcionário [[${comecaAConta}]] A [[${terminaDeConta}]] DE [[${TotalDePaginas}]]</p>
         </div>
 
         <div class="text-center	m-1" th:unless="${TotalDePaginas > 0}">
-            <P> Funcionarios nao encontrados</P>
+            <P> Funcionarios não Encontrados</P>
         </div>
 
 
@@ -205,20 +225,25 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
 
+                    <!-- Primeira Página -->
                     <li th:classappend="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/1?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Primeira Página
+                            <span class="d-lg-none">&laquo;</span>
+                            <span class="d-none d-lg-inline">Primeira Página</span>
                         </a>
                     </li>
 
+                    <!-- Anterior -->
                     <li th:classappend="${PaginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/${PaginaAtual - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Anterior
+                            <span class="d-lg-none">&lsaquo;</span>
+                            <span class="d-none d-lg-inline">Anterior</span>
                         </a>
                     </li>
 
+                    <!-- Números de página -->
                     <li th:each="i : ${#numbers.sequence(1, TotalDePaginas)}"
                         th:classappend="${PaginaAtual != i ? 'page-item' : 'page-item active'}">
                         <a class="page-link colorPagelink"
@@ -227,19 +252,24 @@
                         </a>
                     </li>
 
+                    <!-- Próximo -->
                     <li th:classappend="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/${PaginaAtual + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Próximo
+                            <span class="d-lg-none">&rsaquo;</span>
+                            <span class="d-none d-lg-inline">Próximo</span>
                         </a>
                     </li>
 
+                    <!-- Última Página -->
                     <li th:classappend="${PaginaAtual < TotalDePaginas ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
                             th:href="@{|/Usuarios/pag/${TotalDePaginas}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword ?: ''}&filterBy=${filterBy ?: ''}|}">
-                            Última
+                            <span class="d-lg-none">&raquo;</span>
+                            <span class="d-none d-lg-inline">Última</span>
                         </a>
                     </li>
+
                 </ul>
             </nav>
         </div>
@@ -327,61 +357,91 @@
         }
     </script>
 
-	<footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4" data-bs-theme="dark">
-	    <div class="container text-center text-md-left">
+    <footer class="bg-body-tertiary fixarRodape">
+        <br />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
 
-	        <div class="row text-center text-md-left">
+                        <a th:href="@{/}">
+                            <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
 
-	            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-					
-					<a th:href="@{/}" class="navbar-brand">
-					    <img class="imgMother" th:src="@{/imagens/image-light.png}">
-					</a>
-					<br /><br /><br />
-					
-	                <section class="mb-4">
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-	                            class="bi bi-facebook"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-	                        href="https://x.com/Motherboard2024" role="button"><i class="bi bi-twitter"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-	                        href="https://www.instagram.com/motherboardtecnologic1" role="button"><i
-	                            class="bi bi-instagram"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-	                        href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-	                            class="bi bi-youtube"></i></a>
-	                    <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-	                        href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-	                </section>
-	            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
 
+                        <a th:href="@{/conta}">
+                            <i class="bi bi-person-square" style="font-size: 2rem; color: white;"></i>
 
-	            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-	                <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
-	                <p>
-	                    <a href="SobreNos.html" class=" links2"> Sobre nós</a>
+                        </a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
 
-	                </p>
-					<p>
-					    <a href="atendimento.html" class="links2"> Atendimento ao Funcionario</a>
-					</p>
-	                <p>
-	                    <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+                        <a th:href="@{/SobreNos}">
+                            <i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
 
-	                </p>
-	            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 
-	            <hr class="mb-4">
-	            <div>
-	                <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
-	            </div>
+    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+        <div class="container text-center text-md-left">
 
-	        </div>
+            <div class="row text-center text-md-left">
 
-	    </div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <a class="navbar-brand">
 
+                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+                    </a>
+                    <section class="mb-4">
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+                                class="bi bi-facebook"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+                            href="https://x.com/MotherboardTec1" role="button"><i class="bi bi-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+                            href="https://www.instagram.com/motherboard_tecnologic" role="button"><i
+                                class="bi bi-instagram"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+                                class="bi bi-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+                    </section>
+                </div>
 
-	</footer>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+                    <p>
+                        <a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+
+                    </p>
+                    <p>
+                        <a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+                    </p>
+                    <p>
+                        <a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+
+                    </p>
+                </div>
+
+                <hr class="mb-4">
+                <div>
+                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+                </div>
+
+            </div>
+
+        </div>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

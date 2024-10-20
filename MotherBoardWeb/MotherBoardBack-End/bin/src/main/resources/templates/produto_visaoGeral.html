@@ -1,53 +1,65 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+    data-bs-theme="dark">
     <body>
         <div th:fragment="conteudo" th:remove="tag">
             <div class="my-3">
                 <label for="categoria" class="form-label">Nome do produto:</label>
-                <input type="text" name="_csrf" th:field="*{nome}" class="form-control" placeholder="Digite o nome do produto" required minlength="3" maxlength="256">
+                <input type="text" name="_csrf" th:field="*{nome}" class="form-control validar" id="nome" placeholder="Digite o nome do produto" required minlength="3" maxlength="50">
+                <div class="invalid-feedback">Preencha este campo.</div>
             </div>
 
             <div class="mb-3">
-                <label  class="form-label">alias:</label>
-                <input type="text" th:field="*{alias}" class="form-control"  placeholder="Digite o alias" required minlength="3" maxlength="256">
+                <label  class="form-label">Alias:</label>
+                <input type="text" th:field="*{alias}" class="form-control validar" id="alias" placeholder="Digite o alias" required minlength="3" maxlength="50">
+                <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
-                <label for="categoria" class="form-label">marcas:</label>
-                <select class="form-control" th:field="*{marca}" required>
+                <label for="categoria" class="form-label">Marcas:</label>
+                <select class="form-control validar" th:field="*{marca}" required>
                     <th:block th:each="marca : ${listMarcas}">
                         <option th:value="${marca.id}">[[${marca.nome}]]</option>
                     </th:block>
                 </select>
             </div>
             <div class="mb-3">
-                <label for="categoria" class="form-label">categoria:</label>
-                <select class="form-control" th:field="*{categoria}" required>
+                <label for="categoria" class="form-label">Categoria:</label>
+                <select class="form-control validar" th:field="*{categoria}" required>
                 </select>
             </div>
             <div class="mb-3 d-flex">
                 <label class="form-label">Ativo:</label>
                 <div class="form-check ms-2">
-                    <input type="checkbox" th:field="*{habilitado}" class="form-check-input">
+                    <input type="checkbox" th:field="*{habilitado}" class="form-check-input ativoProd" required >
+                    <div class="invalid-feedback" style="margin-top: 1px;">
+                        Você deve preencher antes de enviar.
+                    </div>
                 </div>
             </div>
 
             <div class="mb-3 d-flex">
                 <label class="form-label">No estoque:</label>
-                <div class="form-check ms-2">
-                    <input type="checkbox" th:field="*{noStoque}" class="form-check-input">
+                <div class="ms-2 d-flex">
+					<input type="text" th:field="*{noStoque}" class="form-control validar" id="estoque" placeholder="Qtd" required minlength="1" maxlength="4" style="width: 80px;">
+                    <div class="invalid-feedback ms-2" style="margin-top: 7px;">
+                        Insira a quantidade.
+                    </div>
                 </div>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Custo:</label>
-                <input type="number"  th:field="*{custo}" class="form-control" placeholder="Digite o valor do custo" />
+                <input type="text"  th:field="*{custo}" class="form-control validar number" placeholder="Digite o valor do custo" maxlength="9" required/>
+                <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
-                <label for="categoria" class="form-label">preco:</label>
-                <input type="number"  th:field="*{preco}" class="form-control" placeholder="Digite o valor do preco" />
+                <label for="categoria" class="form-label">Preço:</label>
+                <input type="text"  th:field="*{preco}" class="form-control validar number" placeholder="Digite o valor do preco" maxlength="9" required/>
+                <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
-                <label for="categoria" class="form-label">desconto:</label>
-                <input type="number"  th:field="*{desconto}" class="form-control" placeholder="Digite o valor do desconto" />
+                <label for="categoria" class="form-label">Desconto:</label>
+                <input type="text"  th:field="*{desconto}" class="form-control validar number" placeholder="Digite o valor do desconto" maxlength="9" required/>
+                <div class="invalid-feedback">Preencha este campo.</div>
             </div>
         </div>
     </body>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+    data-bs-theme="dark">
+
+<head>
+    <title>MotherBoard - Intranet</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="shortcut icon" th:href="@{/imagens/logorapa.png}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body class="bg-dark text-light">
+
+    <form id="logoutForm" th:action="@{/logout}" method="post" style="display: none;">
+        <input type="submit" />
+    </form>
+
+	<header class="mb-3">
+	    <nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
+	        <div class="container-fluid">
+
+
+	            <a th:href="@{/}" class="navbar-brand">
+	                <img class="imgMother" th:src="@{/imagens/image-light.png}">
+	            </a>
+
+
+	                   
+	                        <div class="btn-group dropstart iconsfigures">
+	                            <button type="button" class="btn btn-conta-form-back-end nav-link"
+	                                data-bs-toggle="dropdown" aria-expanded="false">
+	                                <i class="bi bi-person-circle fs-1"></i>
+	                            </button>
+	                            <ul class="dropdown-menu">
+	                                <a class="nav-link" th:href="@{/conta}">
+	                                    <p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
+	                                </a>
+	                                <a class="nav-link btn text-center link-danger" href="#" id="logoutLink" onclick="document.getElementById('logoutForm').submit(); return false;">Logout
+	                                    <i class="bi bi-box-arrow-right"></i></a>
+
+	                            </ul>
+	                        </div>
+	                   
+
+	                </ul>
+	            </div>
+	        
+	    </nav>
+	</header>
+
+
+    <div class="containerdoADM py-5 mb-5 ">
+
+        <div class="col-12 d-flex justify-content-center flex-wrap container mb-5 py-3 ">  
+            
+            <div class="row justify-content-center align-items-center mb-5 rounded-5 p-5 bg-body-tertiary" >
+                <h3 class="text-center rounded-5 p-2 mb-3 intra-header bg-light-subtle"><b>INVENTÁRIO <i class="bi bi-box-fill"></i></b></h3>
+
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+				    <a class="nav-link squaredoADM" th:href="@{/inventarioProdutos}">
+				        <i class="bi bi-box-seam-fill fs-1"></i>
+				        <h5><b>Produtos</b></h5>
+				    </a>
+				</th:block>
+				
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+				    <a class="nav-link squaredoADM iconsfigures" th:href="@{/inventarioMarcas}">
+				        <i class="bi bi-tag-fill fs-1"></i>
+				        <h5><b>Marcas</b></h5>
+				    </a>
+				</th:block>
+				
+				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
+				    <a class="nav-link squaredoADM iconsfigures" th:href="@{/inventarioCategorias}">
+				        <i class="bi bi-grid-3x3-gap-fill fs-1"></i>
+				        <h5><b>Categorias</b></h5>
+				    </a>
+				</th:block>
+				
+                <div class="d-flex justify-content-center align-items-center mt-4 flex-wrap">
+                    <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
+                        <a th:href="@{/}"  class="btn btnIntranet btnCadFunc">Voltar para Intranet <i class="bi bi-globe2"></i></a>
+                    </th:block>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+	<footer class="bg-body-tertiary fixarRodape">
+		      <br />
+		      <div class="container-fluid">
+		          <div class="row">
+		              <div class="col">
+		                  <div class="col ms-3 mb-2 mt-1 quadradodofooter" style="border-radius: 20px;">
+		                      
+							  <a  th:href="@{/}">
+							  						  			       <i class="bi bi-house-door-fill" style="font-size: 2rem; color: white;"></i>
+																	 
+							  						  			    </a>
+		                  </div>
+		              </div>
+		              <div class="col">
+		                  <div class="col mb-3 mt-2 quadradodofooter" style="border-radius: 20px;">
+		                      
+							  <a  th:href="@{/conta}">
+							  			        <i class="bi bi-person-square"  style="font-size: 2rem; color: white;"></i>
+
+							  			    </a>
+		                  </div>
+		              </div>
+		              <div class="col">
+		                  <div class="col me-3 quadradodofooter mb-3 mt-2" style="border-radius: 20px;">
+		                     
+							  <a  th:href="@{/SobreNos}">
+								<i class="bi bi-info-circle" style="font-size: 2rem; color: white;"></i>
+
+							  						  			    </a>
+		                  </div>
+		              </div>
+		          </div>
+		      </div>
+		  </footer>
+
+		    <footer class=" bg-body-tertiary text-white mt-5 pt-5 pb-4 footerdoweb" data-bs-theme="dark">
+		        <div class="container text-center text-md-left">
+
+		            <div class="row text-center text-md-left">
+
+		                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+		                    <a class="navbar-brand">
+
+		                        <img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
+		                    </a>
+		                    <section class="mb-4">
+								<a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
+										class="bi bi-facebook"></i></a>
+								<a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
+									href="https://x.com/MotherboardTec1" role="button"><i class="bi bi-twitter"></i></a>
+								<a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
+									href="https://www.instagram.com/motherboard_tecnologic" role="button"><i
+										class="bi bi-instagram"></i></a>
+								<a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
+									href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
+										class="bi bi-youtube"></i></a>
+								<a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
+									href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
+							</section>
+		                </div>
+
+		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
+		                    <p>
+								<a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+		
+							</p>
+							<p>
+								<a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+							</p>
+							<p>
+								<a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+		
+							</p>
+		                </div>
+
+		                <hr class="mb-4">
+		                <div>
+		                    <p> © 2024 Motherboard Tecnologic. Todos os direitos reservados.</p>
+		                </div>
+
+		            </div>
+
+		        </div>
+		    </footer>
+	
+
+	
+	
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

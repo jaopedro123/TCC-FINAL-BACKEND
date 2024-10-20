@@ -6,6 +6,8 @@ $(document).ready(function () {
         if (!checkFileSize(this)) {
             return;
         }
+
+        addCerto(this)
         showImageThumbnail(this);
     });
 
@@ -23,6 +25,16 @@ $(document).ready(function () {
         })
     })
 });
+
+function addCerto(fileInput) {
+    fileInput.classList.remove('is-invalid');
+    fileInput.classList.add('is-valid');
+}
+
+function addInvalido(fileInput) {
+    fileInput.classList.remove('is-valid');
+    fileInput.classList.add('is-invalid');
+}
 
 function showImageThumbnail(fileInput) {
     var file = fileInput.files[0];
@@ -48,6 +60,8 @@ function showExtraImageThumbnail(fileInput, index) {
     };
     reader.readAsDataURL(file);
 
+    checkFileSize(fileInput)
+
     if(index >= extraImagesCount - 1) {
         addNextExtraImageSection(index + 1);
     }
@@ -59,23 +73,38 @@ function removerImagemExtra(index) {
 
 function addNextExtraImageSection(index) {
     htmlImagemExtra = `
-            <div class="col-5 mt-2 p-2" id="divImagemExtra${index}">
-                <div id="imagemExtraHeader${index}"><label>Imagem Extra #${index + 1}:</label></div>
-                <div class="col-sm-8">
-                    <input type="hidden" th:field="*{imagem_principal}" />
-                    <div class="my-1">
-                        <img src="${defaultImageThumbnailSrc}" id="extraThumbnail${index}"
-                        style="width: 130px; height: 130px;">
-                    </div>
-                    <input type="file" name="imagemExtra" 
-                        onchange="showExtraImageThumbnail(this, ${index})"
-                        accept="image/png, image/jpeg" />
-                </div>
-            </div>
+    <div class="col-md-6 col-sm-12 mt-2 p-2" id="divImagemExtra${index}">
+    <!-- Cabeçalho da Imagem Extra -->
+    <div id="imagemExtraHeader${index}">
+        <label>Imagem Extra #${index + 1}:</label>
+    </div>
+
+    <!-- Contêiner da imagem e input -->
+    <div class="file-input-container">
+        <!-- Imagem Preview (clicável) -->
+        <div class="my-1">
+            <img src="${defaultImageThumbnailSrc}" id="extraThumbnail${index}" alt="Preview da imagem extra"
+                 class="img-fluid rounded-3 clickable-image" style="width: 150px; height: 150px; cursor: pointer;"
+                 onclick="document.getElementById('fileInput${index}').click();" />
+        </div>
+
+        <!-- Campo de input para upload da imagem extra -->
+        <input type="file" name="imagemExtra" class="form-control"
+               onchange="showExtraImageThumbnail(this, ${index})"
+               accept="image/png, image/jpeg" />
+        <div class="invalid-feedback">
+            A imagem deve ter no máximo 1MB.
+        </div>
+    </div>
+
+    <!-- Campo oculto para ID da imagem -->
+    <input type="hidden" th:field="*{imagem_principal}" />
+</div>
     `;
 
     htmlLinkRemove = `
-            <a href="javascript:removerImagemExtra(${index - 1})" title="Remover essa imagem">Remover</a>
+        <button type="button" class="btn btn-danger d-flex align-items-center" 
+        onclick="removerImagemExtra(${index - 1})" title="Remover essa imagem" style="position: absolute;margin-left: 160px;margin-top: 5px;"><i class="bi bi-trash3-fill fs-4"></i></button>
     `;
 
     $("#divImagensProduto").append(htmlImagemExtra);
@@ -87,23 +116,28 @@ function addNextExtraImageSection(index) {
 }
 
 function checkFileSize(fileInput) {
-    fileSize = fileInput.files[0].size;
+    const fileSize = fileInput.files[0].size;
 
-    if (fileSize > 502400) {
-        fileInput.setCustomValidity("Você so pode escolher imagens abaixo de 500KB! ");
-        fileInput.reportvalidity();
+    if (fileSize > 1 * 1024 * 1024) {
+        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1MB! ");
+        addInvalido(fileInput);
+        fileInput.nextElementSibling.textContent = 'A imagem deve ter no máximo 1MB.';
+        showImageThumbnail(fileImage)
 
         return false;
     }
     else {
         fileInput.setCustomValidity("");
-
+        addCerto(fileInput)
         return true;
     }
 }
 
-function showModalDialog(title, message) {
-    $("#modalTitle").text(title);
-    $("#modalBody").text(message);
-    $("#modalDialog").modal('show');
-}
+document.querySelectorAll('.clickable-image').forEach((img) => {
+    img.addEventListener('click', function () {
+        const fileInput = this.parentElement.nextElementSibling;
+        if (fileInput && fileInput.type === 'file') {
+            fileInput.click();
+        }
+    });
+});

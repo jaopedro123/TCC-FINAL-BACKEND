@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+    data-bs-theme="dark">
     <body>
         <div th:fragment="conteudo" th:remove="tag">
-           <div>
-            <label>Descricao curta</label>
+          <div class="p-3">
+            <label class="form-label">Descrição Curta:</label>
              <textarea class="form-control bg-dark" th:field="*{descricaoCurta}" rows="5" required></textarea>
              <br/>
            </div>
-           <div>
-            <label>Descricao completa</label>
+           <div class="p-3">
+            <label class="form-label">Informações Técnicas:</label>
              <textarea class="form-control bg-dark" th:field="*{descricaoCompleta}" rows="10" required></textarea>
            </div>
         </div>

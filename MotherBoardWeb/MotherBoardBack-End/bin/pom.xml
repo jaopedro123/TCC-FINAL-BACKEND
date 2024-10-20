@@ -36,6 +36,13 @@
 		<artifactId>MotherBoardComum</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</dependency>
+	
+	<dependency>
+    <groupId>com.microsoft.sqlserver</groupId>
+    <artifactId>mssql-jdbc</artifactId>
+    <version>9.4.0.jre8</version>
+</dependency>
+
 
 	<dependency>
 		<groupId>org.apache.poi</groupId>
