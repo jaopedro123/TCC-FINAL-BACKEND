@@ -252,7 +252,7 @@
                     </li>
                     <li th:classappend="${currentPage > 1 ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                            th:href="@{|/produtos/page/${currentPage - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}&categoriaId=${categoriaId != null ? categoriaId : ''}|}">
                             <span class="d-lg-none">&lsaquo;</span>
                             <span class="d-none d-lg-inline">Anterior</span>
                         </a>
@@ -260,20 +260,20 @@
                     <li th:each="i : ${#numbers.sequence(1, totalPages)}"
                         th:classappend="${currentPage != i ? 'page-item' : 'page-item active'}">
                         <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                            th:href="@{|/produtos/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}&categoriaId=${categoriaId != null ? categoriaId : ''}|}">
                             [[${i}]]
                         </a>
                     </li>
                     <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                            th:href="@{|/produtos/page/${currentPage + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}&categoriaId=${categoriaId != null ? categoriaId : ''}|}">
                             <span class="d-lg-none">&rsaquo;</span>
                             <span class="d-none d-lg-inline">Próximo</span>
                         </a>
                     </li>
                     <li th:classappend="${currentPage < totalPages ? 'page-item' : 'page-item disabled'}">
                         <a class="page-link colorPagelink"
-                            th:href="@{|/produtos/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
+                            th:href="@{|/produtos/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}&categoriaId=${categoriaId != null ? categoriaId : ''}|}">
                             <span class="d-lg-none">&raquo;</span>
                             <span class="d-none d-lg-inline">Última Página</span>
                         </a>
