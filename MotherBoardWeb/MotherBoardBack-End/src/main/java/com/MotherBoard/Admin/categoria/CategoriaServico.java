@@ -22,7 +22,7 @@ import jakarta.transaction.Transactional;
 @Service
 @Transactional
 public class CategoriaServico {
-	public static final int ROOT_CATEGORIAS_POR_PAGINA = 2;	
+	public static final int ROOT_CATEGORIAS_POR_PAGINA = 3;	
 	@Autowired
 	private CategoriaRepository repo;
 	

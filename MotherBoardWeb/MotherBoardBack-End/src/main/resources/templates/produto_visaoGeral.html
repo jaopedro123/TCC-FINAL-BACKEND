@@ -3,6 +3,42 @@
     data-bs-theme="dark">
     <body>
         <div th:fragment="conteudo" th:remove="tag">
+
+            <!-- Imagem principal -->
+            <div class="mt-3">
+                <div class="file-input-container">
+                    <div class="text-center">
+                        <img id="thumbnail" alt="preview da imagem" th:src="@{${produto.imagemPrincipalPath}}" 
+                             class="img-fluid thumbnail rounded-3 clickable-image" 
+                             style="width: 175px; height: 175px; cursor: pointer;" />
+                    </div>
+                    <label class="form-label">Escolha uma imagem:</label>
+                    <input type="file" id="fileImage" name="fileImage"
+                        th:required="${produto.imagem_principal == null}"
+                        accept="image/png, image/jpeg" class="form-control" />
+                        <div class="invalid-feedback">
+                            Por favor, selecione uma imagem.
+                        </div>
+
+                    <input type="hidden" th:field="*{imagem_principal}">
+                </div>
+            </div>
+
+            <!-- NÃO RETIRAR -->
+            <div style="display: none;" class="col-md-6 col-sm-12 mt-2 p-2" th:id="'divImagemExtra' + ${numeroDeImagensExtras}">
+                <label>Imagem Extra #[[${numeroDeImagensExtras + 1}]]:</label>
+                <div class="file-input-container">
+                    <div class="my-1">
+                        <img th:id="'extraThumbnail' + ${numeroDeImagensExtras}"
+                            th:src="@{/imagens/image-thumbnail.png}"
+                            class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                    </div>
+                    <input type="file" name="imagemExtra"
+                        accept="image/png, image/jpeg" class="form-control" />
+                </div>
+            </div>
+            <!-- NÃO RETIRAR -->
+
             <div class="my-3">
                 <label for="categoria" class="form-label">Nome do produto:</label>
                 <input type="text" name="_csrf" th:field="*{nome}" class="form-control validar" id="nome" placeholder="Digite o nome do produto" required minlength="3" maxlength="50">
@@ -30,7 +66,7 @@
             <div class="mb-3 d-flex">
                 <label class="form-label">Ativo:</label>
                 <div class="form-check ms-2">
-                    <input type="checkbox" th:field="*{habilitado}" class="form-check-input ativoProd validar" required >
+                    <input type="checkbox" th:field="*{habilitado}" class="form-check-input ativoProd" required >
                     <div class="invalid-feedback" style="margin-top: 1px;">
                         Você deve preencher antes de enviar.
                     </div>
@@ -40,7 +76,7 @@
             <div class="mb-3 d-flex">
                 <label class="form-label">No estoque:</label>
                 <div class="ms-2 d-flex">
-					<input type="text" th:field="*{noStoque}" class="form-control validar" id="estoque" placeholder="Qtd" required minlength="1" maxlength="4" style="width: 90px;">
+					<input type="text" th:field="*{noStoque}" class="form-control validar" id="estoque" placeholder="Qtd" required minlength="1" maxlength="4" style="width: 80px;">
                     <div class="invalid-feedback ms-2" style="margin-top: 7px;">
                         Insira a quantidade.
                     </div>
@@ -48,17 +84,17 @@
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Custo:</label>
-                <input type="text"  th:field="*{custo}" class="form-control number validar" placeholder="Digite o valor do custo" maxlength="9" required/>
+                <input type="text"  th:field="*{custo}" class="form-control validar number" placeholder="Digite o valor do custo" maxlength="9" required/>
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Preço:</label>
-                <input type="text"  th:field="*{preco}" class="form-control number validar" placeholder="Digite o valor do preco" maxlength="9" required/>
+                <input type="text"  th:field="*{preco}" class="form-control validar number" placeholder="Digite o valor do preco" maxlength="9" required/>
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Desconto:</label>
-                <input type="text"  th:field="*{desconto}" class="form-control number validar" placeholder="Digite o valor do desconto" maxlength="9" required/>
+                <input type="text"  th:field="*{desconto}" class="form-control validar number" placeholder="Digite o valor do desconto" maxlength="9" required/>
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
         </div>

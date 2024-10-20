@@ -18,7 +18,7 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link linkhoverColor" data-bs-toggle="tab" data-bs-target="#Imagens" type="button"
-                role="tab">Imagens</button>
+                role="tab">Imagem</button>
         </li>
     </ul>
 
@@ -108,29 +108,14 @@
 
             <div class="row" id="divImagensProduto">
                 <div class="col-5 mt-2 p-2">
-                    <label>Imagem principal: [[${produto.imagem_principal}]]</label>
+                    <label>Imagem do produto: [[${produto.imagem_principal}]]</label>
                     <div class="col-sm-8">
                         <div class="my-1">
                             <img alt="preview da imagem" th:src="@{${produto.imagemPrincipalPath}}" class="img-fluid"
-                                style="width: 130px; height: 130px;"/>
+                                style="width: 200px; height: 200px;"/>
                         </div>
                     </div>
                 </div>
-    
-                <th:block th:each="produtoImagem, status : ${produto.imagens}">
-                    <div class="col-5 mt-2 p-2">
-                        <div>
-                            <label>Imagem Extra #[[${status.index + 1}]]: [[${produtoImagem.nome}]]</label>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="my-1"> <!-- th:src="@{${produto.imagemPath}}"  -->
-                                <img th:src="@{${produtoImagem.imagemPath}}"
-                                    th:alt="'Imagem extra #' + ${status.index + 1} + 'preview'" 
-                                    style="width: 130px; height: 130px;"/>
-                            </div>
-                        </div>
-                    </div>
-                </th:block>
 
             </div>
 
