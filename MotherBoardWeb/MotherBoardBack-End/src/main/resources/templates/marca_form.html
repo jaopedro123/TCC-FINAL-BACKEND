@@ -173,7 +173,7 @@
 
             // Validação específica para o campo "Nome"
             function validateNome(input) {
-                const regex = /^[A-Za-z0-9.\-+=&()_\/]+( [A-Za-z0-9.\-+=&()_\/]+)*$/;
+                const regex = /^[A-Za-z0-9.\-+=&()_\/,\p{L}]+( [A-Za-z0-9.\-+=&()_\/,\p{L}]+)*$/u;
                 if (!regex.test(input.value) || input.value.length < 3) {
                     input.classList.add('is-invalid');
                     input.nextElementSibling.textContent = 'O nome da marca é inválido ou curto.';
