@@ -53,7 +53,7 @@
             style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);"
             onsubmit="return validateDates()">
 
-            <div class="container">
+            <div>
                 <label>Filtrar por nome: </label>
                 <div class="col">
                     <div class="input-group mb-3">
@@ -182,12 +182,12 @@
         </div>
 
         <div class="d-block d-sm-none">
-            <h3 class="p-2 rounded-2 mb-3 mt-5" style="background: #694a8f;">Inventário Produtos 
+            <h3 class="p-2 rounded-2 mb-3 mt-5 text-center" style="background: #6f42c1;">Inventário Produtos 
                 <i class="bi bi-bag-fill"></i>
             </h3>
 
             <div th:each="produto : ${listaProdutos}" class="card mb-3 rounded-3">
-                <div style="background-color: #694a8f; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
+                <div style="background-color: #6f42c1; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
                     
                     <div class="d-flex align-items-center justify-content-center" style="height: 100px;">
                         <div class="d-flex justify-content-center align-items-center me-2" style="background-color: #2c3036; height: 50px; width: 50px; border-radius: 50%;">
@@ -199,7 +199,8 @@
                 </div>
 
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item">Produto: [[${produto.Produto.nomeCurto}]]</li>
+                    <li class="list-group-item">Id do Usuário: [[${produto.usuarioId.id}]]</li>
+                    <li class="list-group-item">Produto: [[${produto.Produto.nomeCurto}]] Id:[[${produto.Produto.id}]]</li>
                     <li class="list-group-item">[[${produto.acao}]]</li>
                     <li class="list-group-item">Estoque atual: [[${produto.estoque}]]</li>
                     <li class="list-group-item">Quantidade anterior: [[${produto.quantidadeEstoqueAnterior}]]</li>
