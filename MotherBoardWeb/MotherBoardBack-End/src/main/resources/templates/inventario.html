@@ -54,12 +54,12 @@
 	</header>
 
 
-    <div class="containerdoADM py-5 mb-5">
+    <div class="containerdoADM py-5 mb-5 ">
 
-        <div class="col-12 d-flex justify-content-center flex-wrap container mb-5 py-3">  
+        <div class="col-12 d-flex justify-content-center flex-wrap container mb-5 py-3 ">  
             
-            <div class="row justify-content-center align-items-center mb-5 rounded-5 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 650px;">
-                <h3 class="text-center rounded-5 p-2 mb-3 intra-header"><b>INVENTÁRIO <i class="bi bi-box-fill"></i></b></h3>
+            <div class="row justify-content-center align-items-center mb-5 rounded-5 p-5 bg-body-tertiary" >
+                <h3 class="text-center rounded-5 p-2 mb-3 intra-header bg-light-subtle"><b>INVENTÁRIO <i class="bi bi-box-fill"></i></b></h3>
 
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/inventarioProdutos}">
@@ -84,7 +84,7 @@
 				
                 <div class="d-flex justify-content-center align-items-center mt-4 flex-wrap">
                     <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                        <a th:href="@{/}"  class="btn btnIntranet">Voltar para Intranet <i class="bi bi-globe2"></i></a>
+                        <a th:href="@{/}"  class="btn btnIntranet btnCadFunc">Voltar para Intranet <i class="bi bi-globe2"></i></a>
                     </th:block>
                 </div>
                 

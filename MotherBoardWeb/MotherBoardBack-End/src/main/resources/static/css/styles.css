@@ -940,7 +940,7 @@ a.descRoxo:hover {
 }
 
 .btnIntranet {
-	background: linear-gradient(145deg, #585858, #6d6d6d);
+
 	color: #fff;
 	border: none;
 	border-radius: 8px;
@@ -952,9 +952,7 @@ a.descRoxo:hover {
 	transition: all 0.3s ease-in-out;
 }
 
-.btnIntranet:hover {
-	transform: scale(1.05);
-}
+
 
 .linkhoverColor:hover {
 	color: #b07fec;
