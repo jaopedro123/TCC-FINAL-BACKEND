@@ -60,7 +60,7 @@ public class CategoriaControlador {
 	public String listByPage(@PathVariable(name = "pageNum") int pageNum, @Param("sortDir") String sortDir,@Param("keyword") String keyword, Model model) {
 
 		if (sortDir == null || sortDir.isEmpty()) {
-			sortDir = "desc";
+			sortDir = "asc";
 		}
 
 		CategoriaPaginaInfo pageInfo = new CategoriaPaginaInfo();

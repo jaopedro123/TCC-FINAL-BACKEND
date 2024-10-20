@@ -35,7 +35,7 @@ public class InventarioMarcaService {
     }
 
 
-    public static final int INVENTARIO_MARCAS_PER_PAGE = 3;
+    public static final int INVENTARIO_MARCAS_PER_PAGE = 5;
 
     public Page<InventarioMarca> listByPage(int pageNum, String sortField, String sortDir, String keyword, String startDate, String endDate) {
         Sort sort = Sort.by(sortField);

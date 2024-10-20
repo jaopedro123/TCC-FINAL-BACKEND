@@ -35,7 +35,7 @@ public class InventarioCategoriaService {
     }
 
 
-    public static final int INVENTARIO_CATEGORIA_PER_PAGE = 3;
+    public static final int INVENTARIO_CATEGORIA_PER_PAGE = 5;
 
     public Page<InventarioCategoria> listByPage(int pageNum, String sortField, String sortDir, String keyword, String startDate, String endDate) {
         Sort sort = Sort.by(sortField);

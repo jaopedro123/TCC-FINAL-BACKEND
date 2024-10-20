@@ -15,7 +15,7 @@ import com.MotherBoard.entidade.comum.Marca;
 @Service
 public class MarcaServico {
 
-	static final int MARCAS_PER_PAGE = 1;
+	static final int MARCAS_PER_PAGE = 5;
 	
 	
 	@Autowired
