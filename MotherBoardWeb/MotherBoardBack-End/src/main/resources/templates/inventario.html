@@ -59,7 +59,7 @@
         <div class="col-12 d-flex justify-content-center flex-wrap container mb-5 py-3">  
             
             <div class="row justify-content-center align-items-center mb-5 rounded-5 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 650px;">
-                <h3 class="text-center rounded-5 p-2 mb-3" style="background-color: #303336;"><b>INVENTÁRIO <i class="bi bi-box-fill"></i></b></h3>
+                <h3 class="text-center rounded-5 p-2 mb-3 intra-header"><b>INVENTÁRIO <i class="bi bi-box-fill"></i></b></h3>
 
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/inventarioProdutos}">
@@ -82,9 +82,9 @@
 				    </a>
 				</th:block>
 				
-                <div class="d-flex justify-content-center align-items-center mt-3 flex-wrap">
+                <div class="d-flex justify-content-center align-items-center mt-4 flex-wrap">
                     <th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
-                        <a th:href="@{/}"  class="btn btnCadFunc">Voltar para Intranet <i class="bi bi-globe2"></i></a>
+                        <a th:href="@{/}"  class="btn btnIntranet">Voltar para Intranet <i class="bi bi-globe2"></i></a>
                     </th:block>
                 </div>
                 
@@ -157,16 +157,16 @@
 		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
 		                    <p>
-		                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
-
-		                    </p>
-		                    <p>
-		                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
-		                    </p>
-		                    <p>
-		                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
-
-		                    </p>
+								<a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+		
+							</p>
+							<p>
+								<a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+							</p>
+							<p>
+								<a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+		
+							</p>
 		                </div>
 
 		                <hr class="mb-4">
@@ -193,9 +193,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="assets/scripts/Atendimento.js">
-    </script>
-
 
 </body>
 

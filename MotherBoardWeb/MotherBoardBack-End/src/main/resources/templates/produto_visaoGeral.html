@@ -5,18 +5,18 @@
         <div th:fragment="conteudo" th:remove="tag">
             <div class="my-3">
                 <label for="categoria" class="form-label">Nome do produto:</label>
-                <input type="text" name="_csrf" th:field="*{nome}" class="form-control" placeholder="Digite o nome do produto" required minlength="3" maxlength="50">
+                <input type="text" name="_csrf" th:field="*{nome}" class="form-control validar" id="nome" placeholder="Digite o nome do produto" required minlength="3" maxlength="50">
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
 
             <div class="mb-3">
                 <label  class="form-label">Alias:</label>
-                <input type="text" th:field="*{alias}" class="form-control"  placeholder="Digite o alias" required minlength="3" maxlength="50">
+                <input type="text" th:field="*{alias}" class="form-control validar" id="alias" placeholder="Digite o alias" required minlength="3" maxlength="50">
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Marcas:</label>
-                <select class="form-control" th:field="*{marca}" required>
+                <select class="form-control validar" th:field="*{marca}" required>
                     <th:block th:each="marca : ${listMarcas}">
                         <option th:value="${marca.id}">[[${marca.nome}]]</option>
                     </th:block>
@@ -24,7 +24,7 @@
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Categoria:</label>
-                <select class="form-control" th:field="*{categoria}" required>
+                <select class="form-control validar" th:field="*{categoria}" required>
                 </select>
             </div>
             <div class="mb-3 d-flex">
@@ -40,7 +40,7 @@
             <div class="mb-3 d-flex">
                 <label class="form-label">No estoque:</label>
                 <div class="ms-2 d-flex">
-					<input type="text" th:field="*{noStoque}" class="form-control" id="estoque" placeholder="Qtd" required minlength="1" maxlength="4" style="width: 80px;">
+					<input type="text" th:field="*{noStoque}" class="form-control validar" id="estoque" placeholder="Qtd" required minlength="1" maxlength="4" style="width: 80px;">
                     <div class="invalid-feedback ms-2" style="margin-top: 7px;">
                         Insira a quantidade.
                     </div>
@@ -48,17 +48,17 @@
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Custo:</label>
-                <input type="text"  th:field="*{custo}" class="form-control number" placeholder="Digite o valor do custo" maxlength="9" required/>
+                <input type="text"  th:field="*{custo}" class="form-control validar number" placeholder="Digite o valor do custo" maxlength="9" required/>
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Preço:</label>
-                <input type="text"  th:field="*{preco}" class="form-control number" placeholder="Digite o valor do preco" maxlength="9" required/>
+                <input type="text"  th:field="*{preco}" class="form-control validar number" placeholder="Digite o valor do preco" maxlength="9" required/>
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
             <div class="mb-3">
                 <label for="categoria" class="form-label">Desconto:</label>
-                <input type="text"  th:field="*{desconto}" class="form-control number" placeholder="Digite o valor do desconto" maxlength="9" required/>
+                <input type="text"  th:field="*{desconto}" class="form-control validar number" placeholder="Digite o valor do desconto" maxlength="9" required/>
                 <div class="invalid-feedback">Preencha este campo.</div>
             </div>
         </div>

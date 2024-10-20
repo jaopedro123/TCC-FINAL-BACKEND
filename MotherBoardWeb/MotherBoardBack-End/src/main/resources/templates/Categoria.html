@@ -81,7 +81,7 @@
 
         </form>
 
-        <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela de Categorias <i
+        <h3 class="text-center p-2 rounded-2 mb-0 mt-5 h3-tabela">Tabela de Categorias <i
                 class="bi bi-grid-3x3-gap-fill"></i></h3>
         <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
             <table class="table table-dark table-striped">
@@ -140,7 +140,7 @@
         </div>
 
         <div class="text-center	mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
-            <P> Categorias não encontradas</P>
+            <p> Categorias não encontradas</p>
         </div>
 
         <div class="d-flex justify-content-center align-items-center mt-4 mb-3">
@@ -159,17 +159,18 @@
 
                     <!-- Primeira Página -->
                     <li th:classappend="${paginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink" th:href="@{/categorias/page/1}">
+                        <a class="page-link colorPagelink" th:href="@{/categorias/page/1?(sortField=${sortField}, sortDir=${sortDir}, keyword=${keyword != null ? keyword : ''})}">
                             <!-- Ícone para telas pequenas -->
                             <span class="d-lg-none">&laquo;</span>
                             <!-- Texto para telas maiores -->
                             <span class="d-none d-lg-inline">Primeira Página</span>
                         </a>
                     </li>
+                    
 
                     <!-- Anterior -->
                     <li th:classappend="${paginaAtual > 1 ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${paginaAtual - 1}|}">
+                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${paginaAtual - 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
                             <span class="d-lg-none">&lsaquo;</span>
                             <span class="d-none d-lg-inline">Anterior</span>
                         </a>
@@ -178,14 +179,14 @@
                     <!-- Números de página -->
                     <li th:each="i : ${#numbers.sequence(1, totalPages)}"
                         th:classappend="${paginaAtual != i ? 'page-item' : 'page-item active'}">
-                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${i}|}">
+                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${i}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
                             [[${i}]]
                         </a>
                     </li>
 
                     <!-- Próximo -->
                     <li th:classappend="${paginaAtual < totalPages ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${paginaAtual + 1}|}">
+                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${paginaAtual + 1}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
                             <span class="d-lg-none">&rsaquo;</span>
                             <span class="d-none d-lg-inline">Próximo</span>
                         </a>
@@ -193,9 +194,9 @@
 
                     <!-- Última Página -->
                     <li th:classappend="${paginaAtual < totalPages ? 'page-item' : 'page-item disabled'}">
-                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${totalPages}|}">
+                        <a class="page-link colorPagelink" th:href="@{|/categorias/page/${totalPages}?sortField=${sortField}&sortDir=${sortDir}&keyword=${keyword != null ? keyword : ''}|}">
                             <span class="d-lg-none">&raquo;</span>
-                            <span class="d-none d-lg-inline">Última</span>
+                            <span class="d-none d-lg-inline">Última Página</span>
                         </a>
                     </li>
 
@@ -313,10 +314,10 @@
 
                     </p>
                     <p>
-                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
+                        <a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
                     </p>
                     <p>
-                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
+                        <a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
 
                     </p>
                 </div>

@@ -6,6 +6,8 @@ $(document).ready(function () {
         if (!checkFileSize(this)) {
             return;
         }
+
+        addCerto(this)
         showImageThumbnail(this);
     });
 
@@ -14,7 +16,6 @@ $(document).ready(function () {
 
         $(this).change(function() {
             showExtraImageThumbnail(this, index);
-            checkFileSizeImgExtra(this);
         })
     });
 
@@ -24,6 +25,16 @@ $(document).ready(function () {
         })
     })
 });
+
+function addCerto(fileInput) {
+    fileInput.classList.remove('is-invalid');
+    fileInput.classList.add('is-valid');
+}
+
+function addInvalido(fileInput) {
+    fileInput.classList.remove('is-valid');
+    fileInput.classList.add('is-invalid');
+}
 
 function showImageThumbnail(fileInput) {
     var file = fileInput.files[0];
@@ -48,6 +59,8 @@ function showExtraImageThumbnail(fileInput, index) {
         $("#extraThumbnail" + index).attr("src", e.target.result);
     };
     reader.readAsDataURL(file);
+
+    checkFileSize(fileInput)
 
     if(index >= extraImagesCount - 1) {
         addNextExtraImageSection(index + 1);
@@ -76,9 +89,12 @@ function addNextExtraImageSection(index) {
         </div>
 
         <!-- Campo de input para upload da imagem extra -->
-        <input type="file" name="imagemExtra" class="form-control" id="fileInput${index}"
+        <input type="file" name="imagemExtra" class="form-control"
                onchange="showExtraImageThumbnail(this, ${index})"
                accept="image/png, image/jpeg" />
+        <div class="invalid-feedback">
+            A imagem deve ter no máximo 1MB.
+        </div>
     </div>
 
     <!-- Campo oculto para ID da imagem -->
@@ -104,40 +120,21 @@ function checkFileSize(fileInput) {
 
     if (fileSize > 1 * 1024 * 1024) {
         showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1MB! ");
-        fileInput.setCustomValidity("Você só pode escolher imagens abaixo de 1MB! ");
-        fileInput.reportvalidity();
+        addInvalido(fileInput);
+        fileInput.nextElementSibling.textContent = 'A imagem deve ter no máximo 1MB.';
+        showImageThumbnail(fileImage)
 
         return false;
     }
     else {
         fileInput.setCustomValidity("");
-
+        addCerto(fileInput)
         return true;
     }
 }
 
-function checkFileSizeImgExtra(fileInput) {
-    const imgSize = fileInput.files[0].size;
-
-    if (imgSize > 1 * 1024 * 1024) {
-        showModalDialog("Desculpe...", "Você só pode escolher imagens abaixo de 1 MB!");
-        return false;
-    }
-
-    return true;
-
-}
-
-function showModalDialog(title, message) {
-    $("#modalTitle").text(title);
-    $("#modalBody").text(message);
-    $("#modalDialog").modal('show');
-}
-
-// Adiciona um event listener para cada imagem com a classe 'clickable-image'
 document.querySelectorAll('.clickable-image').forEach((img) => {
     img.addEventListener('click', function () {
-        // Procura o próximo input 'file' associado à imagem clicada e ativa o clique
         const fileInput = this.parentElement.nextElementSibling;
         if (fileInput && fileInput.type === 'file') {
             fileInput.click();

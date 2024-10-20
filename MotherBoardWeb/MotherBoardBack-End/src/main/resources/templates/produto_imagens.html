@@ -18,11 +18,11 @@
                         <input type="file" id="fileImage" name="fileImage"
                             th:required="${produto.imagem_principal == null}"
                             accept="image/png, image/jpeg" class="form-control" />
-
-                        <input type="hidden" th:field="*{imagem_principal}">
                         <div class="invalid-feedback">
                             Por favor, selecione uma imagem.
                         </div>
+
+                        <input type="hidden" th:field="*{imagem_principal}">
                     </div>
                 </div>
 
@@ -40,6 +40,10 @@
                             </div>
                             <input type="file" name="imagemExtra"
                                 accept="image/png, image/jpeg" class="form-control" />
+                            <div class="invalid-feedback">
+                                A imagem deve ter no máximo 1MB.
+                            </div>
+
                         </div>
                         <input type="hidden" name="imagemIDs" th:id="'imagemId' + ${status.index}"
                             th:value="${produtoImagem.id}" />
@@ -59,6 +63,9 @@
                         </div>
                         <input type="file" name="imagemExtra"
                             accept="image/png, image/jpeg" class="form-control" />
+                        <div class="invalid-feedback">
+                            A imagem deve ter no máximo 1MB.
+                        </div>
                     </div>
                 </div>
 

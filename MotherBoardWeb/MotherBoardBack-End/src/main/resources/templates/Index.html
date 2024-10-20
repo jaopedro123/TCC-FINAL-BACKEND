@@ -57,7 +57,7 @@
         <div class="col-12 d-flex justify-content-center flex-wrap container py-3">  
             
             <div class="row justify-content-center align-items-center rounded-5 p-5" style="background-color: #41454a;box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 700px;">
-                <h3 class="text-center rounded-5 p-2" style="background-color: #303336;"><b>INTRANET <i
+                <h3 class="text-center rounded-5 p-2 intra-header"><b>INTRANET <i
                     class="bi bi-globe2"></i></a></b></h3>
 				
                 <a class="nav-link squaredoADM iconsfigures" sec:authorize="hasAuthority('Admin')" th:href="@{/Usuarios}">
@@ -90,7 +90,7 @@
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor', 'Assistente')">
 				    <a class="nav-link squaredoADM" th:href="@{/inventario}">
 				        <i class="bi bi-box2-fill fs-1"></i>
-				        <h5><b>Inventario</b></h5>
+				        <h5><b>Inventário</b></h5>
 				    </a>
 				</th:block>
 				
@@ -169,16 +169,16 @@
 		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
 		                    <p>
-		                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
-
-		                    </p>
-		                    <p>
-		                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
-		                    </p>
-		                    <p>
-		                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
-
-		                    </p>
+								<a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+		
+							</p>
+							<p>
+								<a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+							</p>
+							<p>
+								<a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+		
+							</p>
 		                </div>
 
 		                <hr class="mb-4">

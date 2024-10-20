@@ -148,7 +148,7 @@
             }
         </script>
 
-        <h3 class="text-center p-2 rounded-2 mb-0 mt-5" style="background: #694a8f;">Tabela Inventário Marcas <i
+        <h3 class="text-center p-2 rounded-2 mb-0 mt-5 h3-tabela">Tabela Inventário Marcas <i
                 class="bi bi-tag-fill"></i></h3>
         <div class="table-responsive" style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);">
             <table class="table table-dark table-striped">
@@ -186,11 +186,13 @@
             </table>
         </div>
         
-                <a th:href="@{/inventarioMarcas/export/excel}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
+        <div class="d-flex justify-content-center align-items-center mt-3">
+                <a th:href="@{/inventarioMarcas/export/excel}" class="btn btnCadFunc me-2 mb-2 text-center">Exportar para
                 o EXCEL <i class="bi bi-file-earmark-spreadsheet-fill"></i></a>
                 
-                <a th:href="@{/inventarioMarcas/export/pdf}" class="btn btnCadFunc flex-fill me-2 mb-2 text-center">Exportar para
+                <a th:href="@{/inventarioMarcas/export/pdf}" class="btn btnCadFunc me-2 mb-2 text-center">Exportar para
                 PDF <i class="bi bi-file-earmark-pdf-fill"></i></a>
+            </div>
 
         <div class="text-center mb-3 rounded-bottom categNEncontrada" th:unless="${totalPages > 0}">
             <P> Inventario não encontrado</P>
@@ -323,16 +325,16 @@
 		                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
 		                    <h6 class="text-uppercase mb-4 font-weight-bold">Ajuda:</h6>
 		                    <p>
-		                        <a  th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
-
-		                    </p>
-		                    <p>
-		                        <a href="FaleConosco.html" class=" links2"> Atendimento ao Funcionário</a>
-		                    </p>
-		                    <p>
-		                        <a href="Politica.html" class=" links2"> Política de Privacidade</a>
-
-		                    </p>
+								<a th:href="@{/SobreNos}" class=" links2"> Sobre nós</a>
+		
+							</p>
+							<p>
+								<a th:href="@{/atendimentoFunc}" class="links2"> Atendimento ao Funcionário</a>
+							</p>
+							<p>
+								<a th:href="@{/Politica}" class=" links2"> Política de Privacidade</a>
+		
+							</p>
 		                </div>
 
 		                <hr class="mb-4">
