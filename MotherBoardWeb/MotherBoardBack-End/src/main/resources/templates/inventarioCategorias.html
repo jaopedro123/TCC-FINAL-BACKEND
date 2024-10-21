@@ -62,7 +62,7 @@
 			style="background-color: #40454e; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);"
 			onsubmit="return validateDates()">
 
-			<div class="container">
+			<div class="" style="width: 100%;">
 				<label>Filtrar por nome: </label>
 				<div class="col">
 					<div class="input-group mb-3">
@@ -73,25 +73,27 @@
 				</div>
 
 				<label for="startDate">Data de Início:</label>
-				<div class="col">
-					<div class="input-group mb-3">
+				
+					<div class="">
+						<div class="row">
 						<input type="date" id="startDate" name="startDate" th:value="${startDate}"
-							class="form-control rounded-2">
-						<input th:placeholder="${startDate}" class="form-control rounded-2"
+							class="form-control rounded-2 col">
+						<input th:placeholder="${startDate}" class="form-control rounded-2 col"
 							style="background-color: #141517;" readonly="readonly">
 					</div>
 				</div>
 
 				<label for="endDate">Data de Fim:</label>
-				<div class="col">
-					<div class="input-group mb-3">
+			
+					<div class="">
+						<div class="row">
 						<input type="date" id="endDate" name="endDate" th:value="${endDate}"
-							class="form-control rounded-2">
-						<input th:placeholder="${endDate}" class="form-control rounded-2"
+							class="form-control rounded-2 col">
+						<input th:placeholder="${endDate}" class="form-control rounded-2 col"
 							style="background-color: #141517;" readonly="readonly">
 					</div>
 				</div>
-
+<br>
 				<div class="d-flex justify-content-center align-items-center">
                     <button type="submit" class="btn btnCadFunc rounded-2 me-2">Procurar <i class="bi bi-search"></i></button>
                     <button type="button" class="btn btnCadFunc rounded-2" onclick="limparFiltro()">Resetar <i class="bi bi-arrow-counterclockwise"></i></button>
