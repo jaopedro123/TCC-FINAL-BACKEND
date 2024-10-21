@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function validateInput(input) {
         if (input.name === 'nome' || input.name === 'alias') {
-            const regex = /^[A-Za-z0-9.\-+=&()_\/]+( [A-Za-z0-9.\-+=&()_\/]+)*$/;
+            const regex = /^[A-Za-z0-9.\-+=&()_\/,\p{L}]+( [A-Za-z0-9.\-+=&()_\/,\p{L}]+)*$/u;
 
 
             if (input.value.trim() === '') {

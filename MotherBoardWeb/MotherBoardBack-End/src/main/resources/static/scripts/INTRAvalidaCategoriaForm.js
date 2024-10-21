@@ -82,7 +82,7 @@ function validateInput($input) {
     const name = $input.attr('name');
     const value = $input.val();
 
-    const regex = /^[A-Za-z0-9.\-+=&()_\/]+( [A-Za-z0-9.\-+=&()_\/]+)*$/;
+    const regex = /^[A-Za-z0-9.\-+=&()_\/,\p{L}]+( [A-Za-z0-9.\-+=&()_\/,\p{L}]+)*$/u;
 
     if (name === 'nome' || name === 'alias') {
         const trimmedValue = value.trim();
