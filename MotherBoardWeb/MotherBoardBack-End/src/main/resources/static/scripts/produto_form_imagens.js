@@ -84,7 +84,7 @@ function addNextExtraImageSection(index) {
         <!-- Imagem Preview (clicável) -->
         <div class="my-1">
             <img src="${defaultImageThumbnailSrc}" id="extraThumbnail${index}" alt="Preview da imagem extra"
-                 class="img-fluid rounded-3 clickable-image" style="width: 150px; height: 150px; cursor: pointer;"
+                 class="img-fluid clickable-image imgThumb2"
                  onclick="document.getElementById('fileInput${index}').click();" />
         </div>
 

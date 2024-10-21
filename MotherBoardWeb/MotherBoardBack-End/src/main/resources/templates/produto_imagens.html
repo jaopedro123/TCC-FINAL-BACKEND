@@ -12,8 +12,7 @@
                     <div class="file-input-container">
                         <div class="my-1">
                             <img id="thumbnail" alt="preview da imagem" th:src="@{${produto.imagemPrincipalPath}}" 
-                                 class="img-fluid thumbnail rounded-3 clickable-image" 
-                                 style="width: 150px; height: 150px; cursor: pointer;" />
+                                 class="img-fluid thumbnail clickable-image imgThumb2" />
                         </div>
                         <input type="file" id="fileImage" name="fileImage"
                             th:required="${produto.imagem_principal == null}"
@@ -36,7 +35,7 @@
                             <div class="my-1">
                                 <img th:id="'extraThumbnail' + ${status.index}" th:src="@{${produtoImagem.imagemPath}}"
                                     alt="Imagem extra #[[${status.index}]] preview"
-                                    class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                                    class="img-fluid extraThumbnail clickable-image imgThumb2"/>
                             </div>
                             <input type="file" name="imagemExtra"
                                 accept="image/png, image/jpeg" class="form-control" />
@@ -59,7 +58,7 @@
                         <div class="my-1">
                             <img th:id="'extraThumbnail' + ${numeroDeImagensExtras}"
                                 th:src="@{/imagens/image-thumbnail.png}"
-                                class="img-fluid extraThumbnail rounded-3 clickable-image" style="width: 150px; height: 150px;cursor:pointer"/>
+                                class="img-fluid extraThumbnail  clickable-image imgThumb2"/>
                         </div>
                         <input type="file" name="imagemExtra"
                             accept="image/png, image/jpeg" class="form-control" />

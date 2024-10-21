@@ -339,13 +339,25 @@
         });
 
         function showChosenCategories() {
+            let count = 0;
+
             dropdownCategories.children("option:selected").each(function () {
                 selectedCategory = $(this);
                 catId = selectedCategory.val();
                 catName = selectedCategory.text().replace(/-/g, "");
+
+
                 divChosenCategories.append("<span class='badge1 me-2'>" + catName + "</span>");
+
+                count++;
+
+                // Insere uma quebra de linha a cada 3 categorias
+                if (count % 3 === 0) {
+                    divChosenCategories.append("<br><br><br><br>");
+                }
             });
         }
+
     </script>
 
 
