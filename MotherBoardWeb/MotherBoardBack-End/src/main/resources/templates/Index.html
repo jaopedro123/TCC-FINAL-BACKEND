@@ -23,7 +23,6 @@
 	<header class="mb-3">
 		<nav class="navbar navbar-expand-lg bg-body-tertiary p-3" data-bs-theme="dark">
 			<div class="container-fluid">
-<<<<<<< HEAD
 
 				<div>
 					<a th:href="@{/}" class="navbar-brand">
@@ -73,56 +72,6 @@
 
 				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
 
-=======
-
-
-				<a th:href="@{/}" class="navbar-brand">
-					<img class="imgMother" th:src="@{/imagens/image-light.png}">
-				</a>
-
-
-
-				<div class="btn-group dropstart iconsfigures">
-					<button type="button" class="btn btn-conta-form-back-end nav-link" data-bs-toggle="dropdown"
-						aria-expanded="false">
-						<i class="bi bi-person-circle fs-1"></i>
-					</button>
-					<ul class="dropdown-menu">
-						<a class="nav-link" th:href="@{/conta}">
-							<p class="text-center" th:text="${#authentication.principal.nomeCompleto}"></p>
-						</a>
-						<a class="nav-link btn text-center link-danger" href="#" id="logoutLink"
-							onclick="document.getElementById('logoutForm').submit(); return false;">Logout
-							<i class="bi bi-box-arrow-right"></i></a>
-
-					</ul>
-				</div>
-
-
-				</ul>
-			</div>
-
-		</nav>
-	</header>
-
-	<div class="containerdoADM py-5 mb-5">
-
-		<div class="col-12 d-flex justify-content-center flex-wrap container py-3">
-
-			<div class="row justify-content-center bg-body-tertiary align-items-center rounded-5 p-5"
-				style="box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);width: 700px;">
-				<h3 class="text-center rounded-5 p-2 bg-light-subtle intra-header"><b>INTRANET <i
-							class="bi bi-globe2"></i></a></b></h3>
-
-				<a class="nav-link squaredoADM iconsfigures" sec:authorize="hasAuthority('Admin')"
-					th:href="@{/Usuarios}">
-					<i class="bi bi-person-badge fs-1"></i>
-					<h5><b>Funcionários</b></h5>
-				</a>
-
-				<th:block sec:authorize="hasAnyAuthority('Admin', 'Editor')">
-
->>>>>>> 06cc17a3e952810c137e4d91c5a382f96fafb851
 					<a class="nav-link iconsfigures squaredoADM" th:href="@{/categorias}">
 						<i class="bi bi-grid-3x3-gap-fill fs-1"></i>
 						<h5><b>Categorias</b></h5>
@@ -213,7 +162,6 @@
 						<img class="imgMother mb-4" th:src="@{/imagens/image-light.png}">
 					</a>
 					<section class="mb-4">
-<<<<<<< HEAD
 						<a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
 								class="bi bi-facebook"></i></a>
 						<a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
@@ -227,21 +175,6 @@
 						<a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
 							href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
 					</section>
-=======
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoface" href="#!" role="button"><i
-                                class="bi bi-facebook"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhottw"
-                            href="https://x.com/MotherboardTec1" role="button"><i class="bi bi-twitter"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoinsta"
-                            href="https://www.instagram.com/motherboard_tecnologic" role="button"><i
-                                class="bi bi-instagram"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhoyou"
-                            href="https://www.youtube.com/@MotherboardTecnologic" role="button"><i
-                                class="bi bi-youtube"></i></a>
-                        <a class="btn btn-outline-light btn-floating m-1 botaozinhogit"
-                            href="https://github.com/akavh/TCC3ANOC" role="button"><i class="bi bi-github"></i></a>
-                    </section>
->>>>>>> 06cc17a3e952810c137e4d91c5a382f96fafb851
 				</div>
 
 				<div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
