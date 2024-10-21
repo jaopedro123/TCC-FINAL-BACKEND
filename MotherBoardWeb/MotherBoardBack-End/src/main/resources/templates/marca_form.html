@@ -58,7 +58,7 @@
                 <div class="form-group row mb-3">
                     <div class="text-center">
                         <img id="thumbnail" alt="Pré-visualização do logo" th:src="@{${marca.logoPath}}"
-                            class="img-fluid mb-3 rounded-3" style="width: 130px;height: 130px;cursor: pointer;" />
+                            class="img-fluid mb-3 imgThumb" />
                         <i class="bi bi-pencil-square fs-4 INTRAiconeImg"
                             style="margin-left: 10rem;margin-top:-45px;"></i>
                     </div>
@@ -343,10 +343,12 @@
                 selectedCategory = $(this);
                 catId = selectedCategory.val();
                 catName = selectedCategory.text().replace(/-/g, "");
-                divChosenCategories.append("<span class='badge text-bg-secondary me-1' style='font-size: 16px;margin-top:-5px'>" + catName + "</span>");
+                divChosenCategories.append("<span class='badge1 me-2'>" + catName + "</span>");
             });
         }
     </script>
+
+
 
 
 
